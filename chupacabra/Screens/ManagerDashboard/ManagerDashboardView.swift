@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ManagerDashboardView: View {
-    @ObservedObject var authViewModel: AuthViewModel
     
     var body: some View {
         NavigationView {

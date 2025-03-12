@@ -17,6 +17,9 @@
 		5647F4392D81AB5400362FAC /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F4102D81AB5400362FAC /* APIService.swift */; };
 		5647F43A2D81AB5400362FAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5647F4282D81AB5400362FAC /* Preview Assets.xcassets */; };
 		5647F43D2D81AC9E00362FAC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F43C2D81AC9800362FAC /* User.swift */; };
+		5647F4422D81B4F600362FAC /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F4412D81B4F600362FAC /* TokenService.swift */; };
+		5647F4452D81BA6100362FAC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 5647F4442D81BA6100362FAC /* JWTDecode */; };
+		5647F4472D81C12000362FAC /* LoggedUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */; };
 		B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */; };
 		B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B22D81A318001D0F9E /* Assets.xcassets */; };
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
@@ -52,6 +55,8 @@
 		5647F4282D81AB5400362FAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5647F42A2D81AB5400362FAC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		5647F43C2D81AC9800362FAC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5647F4412D81B4F600362FAC /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedUserViewModel.swift; sourceTree = "<group>"; };
 		B743C4AB2D81A30C001D0F9E /* chupacabra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chupacabra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraApp.swift; sourceTree = "<group>"; };
 		B743C4B22D81A318001D0F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5647F4452D81BA6100362FAC /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +120,7 @@
 		5647F4132D81AB5400362FAC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5647F4412D81B4F600362FAC /* TokenService.swift */,
 				5647F4122D81AB5400362FAC /* AuthService.swift */,
 			);
 			path = Services;
@@ -122,17 +129,10 @@
 		5647F4152D81AB5400362FAC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */,
 				5647F4142D81AB5400362FAC /* AuthViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		5647F4182D81AB5400362FAC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5647F4162D81AB5400362FAC /* LoginView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		5647F4192D81AB5400362FAC /* Authentication */ = {
@@ -141,33 +141,14 @@
 				5647F43B2D81AC8F00362FAC /* Models */,
 				5647F4132D81AB5400362FAC /* Services */,
 				5647F4152D81AB5400362FAC /* ViewModels */,
-				5647F4182D81AB5400362FAC /* Views */,
 			);
 			path = Authentication;
-			sourceTree = "<group>";
-		};
-		5647F41D2D81AB5400362FAC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5647F41A2D81AB5400362FAC /* AdminDashboardView.swift */,
-				5647F41B2D81AB5400362FAC /* ManagerDashboardView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		5647F41E2D81AB5400362FAC /* Dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				5647F41D2D81AB5400362FAC /* Views */,
-			);
-			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		5647F4272D81AB5400362FAC /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				5647F4192D81AB5400362FAC /* Authentication */,
-				5647F41E2D81AB5400362FAC /* Dashboard */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -183,6 +164,9 @@
 		5647F42B2D81AB5400362FAC /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5647F4402D81AF0400362FAC /* Login */,
+				5647F43F2D81AEEE00362FAC /* ManagerDashboard */,
+				5647F43E2D81AEDE00362FAC /* AdminDashboard */,
 				5647F42A2D81AB5400362FAC /* RootView.swift */,
 			);
 			path = Screens;
@@ -194,6 +178,30 @@
 				5647F43C2D81AC9800362FAC /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5647F43E2D81AEDE00362FAC /* AdminDashboard */ = {
+			isa = PBXGroup;
+			children = (
+				5647F41A2D81AB5400362FAC /* AdminDashboardView.swift */,
+			);
+			path = AdminDashboard;
+			sourceTree = "<group>";
+		};
+		5647F43F2D81AEEE00362FAC /* ManagerDashboard */ = {
+			isa = PBXGroup;
+			children = (
+				5647F41B2D81AB5400362FAC /* ManagerDashboardView.swift */,
+			);
+			path = ManagerDashboard;
+			sourceTree = "<group>";
+		};
+		5647F4402D81AF0400362FAC /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5647F4162D81AB5400362FAC /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		B743C4A22D81A30C001D0F9E = {
@@ -335,6 +343,9 @@
 				Base,
 			);
 			mainGroup = B743C4A22D81A30C001D0F9E;
+			packageReferences = (
+				5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = B743C4AC2D81A30C001D0F9E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -386,7 +397,9 @@
 				5647F4372D81AB5400362FAC /* ManagerDashboardView.swift in Sources */,
 				5647F4382D81AB5400362FAC /* CustomTextField.swift in Sources */,
 				5647F4392D81AB5400362FAC /* APIService.swift in Sources */,
+				5647F4472D81C12000362FAC /* LoggedUserViewModel.swift in Sources */,
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
+				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,6 +718,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5647F4442D81BA6100362FAC /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B743C4A32D81A30C001D0F9E /* Project object */;
 }

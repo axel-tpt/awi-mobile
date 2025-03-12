@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
+    @StateObject private var viewModel: AuthViewModel = AuthViewModel()
     @State private var showingRegistration = false
+    
+    init() { }
     
     var body: some View {
         NavigationView {
@@ -24,7 +27,7 @@ struct LoginView: View {
                 }
                 
                 Button(action: {
-                    viewModel.login()
+                    viewModel.login(with: self.loggedUserVM)
                 }) {
                     if case .authenticating = viewModel.state {
                         ProgressView()

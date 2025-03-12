@@ -1,17 +1,15 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var authViewModel = AuthViewModel()
+    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
     
     var body: some View {
-        if case .authenticated(let user) = authViewModel.state {
-            switch user.role {
-            case .admin:
-                AdminDashboardView(authViewModel: authViewModel)
-            case .manager:
-                ManagerDashboardView(authViewModel: authViewModel)
-            }
-        } else {
+        switch loggedUserVM.loggedUser?.permissionLevel {
+        case .manager:
+            ManagerDashboardView()
+        case .admin:
+            AdminDashboardView()
+        case nil:
             LoginView()
         }
     }

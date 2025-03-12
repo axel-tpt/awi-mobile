@@ -2,19 +2,16 @@ import Foundation
 
 public struct AuthResponse: Decodable {
     let accessToken: String
-    let atExpireDate: Date
+    let atExpireDate: String
     let memberId: Int
 }
 
-public struct User: Decodable {
-    let id: Int
-    let email: String
-    let firstName: String?
-    let lastName: String?
-    let role: Role
+public enum PermissionLevel: Int, Decodable {
+    case manager = 1
+    case admin = 2
 }
 
-public enum Role: String, Decodable {
-    case admin
-    case manager
+public struct LoggedUser: Decodable {
+    let id: Int
+    let permissionLevel: PermissionLevel
 }
