@@ -28,8 +28,6 @@ class AuthViewModel: ObservableObject {
     @Published private(set) var state: AuthState = .idle
     @Published var email = ""
     @Published var password = ""
-    @Published var firstName = ""
-    @Published var lastName = ""
     
     private let authService: AuthServiceProtocol
     private var cancellables = Set<AnyCancellable>()
@@ -53,49 +51,9 @@ class AuthViewModel: ObservableObject {
                     self?.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] response in
-                self?.state = .authenticated(response.user)
+                // self?.state = .authenticated(response.user)
                 // Ici, vous pourriez sauvegarder le token dans le Keychain
             }
             .store(in: &cancellables)
     }
-    
-    func register() {
-        guard !email.isEmpty, !password.isEmpty else {
-            state = .error("Please fill in all required fields")
-            return
-        }
-        
-        state = .authenticating
-        
-        authService.register(email: email, password: password, firstName: firstName.isEmpty ? nil : firstName, lastName: lastName.isEmpty ? nil : lastName)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.state = .error(error.localizedDescription)
-                }
-            } receiveValue: { [weak self] response in
-                self?.state = .authenticated(response.user)
-                // Ici, vous pourriez sauvegarder le token dans le Keychain
-            }
-            .store(in: &cancellables)
-    }
-    
-    func logout() {
-        authService.logout()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.state = .idle
-                self?.email = ""
-                self?.password = ""
-                self?.firstName = ""
-                self?.lastName = ""
-            }
-            .store(in: &cancellables)
-    }
-    
-    func clearError() {
-        if case .error = state {
-            state = .idle
-        }
-    }
-} 
+}

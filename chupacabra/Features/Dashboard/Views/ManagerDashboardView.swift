@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct AdminDashboardView: View {
+struct ManagerDashboardView: View {
     @ObservedObject var authViewModel: AuthViewModel
     
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Administration")) {
+                Section(header: Text("Manager")) {
                     NavigationLink(destination: Text("User Management")) {
                         Label("Manage Users", systemImage: "person.2")
                     }

@@ -7,13 +7,13 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("Welcome Back")
+                Text("Chupacabra")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
                 VStack(spacing: 15) {
                     CustomTextField("Email", text: $viewModel.email)
-                    CustomTextField("Password", text: $viewModel.password, isSecure: true)
+                    CustomTextField("Mot de passe", text: $viewModel.password, isSecure: true)
                 }
                 .padding(.horizontal)
                 
@@ -30,7 +30,7 @@ struct LoginView: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                     } else {
-                        Text("Sign In")
+                        Text("Se connecter")
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -40,16 +40,9 @@ struct LoginView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
                 .disabled(viewModel.state == .authenticating)
-                
-                Button("Don't have an account? Sign Up") {
-                    showingRegistration = true
-                }
-                .sheet(isPresented: $showingRegistration) {
-                    RegisterView()
-                }
             }
             .padding()
             .navigationBarHidden(true)
         }
     }
-} 
+}
