@@ -45,6 +45,8 @@
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
 		B743C4CA2D81A319001D0F9E /* chupacabraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4C92D81A319001D0F9E /* chupacabraUITests.swift */; };
 		B743C4CC2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */; };
+		B77B7C662D885A2000647EB8 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B7C652D885A2000647EB8 /* GameViewModel.swift */; };
+		B77B7C692D88631B00647EB8 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B7C682D88631B00647EB8 /* CategoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,8 @@
 		B743C4C52D81A319001D0F9E /* chupacabraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chupacabraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4C92D81A319001D0F9E /* chupacabraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraUITests.swift; sourceTree = "<group>"; };
 		B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B77B7C652D885A2000647EB8 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		B77B7C682D88631B00647EB8 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +371,7 @@
 		B7228D4B2D88302500475A95 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				B77B7C672D8862E600647EB8 /* ViewModels */,
 				B7228D4D2D88303F00475A95 /* Services */,
 				B7228D4C2D88303500475A95 /* Models */,
 			);
@@ -418,6 +423,7 @@
 		B7228D512D88311D00475A95 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				B77B7C642D885A0500647EB8 /* ViewModels */,
 				B7228D532D88312F00475A95 /* Services */,
 				B7228D522D88312800475A95 /* Models */,
 			);
@@ -497,6 +503,22 @@
 				B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */,
 			);
 			path = chupacabraUITests;
+			sourceTree = "<group>";
+		};
+		B77B7C642D885A0500647EB8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B77B7C652D885A2000647EB8 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B77B7C672D8862E600647EB8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B77B7C682D88631B00647EB8 /* CategoryViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -637,6 +659,7 @@
 				5647F4302D81AB5400362FAC /* RootView.swift in Sources */,
 				5647F4332D81AB5400362FAC /* LoginView.swift in Sources */,
 				5647F4352D81AB5400362FAC /* AuthViewModel.swift in Sources */,
+				B77B7C692D88631B00647EB8 /* CategoryViewModel.swift in Sources */,
 				B707A8A72D82E1B20030D387 /* GameService.swift in Sources */,
 				B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */,
 				5647F43D2D81AC9E00362FAC /* User.swift in Sources */,
@@ -650,6 +673,7 @@
 				B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */,
 				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
 				56EA3E0B2D88368700D16599 /* BalanceSheetScreen.swift in Sources */,
+				B77B7C662D885A2000647EB8 /* GameViewModel.swift in Sources */,
 				56EA3E0C2D88368700D16599 /* OrderCreationScreen.swift in Sources */,
 				56EA3E0D2D88368700D16599 /* StatisticsScreen.swift in Sources */,
 				56EA3E172D883A8500D16599 /* ManagerDashboardList.swift in Sources */,

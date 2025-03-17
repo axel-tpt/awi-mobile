@@ -10,8 +10,8 @@ struct BulkUpdateRequest: Encodable {
 
 public protocol PhysicalGameServiceProtocol {
     func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], AuthError>
-    func getPhysicalGamesByBarcode(barcode : String) -> AnyPublisher<[FullPhysicalGame], AuthError>
-    func bulkUpdatePhysicalGamesStatus(ids: [Int], status: PhysicalGameStatus) -> AnyPublisher<[FullPhysicalGame], AuthError>
+    func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, AuthError>
+    func bulkUpdatePhysicalGamesStatus(ids: [Int], status: PhysicalGameStatus) -> AnyPublisher<EmptyResponse, AuthError>
     func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[FullPhysicalGame], AuthError>
 }
 
@@ -38,7 +38,7 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    public func getPhysicalGamesByBarcode(barcode : String) -> AnyPublisher<[FullPhysicalGame], AuthError> {
+    public func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, AuthError> {
         return APIService.fetch(
             endpoint: "physical-games/by-barcode/" + barcode,
             method: .get
@@ -62,7 +62,7 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
     public func bulkUpdatePhysicalGamesStatus(
         ids: [Int],
         status: PhysicalGameStatus
-    ) -> AnyPublisher<[FullPhysicalGame], AuthError> {
+    ) -> AnyPublisher<EmptyResponse, AuthError> {
         let body = BulkUpdateRequest(ids: ids, status: status.rawValue)
         
         return APIService.fetch(

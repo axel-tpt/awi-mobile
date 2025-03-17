@@ -10,8 +10,8 @@ public struct ApiGame: Decodable {
     let publisherId: Int
 }
 
-public struct FullGame: Decodable {
-    let id: Int
+public struct FullGame: Decodable, Identifiable {
+    public let id: Int
     let name: String
     let minimumPrice: Int
     let minimumPlayersNumber: Int

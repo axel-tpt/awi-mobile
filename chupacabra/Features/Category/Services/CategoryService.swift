@@ -4,29 +4,14 @@ import SwiftUI
 import JWTDecode
 
 public protocol CategoryServiceProtocol {
-    func loadCategories()
+    func getCategories() -> AnyPublisher<[Category], AuthError>
 }
 
 public final class CategoryService: CategoryServiceProtocol {
-    private var _categories: [Category] = []
     private var cancellables = Set<AnyCancellable>()
     private var state: AuthState = .idle
     
-    public func loadCategories() {
-        getCategories()
-           .receive(on: DispatchQueue.main)
-           .sink(receiveCompletion: { completion in
-               if case .failure(let error) = completion {
-                   self.state = .error(error.localizedDescription)
-               }
-           }, receiveValue: { [weak self] (response: [Category]) in
-               guard let self = self else { return }
-               self._categories = response
-           })
-           .store(in: &cancellables)
-    }
-    
-    private func getCategories() -> AnyPublisher<[Category], AuthError> {
+    public func getCategories() -> AnyPublisher<[Category], AuthError> {
         return APIService.fetch(
             endpoint: "categories",
             method: .get
