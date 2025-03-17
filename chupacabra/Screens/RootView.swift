@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
     
     var body: some View {
         switch loggedUserVM.loggedUser?.permissionLevel {
@@ -15,7 +15,7 @@ struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView().environmentObject(LoggedUserViewModel())
+        RootView().environmentObject(LoggedUserEnvironment())
     }
 }
 

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
     @StateObject private var viewModel: AuthViewModel
 
     init() {

@@ -1,70 +1,43 @@
 import SwiftUI
-
-struct Session: Identifiable {
-    let id: Int
-    let commissionRate: Double
-    let depositFeesRate: Double
-    let startDateDeposit: String
-    let endDateDeposit: String
-    let startDateSelling: String
-    let endDateSelling: String
-}
+import Combine
 
 struct SessionListScreen: View {
-    @State private var sessions: [Session] = [
-        Session(id: 1, commissionRate: 10.0, depositFeesRate: 5.0, startDateDeposit: "01/06/2023", endDateDeposit: "05/06/2023", startDateSelling: "10/06/2023", endDateSelling: "15/06/2023"),
-        Session(id: 2, commissionRate: 15.0, depositFeesRate: 7.5, startDateDeposit: "20/07/2023", endDateDeposit: "25/07/2023", startDateSelling: "01/08/2023", endDateSelling: "10/08/2023"),
-        Session(id: 3, commissionRate: 12.5, depositFeesRate: 6.0, startDateDeposit: "15/09/2023", endDateDeposit: "20/09/2023", startDateSelling: "25/09/2023", endDateSelling: "05/10/2023")
-    ]
-    
+    @StateObject private var viewModel = SessionViewModel()
     @State private var showingCreateSheet = false
     @State private var selectedSession: Session? = nil
+    @State private var isLoading = false
+    @State private var errorMessage: String? = nil
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(sessions) { session in
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            Text("ID: \(session.id)")
-                                .font(.headline)
-                            Spacer()
-                            Menu {
-                                Button {
-                                    selectedSession = session
-                                } label: {
-                                    Label("Modifier", systemImage: "pencil")
-                                }
-                                
-                                Button(role: .destructive) {
-                                    deleteSession(id: session.id)
-                                } label: {
-                                    Label("Supprimer", systemImage: "trash")
-                                }
-                            } label: {
-                                Image(systemName: "ellipsis.circle")
-                                    .foregroundColor(.blue)
-                            }
-                        }
+            Group {
+                if isLoading {
+                    ProgressView("Chargement des sessions...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if let error = errorMessage {
+                    VStack(spacing: 16) {
+                        Text("Erreur: \(error)")
+                            .foregroundColor(.red)
                         
-                        Text("Commission: \(session.commissionRate, specifier: "%.1f")%")
-                        Text("Frais de dépôt: \(session.depositFeesRate, specifier: "%.1f")%")
-                        
-                        Group {
-                            Text("Période de dépôt:")
-                                .font(.subheadline)
-                            Text("\(session.startDateDeposit) - \(session.endDateDeposit)")
-                                .foregroundColor(.secondary)
+                        Button("Réessayer") {
+                            loadSessions()
                         }
-                        
-                        Group {
-                            Text("Période de vente:")
-                                .font(.subheadline)
-                            Text("\(session.startDateSelling) - \(session.endDateSelling)")
-                                .foregroundColor(.secondary)
-                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if viewModel.sessions.isEmpty {
+                    VStack(spacing: 16) {
+                        Text("Aucune session disponible")
+                            .font(.headline)
+                        
+                        Button("Créer une session") {
+                            showingCreateSheet = true
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    sessionListView
                 }
             }
             .navigationTitle("Sessions")
@@ -90,6 +63,13 @@ struct SessionListScreen: View {
                                     showingCreateSheet = false
                                 }
                             }
+                            
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Créer") {
+                                    // TODO: Ajouter la logique de création
+                                    showingCreateSheet = false
+                                }
+                            }
                         }
                 }
             }
@@ -106,14 +86,105 @@ struct SessionListScreen: View {
                                     selectedSession = nil
                                 }
                             }
+                            
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Enregistrer") {
+                                    // TODO: Ajouter la logique de mise à jour
+                                    selectedSession = nil
+                                }
+                            }
                         }
                 }
             }
         }
+        .onAppear {
+            loadSessions()
+        }
+        .onReceive(viewModel.$state) { state in
+            switch state {
+            case .idle:
+                isLoading = false
+                errorMessage = nil
+            case .loading, .loadingCurrent, .creating, .updating, .deleting:
+                isLoading = true
+                errorMessage = nil
+            case .loaded(_):
+                isLoading = false
+                errorMessage = nil
+            case .currentLoaded(_):
+                isLoading = false
+                errorMessage = nil
+            case .error(let message):
+                isLoading = false
+                errorMessage = message
+            }
+        }
+    }
+    
+    private var sessionListView: some View {
+        List {
+            ForEach(viewModel.sessions) { session in
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text("ID: \(session.id)")
+                            .font(.headline)
+                        Spacer()
+                        Menu {
+                            Button {
+                                selectedSession = session
+                            } label: {
+                                Label("Modifier", systemImage: "pencil")
+                            }
+                            
+                            Button(role: .destructive) {
+                                deleteSession(id: session.id)
+                            } label: {
+                                Label("Supprimer", systemImage: "trash")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    
+                    Text("Commission: \(session.commissionRate, specifier: "%.1f")%")
+                    Text("Frais de dépôt: \(session.depositFeesRate, specifier: "%.1f")%")
+                    
+                    Group {
+                        Text("Période de dépôt:")
+                            .font(.subheadline)
+                        Text("\(formattedDate(session.startDateDeposit)) - \(formattedDate(session.endDateDeposit))")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Group {
+                        Text("Période de vente:")
+                            .font(.subheadline)
+                        Text("\(formattedDate(session.startDateSelling)) - \(formattedDate(session.endDateSelling))")
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+        }
+        .refreshable {
+            loadSessions()
+        }
+    }
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
+    }
+    
+    private func loadSessions() {
+        viewModel.loadSessions()
     }
     
     private func deleteSession(id: Int) {
-        sessions.removeAll { $0.id == id }
+        viewModel.deleteSession(id: id)
     }
 }
 

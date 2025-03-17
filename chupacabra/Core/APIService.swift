@@ -4,7 +4,13 @@ import Combine
 public struct APIError: Error {
     public let statusCode: Int
     public let underlyingError: Error
+    
+    var localizedDescription: String {
+        return "\(statusCode): \(underlyingError)"
+    }
 }
+
+public struct EmptyResponse: Decodable {}
 
 public enum HTTPMethod: String {
     case get = "GET"
@@ -15,6 +21,7 @@ public enum HTTPMethod: String {
 
 public enum APIService {
     private static let baseURL = URL(string: "https://awi-dev.cyrildeschamps.fr/api")!
+    private static let tokenService = TokenService()
 
     public static func fetch<T: Decodable>(
         endpoint: String,
@@ -39,7 +46,15 @@ public enum APIService {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
 
+        // Définir les en-têtes de base
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Ajouter le token d'authentification si disponible
+        if let token = tokenService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        // Ajouter les en-têtes personnalisés (qui peuvent éventuellement remplacer l'en-tête d'authentification)
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
@@ -52,14 +67,14 @@ public enum APIService {
             }
         }
 
-        return URLSession.shared.dataTaskPublisher(for: request)
+        let flop = URLSession.shared.dataTaskPublisher(for: request)
+            .mapError { $0 }
             .tryMap { (data, response) in
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw URLError(.badServerResponse)
                 }
                 return (data, httpResponse.statusCode)
             }
-            .mapError { $0 }
             .flatMap { (data, statusCode) -> AnyPublisher<T, Error> in
                 return Just(data)
                     .decode(type: T.self, decoder: JSONDecoder())
@@ -69,5 +84,8 @@ public enum APIService {
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+        
+        ;
+        return flop;
     }
 }
