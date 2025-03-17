@@ -32,6 +32,9 @@
 		56EA3E2A2D8840DB00D16599 /* SessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E272D8840DB00D16599 /* SessionViewModel.swift */; };
 		56EA3E2B2D8840DB00D16599 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E232D8840DB00D16599 /* Session.swift */; };
 		56EA3E2C2D8840DB00D16599 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E252D8840DB00D16599 /* SessionService.swift */; };
+		56EA3E312D886A6400D16599 /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E2D2D886A6400D16599 /* CreateSessionView.swift */; };
+		56EA3E322D886A6400D16599 /* EditSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E2E2D886A6400D16599 /* EditSessionView.swift */; };
+		56EA3E332D886A6400D16599 /* SessionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E2F2D886A6400D16599 /* SessionForm.swift */; };
 		B707A89B2D8220910030D387 /* PhysicalGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */; };
 		B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89C2D8222EE0030D387 /* PhysicalGame.swift */; };
 		B707A89F2D8225230030D387 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89E2D8225230030D387 /* Game.swift */; };
@@ -91,6 +94,9 @@
 		56EA3E232D8840DB00D16599 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		56EA3E252D8840DB00D16599 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		56EA3E272D8840DB00D16599 /* SessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewModel.swift; sourceTree = "<group>"; };
+		56EA3E2D2D886A6400D16599 /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
+		56EA3E2E2D886A6400D16599 /* EditSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSessionView.swift; sourceTree = "<group>"; };
+		56EA3E2F2D886A6400D16599 /* SessionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionForm.swift; sourceTree = "<group>"; };
 		B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameViewModel.swift; sourceTree = "<group>"; };
 		B707A89C2D8222EE0030D387 /* PhysicalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGame.swift; sourceTree = "<group>"; };
 		B707A89E2D8225230030D387 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -361,11 +367,22 @@
 		56EA3E292D8840DB00D16599 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				56EA3E302D886A6400D16599 /* Views */,
 				56EA3E242D8840DB00D16599 /* Models */,
 				56EA3E262D8840DB00D16599 /* Services */,
 				56EA3E282D8840DB00D16599 /* ViewModels */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		56EA3E302D886A6400D16599 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E2D2D886A6400D16599 /* CreateSessionView.swift */,
+				56EA3E2E2D886A6400D16599 /* EditSessionView.swift */,
+				56EA3E2F2D886A6400D16599 /* SessionForm.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B7228D4B2D88302500475A95 /* Category */ = {
@@ -687,6 +704,9 @@
 				56EA3E122D88368700D16599 /* MemberListScreen.swift in Sources */,
 				56EA3E132D88368700D16599 /* DashboardView.swift in Sources */,
 				56EA3E142D88368700D16599 /* SellerListScreen.swift in Sources */,
+				56EA3E312D886A6400D16599 /* CreateSessionView.swift in Sources */,
+				56EA3E322D886A6400D16599 /* EditSessionView.swift in Sources */,
+				56EA3E332D886A6400D16599 /* SessionForm.swift in Sources */,
 				B7228D4A2D882E6E00475A95 /* CategoryService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

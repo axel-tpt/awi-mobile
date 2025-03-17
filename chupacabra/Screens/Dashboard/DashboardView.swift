@@ -1,6 +1,9 @@
 import SwiftUI
+import JWTDecode
 
 struct DashboardView: View {
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
+    
     var body: some View {
         NavigationView {
             List {
@@ -9,6 +12,15 @@ struct DashboardView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Dashboard")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        loggedUserVM.logout()
+                    }) {
+                        Label("Se déconnecter", systemImage: "rectangle.portrait.and.arrow.right")
+                    }
+                }
+            }
         }
     }
 }

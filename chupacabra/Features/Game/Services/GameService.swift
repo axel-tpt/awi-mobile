@@ -80,5 +80,3 @@ public final class GameService: GameServiceProtocol {
         .eraseToAnyPublisher()
     }
 }
-
-public struct EmptyResponse: Decodable {}

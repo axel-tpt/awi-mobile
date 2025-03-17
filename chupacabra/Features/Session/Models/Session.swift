@@ -52,7 +52,17 @@ public struct Session: Decodable, Identifiable {
             endDateSelling = try container.decode(Date.self, forKey: .endDateSelling)
         }
     }
-} 
+    
+    public init(id: Int, commissionRate: Double, depositFeesRate: Double, startDateDeposit: Date, endDateDeposit: Date, startDateSelling: Date, endDateSelling: Date) {
+        self.id = id
+        self.commissionRate = commissionRate
+        self.depositFeesRate = depositFeesRate
+        self.startDateDeposit = startDateDeposit
+        self.endDateDeposit = endDateDeposit
+        self.startDateSelling = startDateSelling
+        self.endDateSelling = endDateSelling
+    }
+}
 
 public struct SessionForm: Encodable {
     public let commissionRate: Double
@@ -61,4 +71,13 @@ public struct SessionForm: Encodable {
     public let endDateDeposit: Date
     public let startDateSelling: Date
     public let endDateSelling: Date
+    
+    public init(commissionRate: Double, depositFeesRate: Double, startDateDeposit: Date, endDateDeposit: Date, startDateSelling: Date, endDateSelling: Date) {
+        self.commissionRate = commissionRate
+        self.depositFeesRate = depositFeesRate
+        self.startDateDeposit = startDateDeposit
+        self.endDateDeposit = endDateDeposit
+        self.startDateSelling = startDateSelling
+        self.endDateSelling = endDateSelling
+    }
 }

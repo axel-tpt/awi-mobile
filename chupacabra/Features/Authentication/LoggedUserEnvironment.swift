@@ -34,4 +34,9 @@ class LoggedUserEnvironment: ObservableObject {
             tokenService.deleteToken()
         }
     }
+    
+    func logout() {
+        tokenService.deleteToken()
+        loggedUser = nil
+    }
 }

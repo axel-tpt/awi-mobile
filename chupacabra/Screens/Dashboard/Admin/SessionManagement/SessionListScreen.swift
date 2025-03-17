@@ -51,50 +51,10 @@ struct SessionListScreen: View {
                 }
             }
             .sheet(isPresented: $showingCreateSheet) {
-                NavigationStack {
-                    Text("Créer une nouvelle session")
-                        .navigationTitle("Nouvelle Session")
-                        #if os(iOS)
-                        .navigationBarTitleDisplayMode(.inline)
-                        #endif
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    showingCreateSheet = false
-                                }
-                            }
-                            
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Créer") {
-                                    // TODO: Ajouter la logique de création
-                                    showingCreateSheet = false
-                                }
-                            }
-                        }
-                }
+                CreateSessionView()
             }
             .sheet(item: $selectedSession) { session in
-                NavigationStack {
-                    Text("Modifier la session \(session.id)")
-                        .navigationTitle("Modifier Session")
-                        #if os(iOS)
-                        .navigationBarTitleDisplayMode(.inline)
-                        #endif
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    selectedSession = nil
-                                }
-                            }
-                            
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Enregistrer") {
-                                    // TODO: Ajouter la logique de mise à jour
-                                    selectedSession = nil
-                                }
-                            }
-                        }
-                }
+                EditSessionView(session: session)
             }
         }
         .onAppear {
@@ -188,8 +148,6 @@ struct SessionListScreen: View {
     }
 }
 
-struct SessionListScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        SessionListScreen()
-    }
+#Preview {
+    SessionListScreen()
 } 
