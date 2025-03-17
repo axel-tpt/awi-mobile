@@ -10,7 +10,7 @@ public struct Game: Decodable {
     let publisherId: Int
 }
 
-public struct FullGame {
+public struct FullGame: Decodable {
     let id: Int
     let name: String
     let minimumPrice: Int
@@ -22,7 +22,7 @@ public struct FullGame {
     let publisher: Publisher
 }
 
-public struct GameCreate {
+public struct GameCreate: Encodable {
     let name: String
     let minimumPlayersNumber: Int
     let maximumPlayersNumber: Int
@@ -30,11 +30,13 @@ public struct GameCreate {
     let publisherId: Int
 }
 
-public struct Filter {
-    let gameName: String
-    let publisherName: String
-    let categoryName: Category
-    let playerNumber: Int
-    let minimumPrice: Int
-    let maximumPrice: Int
+public struct Filter: Encodable {
+    let gameName: String?
+    let publisherName: String?
+    let categoryName: Category?
+    let playerNumber: Int?
+    let minimumPrice: Int?
+    let maximumPrice: Int?
+    
+    static let empty = Filter(gameName: nil, publisherName: nil, categoryName: nil, playerNumber: nil, minimumPrice: nil, maximumPrice: nil)
 }

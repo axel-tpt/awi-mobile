@@ -27,6 +27,7 @@
 		B707A8A32D82261D0030D387 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A22D82261D0030D387 /* Category.swift */; };
 		B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A42D82271C0030D387 /* PhysicalGameService.swift */; };
 		B707A8A72D82E1B20030D387 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A62D82E1B20030D387 /* GameService.swift */; };
+		B7228D4A2D882E6E00475A95 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7228D492D882E6E00475A95 /* CategoryService.swift */; };
 		B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */; };
 		B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B22D81A318001D0F9E /* Assets.xcassets */; };
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
@@ -71,6 +72,7 @@
 		B707A8A22D82261D0030D387 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B707A8A42D82271C0030D387 /* PhysicalGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameService.swift; sourceTree = "<group>"; };
 		B707A8A62D82E1B20030D387 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
+		B7228D492D882E6E00475A95 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		B743C4AB2D81A30C001D0F9E /* chupacabra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chupacabra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraApp.swift; sourceTree = "<group>"; };
 		B743C4B22D81A318001D0F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,8 +138,6 @@
 			children = (
 				5647F4412D81B4F600362FAC /* TokenService.swift */,
 				5647F4122D81AB5400362FAC /* AuthService.swift */,
-				B707A8A42D82271C0030D387 /* PhysicalGameService.swift */,
-				B707A8A62D82E1B20030D387 /* GameService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -145,7 +145,6 @@
 		5647F4152D81AB5400362FAC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */,
 				5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */,
 				5647F4142D81AB5400362FAC /* AuthViewModel.swift */,
 			);
@@ -165,6 +164,9 @@
 		5647F4272D81AB5400362FAC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				B7228D512D88311D00475A95 /* Game */,
+				B7228D4E2D88305800475A95 /* PhysicalGame */,
+				B7228D4B2D88302500475A95 /* Category */,
 				5647F4192D81AB5400362FAC /* Authentication */,
 			);
 			path = Features;
@@ -193,10 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				5647F43C2D81AC9800362FAC /* User.swift */,
-				B707A89C2D8222EE0030D387 /* PhysicalGame.swift */,
-				B707A89E2D8225230030D387 /* Game.swift */,
 				B707A8A02D8225E20030D387 /* Publisher.swift */,
-				B707A8A22D82261D0030D387 /* Category.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,6 +222,90 @@
 				5647F4162D81AB5400362FAC /* LoginView.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		B7228D4B2D88302500475A95 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B7228D4D2D88303F00475A95 /* Services */,
+				B7228D4C2D88303500475A95 /* Models */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		B7228D4C2D88303500475A95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B707A8A22D82261D0030D387 /* Category.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B7228D4D2D88303F00475A95 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B7228D492D882E6E00475A95 /* CategoryService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B7228D4E2D88305800475A95 /* PhysicalGame */ = {
+			isa = PBXGroup;
+			children = (
+				B7228D542D8831FC00475A95 /* ViewModels */,
+				B7228D502D88307000475A95 /* Services */,
+				B7228D4F2D88306A00475A95 /* Models */,
+			);
+			path = PhysicalGame;
+			sourceTree = "<group>";
+		};
+		B7228D4F2D88306A00475A95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B707A89C2D8222EE0030D387 /* PhysicalGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B7228D502D88307000475A95 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B707A8A42D82271C0030D387 /* PhysicalGameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B7228D512D88311D00475A95 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B7228D532D88312F00475A95 /* Services */,
+				B7228D522D88312800475A95 /* Models */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		B7228D522D88312800475A95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B707A89E2D8225230030D387 /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B7228D532D88312F00475A95 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B707A8A62D82E1B20030D387 /* GameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B7228D542D8831FC00475A95 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		B743C4A22D81A30C001D0F9E = {
@@ -428,6 +511,7 @@
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
 				B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */,
 				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
+				B7228D4A2D882E6E00475A95 /* CategoryService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
