@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Game: Decodable {
+public struct ApiGame: Decodable {
     let id: Int
     let name: String
     let minimumPrice: Int

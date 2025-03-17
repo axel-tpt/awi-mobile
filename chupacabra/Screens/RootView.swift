@@ -5,18 +5,17 @@ struct RootView: View {
     
     var body: some View {
         switch loggedUserVM.loggedUser?.permissionLevel {
-        case .manager:
-            ManagerDashboardView()
-        case .admin:
-            AdminDashboardView()
         case nil:
             LoginView()
+        default:
+            DashboardView()
         }
     }
 }
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+        RootView().environmentObject(LoggedUserViewModel())
     }
 }
+
