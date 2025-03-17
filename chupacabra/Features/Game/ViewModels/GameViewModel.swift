@@ -18,17 +18,18 @@ class GameViewModel: ObservableObject {
     
     public func loadForSaleGames() {
         self.gameService.getForSaleGames(filter: self.filter)
-           .receive(on: DispatchQueue.main)
-           .sink(receiveCompletion: { completion in
-               if case .failure(let error) = completion {
-                   self.state = .error(error.localizedDescription)
-               }
-           }, receiveValue: { [weak self] (response: [FullGame]) in
-               guard let self = self else { return }
-               self.forSaleGames = response
-           })
-           .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.state = .error(error.localizedDescription)
+                }
+            }, receiveValue: { [weak self] (response: [FullGame]) in
+                guard let self = self else { return }
+                self.forSaleGames = response
+            })
+            .store(in: &cancellables)
     }
+
     
     public func loadGames() {
         self.gameService.getGames()
