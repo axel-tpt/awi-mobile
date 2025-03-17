@@ -20,6 +20,13 @@
 		5647F4422D81B4F600362FAC /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F4412D81B4F600362FAC /* TokenService.swift */; };
 		5647F4452D81BA6100362FAC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 5647F4442D81BA6100362FAC /* JWTDecode */; };
 		5647F4472D81C12000362FAC /* LoggedUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */; };
+		B707A89B2D8220910030D387 /* PhysicalGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */; };
+		B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89C2D8222EE0030D387 /* PhysicalGame.swift */; };
+		B707A89F2D8225230030D387 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89E2D8225230030D387 /* Game.swift */; };
+		B707A8A12D8225E20030D387 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A02D8225E20030D387 /* Publisher.swift */; };
+		B707A8A32D82261D0030D387 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A22D82261D0030D387 /* Category.swift */; };
+		B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A42D82271C0030D387 /* PhysicalGameService.swift */; };
+		B707A8A72D82E1B20030D387 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A8A62D82E1B20030D387 /* GameService.swift */; };
 		B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */; };
 		B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B22D81A318001D0F9E /* Assets.xcassets */; };
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
@@ -57,6 +64,13 @@
 		5647F43C2D81AC9800362FAC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5647F4412D81B4F600362FAC /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
 		5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedUserViewModel.swift; sourceTree = "<group>"; };
+		B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameViewModel.swift; sourceTree = "<group>"; };
+		B707A89C2D8222EE0030D387 /* PhysicalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGame.swift; sourceTree = "<group>"; };
+		B707A89E2D8225230030D387 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		B707A8A02D8225E20030D387 /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
+		B707A8A22D82261D0030D387 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		B707A8A42D82271C0030D387 /* PhysicalGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameService.swift; sourceTree = "<group>"; };
+		B707A8A62D82E1B20030D387 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
 		B743C4AB2D81A30C001D0F9E /* chupacabra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chupacabra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraApp.swift; sourceTree = "<group>"; };
 		B743C4B22D81A318001D0F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +136,8 @@
 			children = (
 				5647F4412D81B4F600362FAC /* TokenService.swift */,
 				5647F4122D81AB5400362FAC /* AuthService.swift */,
+				B707A8A42D82271C0030D387 /* PhysicalGameService.swift */,
+				B707A8A62D82E1B20030D387 /* GameService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -129,6 +145,7 @@
 		5647F4152D81AB5400362FAC /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */,
 				5647F4462D81C11A00362FAC /* LoggedUserViewModel.swift */,
 				5647F4142D81AB5400362FAC /* AuthViewModel.swift */,
 			);
@@ -176,6 +193,10 @@
 			isa = PBXGroup;
 			children = (
 				5647F43C2D81AC9800362FAC /* User.swift */,
+				B707A89C2D8222EE0030D387 /* PhysicalGame.swift */,
+				B707A89E2D8225230030D387 /* Game.swift */,
+				B707A8A02D8225E20030D387 /* Publisher.swift */,
+				B707A8A22D82261D0030D387 /* Category.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,17 +409,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B707A89B2D8220910030D387 /* PhysicalGameViewModel.swift in Sources */,
+				B707A89F2D8225230030D387 /* Game.swift in Sources */,
 				5647F4302D81AB5400362FAC /* RootView.swift in Sources */,
 				5647F4332D81AB5400362FAC /* LoginView.swift in Sources */,
 				5647F4342D81AB5400362FAC /* AdminDashboardView.swift in Sources */,
 				5647F4352D81AB5400362FAC /* AuthViewModel.swift in Sources */,
+				B707A8A72D82E1B20030D387 /* GameService.swift in Sources */,
+				B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */,
 				5647F43D2D81AC9E00362FAC /* User.swift in Sources */,
 				5647F4362D81AB5400362FAC /* AuthService.swift in Sources */,
+				B707A8A12D8225E20030D387 /* Publisher.swift in Sources */,
 				5647F4372D81AB5400362FAC /* ManagerDashboardView.swift in Sources */,
 				5647F4382D81AB5400362FAC /* CustomTextField.swift in Sources */,
+				B707A8A32D82261D0030D387 /* Category.swift in Sources */,
 				5647F4392D81AB5400362FAC /* APIService.swift in Sources */,
 				5647F4472D81C12000362FAC /* LoggedUserViewModel.swift in Sources */,
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
+				B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */,
 				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -724,8 +752,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.2.0;
+				kind = exactVersion;
+				version = 3.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
