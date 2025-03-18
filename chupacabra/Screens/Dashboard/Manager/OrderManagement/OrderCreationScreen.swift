@@ -54,18 +54,7 @@ struct Game: Identifiable {
 }
 
 struct OrderCreationScreen: View {
-    // Données de test pour les jeux disponibles
-    @State private var availableGames: [Game] = [
-        Game(id: 1, name: "Catan", price: 35.0, imageURL: "catan", inStock: 15),
-        Game(id: 2, name: "Monopoly", price: 29.99, imageURL: "monopoly", inStock: 20),
-        Game(id: 3, name: "Risk", price: 42.50, imageURL: "risk", inStock: 8),
-        Game(id: 4, name: "Scrabble", price: 19.99, imageURL: "scrabble", inStock: 12),
-        Game(id: 5, name: "Trivial Pursuit", price: 39.95, imageURL: "trivial", inStock: 7),
-        Game(id: 6, name: "Les Aventuriers du Rail", price: 44.99, imageURL: "aventuriers", inStock: 10),
-        Game(id: 7, name: "7 Wonders", price: 49.99, imageURL: "7wonders", inStock: 5),
-        Game(id: 8, name: "Dixit", price: 29.99, imageURL: "dixit", inStock: 9),
-        Game(id: 9, name: "Pandemic", price: 39.99, imageURL: "pandemic", inStock: 6)
-    ]
+    @StateObject private var gameViewModel: GameViewModel = GameViewModel()
     
     // État de la commande en cours
     @State private var customerName: String = ""
@@ -75,14 +64,6 @@ struct OrderCreationScreen: View {
     // État de l'interface
     @State private var showingConfirmation = false
     @State private var selectedTab = 0
-    
-    var filteredGames: [Game] {
-        if searchText.isEmpty {
-            return availableGames
-        } else {
-            return availableGames.filter { $0.name.lowercased().contains(searchText.lowercased()) }
-        }
-    }
     
     var totalAmount: Double {
         selectedItems.reduce(0) { $0 + ($1.price * Double($1.quantity)) }
@@ -142,6 +123,20 @@ struct OrderCreationScreen: View {
                 Text("Créer une commande pour \(customerName) avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
             }
         }
+        .onAppear {
+            gameViewModel.loadForSaleGames()
+        }
+    }
+    
+    private func applyFilters() {
+        gameViewModel.applyFilter(filter: Filter(
+            gameName: searchText.isEmpty ? nil : searchText,
+            publisherName: nil,
+            categoryName: nil,
+            playerNumber: nil,
+            minimumPrice: nil,
+            maximumPrice: nil
+        ))
     }
     
     private var customerInfoView: some View {
@@ -182,6 +177,9 @@ struct OrderCreationScreen: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray)
                     }
+                    .onChange(of: searchText) { newValue in
+                        applyFilters()
+                    }
                 }
             }
             .padding(10)
@@ -192,7 +190,7 @@ struct OrderCreationScreen: View {
             // Catalogue de jeux
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 16) {
-                    ForEach(filteredGames) { game in
+                    ForEach(gameViewModel.forSaleGames) { game in
                         GameCardView(game: game, onAdd: {
                             addGameToOrder(game)
                             // Feedback tactile et visuel
@@ -357,13 +355,13 @@ struct OrderCreationScreen: View {
         }
     }
     
-    private func addGameToOrder(_ game: Game) {
+    private func addGameToOrder(_ game: FullGame) {
         if let index = selectedItems.firstIndex(where: { $0.id == game.id }) {
             // Le jeu est déjà dans le panier, augmenter la quantité
             updateQuantity(for: game.id, to: selectedItems[index].quantity + 1)
         } else {
             // Ajouter le jeu au panier
-            let newItem = OrderItem(id: game.id, gameName: game.name, price: game.price, quantity: 1)
+            let newItem = OrderItem(id: game.id, gameName: game.name, price: game.minimumPrice, quantity: 1)
             selectedItems.append(newItem)
         }
     }
@@ -403,7 +401,7 @@ struct OrderCreationScreen: View {
 }
 
 struct GameCardView: View {
-    let game: Game
+    let game: FullGame
     let onAdd: () -> Void
     
     var body: some View {
@@ -424,15 +422,11 @@ struct GameCardView: View {
                     .lineLimit(1)
                 
                 HStack {
-                    Text("\(game.price, specifier: "%.2f") €")
+                    Text("\(game.minimumPrice, specifier: "%.2f") €")
                         .font(.subheadline)
                         .bold()
                     
                     Spacer()
-                    
-                    Text("\(game.inStock) en stock")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
                 }
                 
                 Button {

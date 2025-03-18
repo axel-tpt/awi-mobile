@@ -13,7 +13,7 @@ public struct ApiGame: Decodable {
 public struct FullGame: Decodable, Identifiable {
     public let id: Int
     let name: String
-    let minimumPrice: Int
+    let minimumPrice: Double
     let minimumPlayersNumber: Int
     let maximumPlayersNumber: Int
     let categoryId: Int
