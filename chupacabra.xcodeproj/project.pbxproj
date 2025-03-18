@@ -36,6 +36,12 @@
 		56EA3E322D886A6400D16599 /* EditSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E2E2D886A6400D16599 /* EditSessionView.swift */; };
 		56EA3E332D886A6400D16599 /* SessionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E2F2D886A6400D16599 /* SessionForm.swift */; };
 		56EA3E352D897DF100D16599 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E342D897DE400D16599 /* RequestHandler.swift */; };
+		56EA3E412D89F1E300D16599 /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E3A2D89F1E300D16599 /* MemberViewModel.swift */; };
+		56EA3E422D89F1E300D16599 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E382D89F1E300D16599 /* MemberService.swift */; };
+		56EA3E432D89F1E300D16599 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E362D89F1E300D16599 /* Member.swift */; };
+		56EA3E442D89F1E300D16599 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E3D2D89F1E300D16599 /* EditMemberView.swift */; };
+		56EA3E452D89F1E300D16599 /* CreateMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E3C2D89F1E300D16599 /* CreateMemberView.swift */; };
+		56EA3E462D89F1E300D16599 /* MemberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EA3E3E2D89F1E300D16599 /* MemberFormView.swift */; };
 		B707A89B2D8220910030D387 /* PhysicalGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */; };
 		B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89C2D8222EE0030D387 /* PhysicalGame.swift */; };
 		B707A89F2D8225230030D387 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707A89E2D8225230030D387 /* Game.swift */; };
@@ -99,6 +105,12 @@
 		56EA3E2E2D886A6400D16599 /* EditSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSessionView.swift; sourceTree = "<group>"; };
 		56EA3E2F2D886A6400D16599 /* SessionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionForm.swift; sourceTree = "<group>"; };
 		56EA3E342D897DE400D16599 /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
+		56EA3E362D89F1E300D16599 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		56EA3E382D89F1E300D16599 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
+		56EA3E3A2D89F1E300D16599 /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
+		56EA3E3C2D89F1E300D16599 /* CreateMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMemberView.swift; sourceTree = "<group>"; };
+		56EA3E3D2D89F1E300D16599 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
+		56EA3E3E2D89F1E300D16599 /* MemberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFormView.swift; sourceTree = "<group>"; };
 		B707A89A2D8220910030D387 /* PhysicalGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameViewModel.swift; sourceTree = "<group>"; };
 		B707A89C2D8222EE0030D387 /* PhysicalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGame.swift; sourceTree = "<group>"; };
 		B707A89E2D8225230030D387 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -203,6 +215,7 @@
 		5647F4272D81AB5400362FAC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				56EA3E402D89F1E300D16599 /* Member */,
 				56EA3E292D8840DB00D16599 /* Session */,
 				B7228D512D88311D00475A95 /* Game */,
 				B7228D4E2D88305800475A95 /* PhysicalGame */,
@@ -386,6 +399,51 @@
 				56EA3E2F2D886A6400D16599 /* SessionForm.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		56EA3E372D89F1E300D16599 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E362D89F1E300D16599 /* Member.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56EA3E392D89F1E300D16599 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E382D89F1E300D16599 /* MemberService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56EA3E3B2D89F1E300D16599 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E3A2D89F1E300D16599 /* MemberViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56EA3E3F2D89F1E300D16599 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E3C2D89F1E300D16599 /* CreateMemberView.swift */,
+				56EA3E3D2D89F1E300D16599 /* EditMemberView.swift */,
+				56EA3E3E2D89F1E300D16599 /* MemberFormView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56EA3E402D89F1E300D16599 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				56EA3E372D89F1E300D16599 /* Models */,
+				56EA3E392D89F1E300D16599 /* Services */,
+				56EA3E3B2D89F1E300D16599 /* ViewModels */,
+				56EA3E3F2D89F1E300D16599 /* Views */,
+			);
+			path = Member;
 			sourceTree = "<group>";
 		};
 		B7228D4B2D88302500475A95 /* Category */ = {
@@ -682,6 +740,12 @@
 				B77B7C692D88631B00647EB8 /* CategoryViewModel.swift in Sources */,
 				B707A8A72D82E1B20030D387 /* GameService.swift in Sources */,
 				B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */,
+				56EA3E412D89F1E300D16599 /* MemberViewModel.swift in Sources */,
+				56EA3E422D89F1E300D16599 /* MemberService.swift in Sources */,
+				56EA3E432D89F1E300D16599 /* Member.swift in Sources */,
+				56EA3E442D89F1E300D16599 /* EditMemberView.swift in Sources */,
+				56EA3E452D89F1E300D16599 /* CreateMemberView.swift in Sources */,
+				56EA3E462D89F1E300D16599 /* MemberFormView.swift in Sources */,
 				5647F43D2D81AC9E00362FAC /* User.swift in Sources */,
 				5647F4362D81AB5400362FAC /* AuthService.swift in Sources */,
 				B707A8A12D8225E20030D387 /* Publisher.swift in Sources */,

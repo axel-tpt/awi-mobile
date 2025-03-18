@@ -1,65 +1,44 @@
 import SwiftUI
-
-struct Member: Identifiable {
-    let id: Int
-    let email: String
-    let firstName: String
-    let lastName: String
-    let permissionLevel: String
-}
+import Foundation
 
 struct MemberListScreen: View {
-    @State private var members: [Member] = [
-        Member(id: 1, email: "admin@example.com", firstName: "Jean", lastName: "Dupont", permissionLevel: "Administrateur"),
-        Member(id: 2, email: "manager@example.com", firstName: "Marie", lastName: "Martin", permissionLevel: "Manager"),
-        Member(id: 3, email: "user@example.com", firstName: "Pierre", lastName: "Durand", permissionLevel: "Utilisateur")
-    ]
+    @StateObject private var viewModel = MemberViewModel()
     
     @State private var showingCreateSheet = false
     @State private var selectedMember: Member? = nil
+    @State private var showConfirmationDialog = false
+    @State private var memberToDelete: Member? = nil
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(members) { member in
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            Text("\(member.firstName) \(member.lastName)")
-                                .font(.headline)
-                            Spacer()
-                            Menu {
-                                Button {
-                                    selectedMember = member
-                                } label: {
-                                    Label("Modifier", systemImage: "pencil")
-                                }
-                                
-                                Button(role: .destructive) {
-                                    deleteMember(id: member.id)
-                                } label: {
-                                    Label("Supprimer", systemImage: "trash")
-                                }
-                            } label: {
-                                Image(systemName: "ellipsis.circle")
-                                    .foregroundColor(.blue)
-                            }
+            ZStack {
+                // Error view
+                if let error = viewModel.error {
+                    ErrorView(error: error, retryAction: {
+                        viewModel.loadMembers()
+                    })
+                }
+                
+                // Loading view
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if viewModel.members.isEmpty {
+                    Text("Aucun membre")
+                } else {
+                    // Member list
+                    MemberListView(
+                        members: viewModel.members,
+                        onEditMember: { member in
+                            selectedMember = member
+                        },
+                        onDeleteMember: { member in
+                            memberToDelete = member
+                            showConfirmationDialog = true
                         }
-                        
-                        Text("Email: \(member.email)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        
-                        HStack {
-                            Text("Rôle:")
-                            Text(member.permissionLevel)
-                                .foregroundColor(.blue)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 2)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(4)
-                        }
+                    )
+                    .refreshable {
+                        await refresh()
                     }
-                    .padding(.vertical, 8)
                 }
             }
             .navigationTitle("Membres")
@@ -73,36 +52,132 @@ struct MemberListScreen: View {
                 }
             }
             .sheet(isPresented: $showingCreateSheet) {
-                NavigationStack {
-                    Text("Créer un nouveau membre")
-                        .navigationTitle("Nouveau Membre")
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    showingCreateSheet = false
-                                }
-                            }
-                        }
-                }
+                CreateMemberView(viewModel: viewModel)
             }
             .sheet(item: $selectedMember) { member in
-                NavigationStack {
-                    Text("Modifier le membre \(member.firstName) \(member.lastName)")
-                        .navigationTitle("Modifier Membre")
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    selectedMember = nil
-                                }
-                            }
-                        }
+                EditMemberView(member: member, viewModel: viewModel)
+            }
+            .confirmationDialog(
+                "Êtes-vous sûr de vouloir supprimer ce membre ?",
+                isPresented: $showConfirmationDialog,
+                titleVisibility: .visible
+            ) {
+                Button("Supprimer", role: .destructive) {
+                    if let member = memberToDelete {
+                        deleteMember(id: member.id)
+                    }
                 }
+                Button("Annuler", role: .cancel) {
+                    memberToDelete = nil
+                }
+            } message: {
+                if let member = memberToDelete {
+                    Text("Cette action supprimera définitivement \(member.firstName) \(member.lastName).")
+                }
+            }
+            .onAppear {
+                viewModel.loadMembers()
             }
         }
     }
     
     private func deleteMember(id: Int) {
-        members.removeAll { $0.id == id }
+        viewModel.deleteMember(id: id)
+        memberToDelete = nil
+    }
+    
+    @MainActor
+    private func refresh() async {
+        viewModel.loadMembers()
+    }
+}
+
+// MARK: - Subviews
+
+struct ErrorView: View {
+    let error: Error
+    let retryAction: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("Erreur lors du chargement des membres : " + error.localizedDescription)
+            Button("Réessayer") {
+                retryAction()
+            }
+        }.padding()
+    }
+}
+
+struct MemberListView: View {
+    let members: [Member]
+    let onEditMember: (Member) -> Void
+    let onDeleteMember: (Member) -> Void
+    
+    var body: some View {
+        List {
+            ForEach(members) { member in
+                MemberRowView(
+                    member: member,
+                    onEdit: { onEditMember(member) },
+                    onDelete: { onDeleteMember(member) }
+                )
+            }
+        }
+    }
+}
+
+struct MemberRowView: View {
+    let member: Member
+    let onEdit: () -> Void
+    let onDelete: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("\(member.firstName) \(member.lastName)")
+                    .font(.headline)
+                Spacer()
+                Menu {
+                    Button {
+                        onEdit()
+                    } label: {
+                        Label("Modifier", systemImage: "pencil")
+                    }
+                    
+                    Button(role: .destructive) {
+                        onDelete()
+                    } label: {
+                        Label("Supprimer", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .foregroundColor(.blue)
+                }
+            }
+            
+            Text("Email: \(member.email)")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            HStack {
+                Text("Rôle:")
+                RoleView(permissionLevel: member.permissionLevel)
+            }
+        }
+        .padding(.vertical, 8)
+    }
+}
+
+struct RoleView: View {
+    let permissionLevel: PermissionLevel
+    
+    var body: some View {
+        Text(permissionLevel.displayName)
+            .foregroundColor(.blue)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 2)
+            .background(Color.blue.opacity(0.1))
+            .cornerRadius(4)
     }
 }
 

@@ -56,7 +56,7 @@ struct SessionListScreen: View {
             }
         }
         .onAppear {
-            loadSessions()
+            viewModel.loadSessions()
         }
     }
     
