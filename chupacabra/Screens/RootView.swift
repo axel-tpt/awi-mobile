@@ -1,22 +1,21 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
     
     var body: some View {
         switch loggedUserVM.loggedUser?.permissionLevel {
-        case .manager:
-            ManagerDashboardView()
-        case .admin:
-            AdminDashboardView()
         case nil:
             LoginView()
+        default:
+            DashboardView()
         }
     }
 }
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+        RootView().environmentObject(LoggedUserEnvironment())
     }
 }
+

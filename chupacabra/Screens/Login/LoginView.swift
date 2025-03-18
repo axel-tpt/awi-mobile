@@ -1,11 +1,16 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var loggedUserVM: LoggedUserViewModel
-    @StateObject private var viewModel: AuthViewModel = AuthViewModel()
-    @State private var showingRegistration = false
-    
-    init() { }
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
+    @StateObject private var viewModel: AuthViewModel
+
+    init() {
+        // Initialisation de l'AuthViewModel avec les valeurs par défaut souhaitées
+        let authVM = AuthViewModel()
+        authVM.email = "cyril.dsch@gmail.com"
+        authVM.password = "Test0202!"
+        _viewModel = StateObject(wrappedValue: authVM)
+    }
     
     var body: some View {
         NavigationView {

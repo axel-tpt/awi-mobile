@@ -25,7 +25,7 @@ class AuthViewModel: ObservableObject {
         self.tokenService = tokenService
     }
     
-    func login(with loggedUserVM: LoggedUserViewModel) {
+    func login(with loggedUserVM: LoggedUserEnvironment) {
         guard !email.isEmpty, !password.isEmpty else {
             state = .error("Please fill in all fields")
             return
