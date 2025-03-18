@@ -5,22 +5,20 @@ struct SessionListScreen: View {
     @StateObject private var viewModel = SessionViewModel()
     @State private var showingCreateSheet = false
     @State private var selectedSession: Session? = nil
-    @State private var isLoading = false
-    @State private var errorMessage: String? = nil
     
     var body: some View {
         NavigationStack {
             Group {
-                if isLoading {
+                if viewModel.isLoading {
                     ProgressView("Chargement des sessions...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if let error = errorMessage {
+                } else if let error = viewModel.error {
                     VStack(spacing: 16) {
                         Text("Erreur: \(error)")
                             .foregroundColor(.red)
                         
                         Button("Réessayer") {
-                            loadSessions()
+                            viewModel.loadSessions()
                         }
                         .buttonStyle(.borderedProminent)
                     }
@@ -51,33 +49,14 @@ struct SessionListScreen: View {
                 }
             }
             .sheet(isPresented: $showingCreateSheet) {
-                CreateSessionView()
+                CreateSessionView(viewModel: viewModel)
             }
             .sheet(item: $selectedSession) { session in
-                EditSessionView(session: session)
+                EditSessionView(session: session, viewModel: viewModel)
             }
         }
         .onAppear {
             loadSessions()
-        }
-        .onReceive(viewModel.$state) { state in
-            switch state {
-            case .idle:
-                isLoading = false
-                errorMessage = nil
-            case .loading, .loadingCurrent, .creating, .updating, .deleting:
-                isLoading = true
-                errorMessage = nil
-            case .loaded(_):
-                isLoading = false
-                errorMessage = nil
-            case .currentLoaded(_):
-                isLoading = false
-                errorMessage = nil
-            case .error(let message):
-                isLoading = false
-                errorMessage = message
-            }
         }
     }
     
@@ -97,7 +76,7 @@ struct SessionListScreen: View {
                             }
                             
                             Button(role: .destructive) {
-                                deleteSession(id: session.id)
+                                viewModel.deleteSession(id: session.id)
                             } label: {
                                 Label("Supprimer", systemImage: "trash")
                             }
@@ -128,7 +107,7 @@ struct SessionListScreen: View {
             }
         }
         .refreshable {
-            loadSessions()
+            viewModel.loadSessions()
         }
     }
     
@@ -137,14 +116,6 @@ struct SessionListScreen: View {
         formatter.dateStyle = .short
         formatter.timeStyle = .none
         return formatter.string(from: date)
-    }
-    
-    private func loadSessions() {
-        viewModel.loadSessions()
-    }
-    
-    private func deleteSession(id: Int) {
-        viewModel.deleteSession(id: id)
     }
 }
 

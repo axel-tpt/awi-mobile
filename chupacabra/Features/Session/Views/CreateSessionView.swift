@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CreateSessionView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var viewModel = SessionViewModel()
+    @ObservedObject var viewModel: SessionViewModel
     
     @State private var commissionRate: Double = 10.0
     @State private var depositFeesRate: Double = 5.0
@@ -35,6 +35,7 @@ struct CreateSessionView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Créer") {
                         createSession()
+                        
                     }
                 }
             }
@@ -51,11 +52,12 @@ struct CreateSessionView: View {
             endDateSelling: endDateSelling
         )
         
-        viewModel.createSession(data: sessionForm)
-        dismiss()
+        viewModel.createSession(data: sessionForm, onSuccess: {
+            dismiss()
+        })
     }
 }
 
 #Preview {
-    CreateSessionView()
+    CreateSessionView(viewModel: SessionViewModel())
 } 

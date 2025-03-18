@@ -19,8 +19,6 @@ public final class AuthService: AuthServiceProtocol {
         
         return APIService.fetch(endpoint: "/auth/login", method: .post, body: body)
             .mapError { error -> AuthError in
-                print("Erreur capturée : \(error)")
-
                 if let apiError = error as? APIError {
                     return .serverError(statusCode: apiError.statusCode, underlyingError: apiError.underlyingError)
                 } else if error is URLError {

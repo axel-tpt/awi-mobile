@@ -2,7 +2,7 @@ import SwiftUI
 
 struct EditSessionView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var viewModel = SessionViewModel()
+    @ObservedObject var viewModel: SessionViewModel
     
     let session: Session
     
@@ -13,8 +13,9 @@ struct EditSessionView: View {
     @State private var startDateSelling: Date
     @State private var endDateSelling: Date
     
-    init(session: Session) {
+    init(session: Session, viewModel: SessionViewModel) {
         self.session = session
+        self.viewModel = viewModel
         _commissionRate = State(initialValue: session.commissionRate)
         _depositFeesRate = State(initialValue: session.depositFeesRate)
         _startDateDeposit = State(initialValue: session.startDateDeposit)
@@ -63,8 +64,7 @@ struct EditSessionView: View {
             endDateSelling: endDateSelling
         )
         
-        viewModel.updateSession(id: session.id, data: sessionForm)
-        dismiss()
+        viewModel.updateSession(id: session.id, data: sessionForm, onSuccess: {dismiss()})
     }
 }
 
@@ -78,6 +78,7 @@ struct EditSessionView: View {
             endDateDeposit: Date(),
             startDateSelling: Date(),
             endDateSelling: Date()
-        )
+        ),
+        viewModel: SessionViewModel()
     )
 } 

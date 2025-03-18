@@ -61,9 +61,12 @@ public enum APIService {
 
         if let body = body, method != .get {
             do {
-                request.httpBody = try JSONEncoder().encode(body)
+                let encoder = JSONEncoder()
+                encoder.dateEncodingStrategy = .iso8601
+                request.httpBody = try encoder.encode(body)
             } catch {
-                return Fail(error: error).eraseToAnyPublisher()
+                return Fail(error: error)
+                    .eraseToAnyPublisher()
             }
         }
 
@@ -76,8 +79,40 @@ public enum APIService {
                 return (data, httpResponse.statusCode)
             }
             .flatMap { (data, statusCode) -> AnyPublisher<T, Error> in
+                
+                // Vérifier si le statut est 401 (Unauthorized), indiquant un token expiré
+                if statusCode == 401 {
+                    // Appeler la fonction statique pour notifier l'expiration du token
+                    APIService.notifyTokenExpiration()
+                    return Fail(error: APIError(statusCode: statusCode, underlyingError: URLError(.userAuthenticationRequired)))
+                        .eraseToAnyPublisher()
+                }
+                
+                // Si le type de retour est EmptyResponse et que les données sont vides ou presque vides,
+                // retourner directement une EmptyResponse sans décodage
+                if T.self == EmptyResponse.self && (data.isEmpty || String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true) {
+                    // Créer une EmptyResponse vide et la convertir au type T
+                    return Just(EmptyResponse() as! T)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                let decoder = JSONDecoder()
+                let isoFormatter = ISO8601DateFormatter()
+                isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+                decoder.dateDecodingStrategy = .custom { decoder in
+                    let container = try decoder.singleValueContainer()
+                    let dateString = try container.decode(String.self)
+                    guard let date = isoFormatter.date(from: dateString) else {
+                        throw DecodingError.dataCorruptedError(in: container,
+                            debugDescription: "La chaîne de date ne correspond pas au format ISO8601 attendu avec fractions de seconde.")
+                    }
+                    return date
+                }
+                
                 return Just(data)
-                    .decode(type: T.self, decoder: JSONDecoder())
+                    .decode(type: T.self, decoder: decoder)
                     .mapError { error in
                         return APIError(statusCode: statusCode, underlyingError: error)
                     }
@@ -87,5 +122,26 @@ public enum APIService {
         
         ;
         return flop;
+    }
+
+    // Notification center pour l'expiration du token
+    private static let tokenExpirationNotification = Notification.Name("TokenExpirationNotification")
+    
+    // Fonction pour notifier l'expiration du token
+    private static func notifyTokenExpiration() {
+        // Effacer le token expiré
+        tokenService.deleteToken()
+        // Poster la notification
+        NotificationCenter.default.post(name: tokenExpirationNotification, object: nil)
+    }
+    
+    // Fonction pour s'abonner aux notifications d'expiration de token
+    public static func subscribeToTokenExpiration(observer: Any, selector: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: selector, name: tokenExpirationNotification, object: nil)
+    }
+    
+    // Fonction pour se désabonner des notifications
+    public static func unsubscribeFromTokenExpiration(observer: Any) {
+        NotificationCenter.default.removeObserver(observer, name: tokenExpirationNotification, object: nil)
     }
 }
