@@ -1,61 +1,47 @@
 import Foundation
 
-// Structure locale pour éviter les ambiguïtés
-public struct ImportedGame: Decodable, Identifiable {
-    public let id: Int
-    public let name: String
-    public let publisher: String
-    public let category: String
-    public let minPlayers: Int
-    public let maxPlayers: Int
-    public let duration: Int
-    public let price: Double
-    
-    public init(id: Int, name: String, publisher: String, category: String, minPlayers: Int, maxPlayers: Int, duration: Int, price: Double) {
-        self.id = id
-        self.name = name
-        self.publisher = publisher
-        self.category = category
-        self.minPlayers = minPlayers
-        self.maxPlayers = maxPlayers
-        self.duration = duration
-        self.price = price
-    }
-}
-
 public struct PhysicalGame: Decodable, Identifiable {
     public let id: Int
     public let barcode: String
     public let price: Double
-    public let isLabellingDone: Bool
-    public let isSold: Bool
-    
-    public init(id: Int, barcode: String, price: Double, isLabellingDone: Bool, isSold: Bool) {
+    public let status: PhysicalGameStatus
+    public let commissionApplied: Double
+    public let gameId: Int
+    public let depositId: Int
+
+    public init(id: Int, barcode: String, price: Double, status: PhysicalGameStatus, commissionApplied: Double, gameId: Int, depositId: Int) {
         self.id = id
         self.barcode = barcode
         self.price = price
-        self.isLabellingDone = isLabellingDone
-        self.isSold = isSold
+        self.status = status
+        self.commissionApplied = commissionApplied
+        self.gameId = gameId
+        self.depositId = depositId
     }
 }
 
-public struct FullPhysicalGame: Decodable {
+public struct FullPhysicalGame: Decodable, Identifiable {
     public let id: Int
     public let barcode: String
     public let price: Double
-    public let game: ImportedGame
-    public let isLabellingDone: Bool
-    public let isSold: Bool
-    
-    public init(id: Int, barcode: String, price: Double, game: ImportedGame, isLabellingDone: Bool, isSold: Bool) {
+    public let status: PhysicalGameStatus
+    public let commissionApplied: Double
+    public let gameId: Int
+    public let depositId: Int
+    public let game: FullGame
+
+    public init(id: Int, barcode: String, price: Double, status: PhysicalGameStatus, commissionApplied: Double, gameId: Int, depositId: Int, game: FullGame) {
         self.id = id
         self.barcode = barcode
         self.price = price
+        self.status = status
+        self.commissionApplied = commissionApplied
+        self.gameId = gameId
+        self.depositId = depositId
         self.game = game
-        self.isLabellingDone = isLabellingDone
-        self.isSold = isSold
     }
 }
+
 
 public enum PhysicalGameStatus: String, Decodable {
     case DEPOSITED = "deposited"

@@ -1,17 +1,5 @@
 import SwiftUI
 
-struct GameLabelItem: Identifiable, Equatable {
-    let id: Int
-    let gameName: String
-    let barcode: String
-    let price: Double
-    var isSelected: Bool = false
-    
-    static func == (lhs: GameLabelItem, rhs: GameLabelItem) -> Bool {
-        return lhs.id == rhs.id
-    }
-}
-
 struct EmptyStateView: View {
     let title: String
     let systemImage: String
@@ -38,13 +26,8 @@ struct EmptyStateView: View {
 }
 
 struct GameLabellingScreen: View {
-    @State private var physicalGames: [GameLabelItem] = [
-        GameLabelItem(id: 1, gameName: "Catan", barcode: "978-3-16-148410-0", price: 35.0),
-        GameLabelItem(id: 2, gameName: "Monopoly", barcode: "978-3-16-148411-7", price: 29.99),
-        GameLabelItem(id: 3, gameName: "Risk", barcode: "978-3-16-148412-4", price: 42.50),
-        GameLabelItem(id: 4, gameName: "Scrabble", barcode: "978-3-16-148413-1", price: 19.99),
-        GameLabelItem(id: 5, gameName: "Trivial Pursuit", barcode: "978-3-16-148414-8", price: 39.95)
-    ]
+    
+    @StateObject private var physicalGameViewModel: PhysicalGameViewModel = PhysicalGameViewModel()
     
     @State private var selectedGames: Set<Int> = []
     @State private var isLoading = false
@@ -76,7 +59,7 @@ struct GameLabellingScreen: View {
                     ProgressView()
                         .scaleEffect(1.5)
                         .padding(.top, 100)
-                } else if physicalGames.isEmpty {
+                } else if physicalGameViewModel.physicalGamesNotLabeled.isEmpty {
                     EmptyStateView(
                         title: "Aucun jeu à étiqueter",
                         systemImage: "tag.slash",
@@ -84,10 +67,10 @@ struct GameLabellingScreen: View {
                     )
                 } else {
                     List {
-                        ForEach(physicalGames) { game in
+                        ForEach(physicalGameViewModel.physicalGamesNotLabeled, id: \.id) { game in
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(game.gameName)
+                                    Text(game.game.name)
                                         .font(.headline)
                                     Text("Code barre: \(game.barcode)")
                                         .font(.subheadline)
@@ -120,6 +103,9 @@ struct GameLabellingScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
         }
+        .onAppear {
+            self.physicalGameViewModel.loadPhysicalGamesNotLabeled()
+        }
     }
     
     private func labelSelectedGames() {
@@ -128,7 +114,7 @@ struct GameLabellingScreen: View {
         // Simuler un délai pour l'API
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             // Supprimer les jeux sélectionnés
-            physicalGames.removeAll { selectedGames.contains($0.id) }
+            physicalGameViewModel.physicalGamesNotLabeled.removeAll { selectedGames.contains($0.id)}
             selectedGames.removeAll()
             isLoading = false
         }

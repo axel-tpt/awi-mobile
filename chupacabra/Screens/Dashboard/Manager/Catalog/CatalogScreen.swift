@@ -86,18 +86,18 @@ struct CatalogScreen: View {
                                             .font(.headline)
                                     }
                                     
-                                    Text(game.publisher.name)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+//                                    Text(game.publisher.name)
+//                                        .font(.subheadline)
+//                                        .foregroundColor(.secondary)
                                     
                                     HStack {
-                                        Text(game.category.name)
-                                            .font(.caption)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 3)
-                                            .background(Color.blue.opacity(0.1))
-                                            .foregroundColor(.blue)
-                                            .cornerRadius(5)
+//                                        Text(game.category.name)
+//                                            .font(.caption)
+//                                            .padding(.horizontal, 8)
+//                                            .padding(.vertical, 3)
+//                                            .background(Color.blue.opacity(0.1))
+//                                            .foregroundColor(.blue)
+//                                            .cornerRadius(5)
                                         
                                         Text("\(game.minimumPlayersNumber)-\(game.maximumPlayersNumber) joueurs")
                                             .font(.caption)
@@ -160,9 +160,9 @@ struct CatalogScreen: View {
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                         
-                        Text(game.publisher.name)
-                            .font(.headline)
-                            .foregroundColor(.secondary)
+//                        Text(game.publisher.name)
+//                            .font(.headline)
+//                            .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.bottom)

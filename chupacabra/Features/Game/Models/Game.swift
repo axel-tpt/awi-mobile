@@ -18,8 +18,6 @@ public struct FullGame: Decodable, Identifiable {
     let maximumPlayersNumber: Int
     let categoryId: Int
     let publisherId: Int
-    let category: Category
-    let publisher: Publisher
 }
 
 public struct GameCreate: Encodable {

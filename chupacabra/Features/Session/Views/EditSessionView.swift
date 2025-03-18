@@ -68,16 +68,18 @@ struct EditSessionView: View {
     }
 }
 
-#Preview {
-    EditSessionView(
-        session: Session(
-            id: 1,
-            commissionRate: 10.0,
-            depositFeesRate: 5.0,
-            startDateDeposit: Date(),
-            endDateDeposit: Date(),
-            startDateSelling: Date(),
-            endDateSelling: Date()
+struct EditSessionView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditSessionView(
+            session: Session(
+                id: 1,
+                commissionRate: 10.0,
+                depositFeesRate: 5.0,
+                startDateDeposit: Date(),
+                endDateDeposit: Date(),
+                startDateSelling: Date(),
+                endDateSelling: Date()
+            )
         )
-    )
-} 
+    }
+}
