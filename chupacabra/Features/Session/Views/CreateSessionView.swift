@@ -57,9 +57,3 @@ struct CreateSessionView: View {
         })
     }
 }
-
-struct CreateSessionView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateSessionView()
-    }
-}
