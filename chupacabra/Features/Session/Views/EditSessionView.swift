@@ -79,7 +79,8 @@ struct EditSessionView_Previews: PreviewProvider {
                 endDateDeposit: Date(),
                 startDateSelling: Date(),
                 endDateSelling: Date()
-            )
+            ),
+            viewModel: SessionViewModel()
         )
     }
 }

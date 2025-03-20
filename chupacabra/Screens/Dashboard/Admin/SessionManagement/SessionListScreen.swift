@@ -14,9 +14,8 @@ struct SessionListScreen: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if let error = viewModel.error {
                     VStack(spacing: 16) {
-                        Text("Erreur: \(error)")
-                            .foregroundColor(.red)
-                        
+                        Text("Erreur: \(error.localizedDescription)")
+                            .foregroundColor(.red)                        
                         Button("Réessayer") {
                             viewModel.loadSessions()
                         }
