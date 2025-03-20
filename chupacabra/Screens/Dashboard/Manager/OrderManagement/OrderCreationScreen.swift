@@ -33,7 +33,6 @@ struct OrderItem: Identifiable {
 struct Order: Identifiable {
     let id: Int
     let orderNumber: String
-    let customerName: String
     let date: String
     var status: OrderStatus
     var items: [OrderItem]
@@ -57,9 +56,9 @@ struct OrderCreationScreen: View {
     @StateObject private var gameViewModel: GameViewModel = GameViewModel()
     
     // État de la commande en cours
-    @State private var customerName: String = ""
     @State private var selectedItems: [OrderItem] = []
     @State private var searchText: String = ""
+    @State private var showingInvoiceForm = false
     
     // État de l'interface
     @State private var showingConfirmation = false
@@ -72,10 +71,6 @@ struct OrderCreationScreen: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Information client - Toujours visible en haut
-                customerInfoView
-                    .padding(.bottom, 8)
-                
                 // TabView pour basculer entre catalogue et panier
                 TabView(selection: $selectedTab) {
                     catalogView
@@ -118,9 +113,10 @@ struct OrderCreationScreen: View {
                 Button("Annuler", role: .cancel) {}
                 Button("Confirmer") {
                     createOrder()
+                    showingInvoiceForm = true
                 }
             } message: {
-                Text("Créer une commande pour \(customerName) avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
+                Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
             }
         }
         .onAppear {
@@ -137,28 +133,6 @@ struct OrderCreationScreen: View {
             minimumPrice: nil,
             maximumPrice: nil
         ))
-    }
-    
-    private var customerInfoView: some View {
-        VStack(spacing: 8) {
-            TextField("Nom du client", text: $customerName)
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .padding(.top, 8)
-            
-            if !selectedItems.isEmpty {
-                HStack {
-                    Text("\(selectedItems.count) article(s)")
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text("Total: \(totalAmount, specifier: "%.2f") €")
-                        .bold()
-                }
-                .padding(.horizontal)
-            }
-        }
     }
     
     private var catalogView: some View {
@@ -317,11 +291,22 @@ struct OrderCreationScreen: View {
                     Text("Valider la commande")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(customerName.isEmpty ? Color.gray : Color.blue)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                .disabled(customerName.isEmpty)
+                .alert("Confirmer la commande", isPresented: $showingConfirmation) {
+                    Button("Annuler", role: .cancel) {}
+                    Button("Confirmer") {
+                        createOrder()
+                        showingInvoiceForm = true // Afficher la vue après validation
+                    }
+                } message: {
+                    Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
+                }
+                .sheet(isPresented: $showingInvoiceForm) {
+                    InvoiceFormView()
+                }
                 .padding(.horizontal)
                 .padding(.bottom, 8)
             }
@@ -384,7 +369,6 @@ struct OrderCreationScreen: View {
         let newOrder = Order(
             id: Int.random(in: 1000...9999),
             orderNumber: orderNumber,
-            customerName: customerName,
             date: Date().formatted(.dateTime.day().month().year()),
             status: .pending,
             items: selectedItems,
@@ -395,7 +379,6 @@ struct OrderCreationScreen: View {
         print("Commande créée: \(newOrder)")
         
         // Réinitialiser le formulaire
-        customerName = ""
         selectedItems = []
     }
 }
