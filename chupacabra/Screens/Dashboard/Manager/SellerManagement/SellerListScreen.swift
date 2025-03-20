@@ -1,23 +1,16 @@
 import SwiftUI
+import Combine
 
 struct SellerListScreen: View {
-    @State private var sellers: [Seller] = [
-        Seller(id: 1, firstName: "Jean", lastName: "Dupont", email: "jean.dupont@example.com", phone: "06 12 34 56 78"),
-        Seller(id: 2, firstName: "Marie", lastName: "Martin", email: "marie.martin@example.com", phone: "06 23 45 67 89"),
-        Seller(id: 3, firstName: "Pierre", lastName: "Durand", email: "pierre.durand@example.com", phone: "06 34 56 78 90"),
-        Seller(id: 4, firstName: "Sophie", lastName: "Leroy", email: "sophie.leroy@example.com", phone: "06 45 67 89 01"),
-        Seller(id: 5, firstName: "Lucas", lastName: "Moreau", email: "lucas.moreau@example.com", phone: "06 56 78 90 12")
-    ]
-    
+    @ObservedObject private var viewModel = SellerViewModel()
     @State private var searchText = ""
     @State private var showingCreateSheet = false
-    @State private var selectedSeller: Seller? = nil
     
     var filteredSellers: [Seller] {
         if searchText.isEmpty {
-            return sellers
+            return viewModel.sellers
         } else {
-            return sellers.filter { seller in
+            return viewModel.sellers.filter { seller in
                 seller.firstName.lowercased().contains(searchText.lowercased()) ||
                 seller.lastName.lowercased().contains(searchText.lowercased()) ||
                 seller.email.lowercased().contains(searchText.lowercased())
@@ -27,128 +20,120 @@ struct SellerListScreen: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                // Barre de recherche
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    TextField("Rechercher un vendeur", text: $searchText)
-                        .autocorrectionDisabled()
+            Group {
+                if viewModel.isLoading && viewModel.sellers.isEmpty {
+                    loadingView
+                } else if let error = viewModel.error {
+                    errorView(error: error)
+                } else if viewModel.sellers.isEmpty {
+                    emptyStateView
+                } else {
+                    sellerListView
                 }
-                .padding(10)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(10)
-                .padding(.horizontal)
-                
-                // Liste des vendeurs
             }
             .navigationTitle("Vendeurs")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        showingCreateSheet = true
-                    } label: {
-                        Label("Ajouter", systemImage: "plus")
-                    }
+                    addButton
                 }
             }
+            .searchable(text: $searchText, prompt: "Rechercher un vendeur")
             .sheet(isPresented: $showingCreateSheet) {
-                NavigationStack {
-                    Text("Créer un nouveau vendeur")
-                        .navigationTitle("Nouveau Vendeur")
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    showingCreateSheet = false
-                                }
-                            }
-                        }
-                }
+                CreateSellerView(viewModel: viewModel)
             }
-            .sheet(item: $selectedSeller) { seller in
-                NavigationStack {
-                    Text("Modifier le vendeur \(seller.firstName) \(seller.lastName)")
-                        .navigationTitle("Modifier Vendeur")
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Annuler") {
-                                    selectedSeller = nil
-                                }
-                            }
-                        }
-                }
-            }
+        }
+        .onAppear {
+            viewModel.loadSellers()
         }
     }
     
-    private func sellerDetailsView(seller: Seller) -> some View {
-        VStack {
-            Text("Détails du vendeur \(seller.firstName) \(seller.lastName)")
-                .font(.title2)
-                .padding()
+    // MARK: - Subviews
+    
+    private var loadingView: some View {
+        ProgressView("Chargement des vendeurs...")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private func errorView(error: RequestError) -> some View {
+        VStack(spacing: 16) {
+            Text("Erreur: \(error.localizedDescription)")
+                .foregroundColor(.red)
             
-            List {
-                Section("Informations personnelles") {
-                    HStack {
-                        Text("Prénom")
-                        Spacer()
-                        Text(seller.firstName)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("Nom")
-                        Spacer()
-                        Text(seller.lastName)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("Email")
-                        Spacer()
-                        Text(seller.email)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("Téléphone")
-                        Spacer()
-                        Text(seller.phone)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                Section {
-                    Button("Créer un dépôt") {
-                        // Action pour créer un dépôt
-                    }
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(8)
-                    
-                    Button("Retrait des jeux") {
-                        // Action pour retirer des jeux
-                    }
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.orange)
-                    .cornerRadius(8)
-                }
-                .listRowInsets(EdgeInsets())
-                .padding()
+            Button("Réessayer") {
+                viewModel.loadSellers()
             }
+            .buttonStyle(.borderedProminent)
         }
-        .navigationTitle("Détails du vendeur")
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    private func removeSeller(id: Int) {
-        sellers.removeAll { $0.id == id }
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Text("Aucun vendeur disponible")
+                .font(.headline)
+            
+            Button("Ajouter un vendeur") {
+                showingCreateSheet = true
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var addButton: some View {
+        Button {
+            showingCreateSheet = true
+        } label: {
+            Label("Ajouter", systemImage: "plus")
+        }
+    }
+    
+    private var sellerListView: some View {
+        List {
+            ForEach(filteredSellers) { seller in
+                NavigationLink(destination: SellerDetailScreen(viewModel: viewModel, sellerId: seller.id)) {
+                    SellerRowView(seller: seller)
+                }
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        viewModel.deleteSeller(id: seller.id)
+                    } label: {
+                        Label("Supprimer", systemImage: "trash")
+                    }
+                    
+                    NavigationLink(destination: EditSellerView(seller: seller, viewModel: viewModel)) {
+                        Label("Modifier", systemImage: "pencil")
+                    }
+                    .tint(.blue)
+                }
+            }
+        }
+        .listStyle(.plain)
+        .refreshable {
+            viewModel.loadSellers()
+        }
+    }
+}
+
+// MARK: - Extracted Components
+
+struct SellerRowView: View {
+    let seller: Seller
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("\(seller.firstName) \(seller.lastName)")
+                .font(.headline)
+            
+            Text(seller.email)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Text(seller.phone)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 4)
     }
 }
 
