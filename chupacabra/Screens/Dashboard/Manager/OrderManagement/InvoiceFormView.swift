@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InvoiceFormView: View {
+struct InvoiceFormView2: View {
     @Environment(\.dismiss) var dismiss
     @State private var buyerLastName: String = ""
     @State private var buyerFirstName: String = ""
@@ -69,6 +69,9 @@ struct InvoiceFormView: View {
                 .padding(.horizontal)
             }
             .navigationTitle("Facturation")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Passer") { dismiss() }

@@ -61,7 +61,6 @@ struct OrderCreationScreen: View {
     @State private var showingInvoiceForm = false
     
     // État de l'interface
-    @State private var showingConfirmation = false
     @State private var selectedTab = 0
     
     var totalAmount: Double {
@@ -109,15 +108,6 @@ struct OrderCreationScreen: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .alert("Confirmer la commande", isPresented: $showingConfirmation) {
-                Button("Annuler", role: .cancel) {}
-                Button("Confirmer") {
-                    createOrder()
-                    showingInvoiceForm = true
-                }
-            } message: {
-                Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
-            }
         }
         .onAppear {
             gameViewModel.loadForSaleGames()
@@ -286,7 +276,9 @@ struct OrderCreationScreen: View {
                 .padding(.horizontal)
                 
                 Button {
-                    showingConfirmation = true
+                    createOrder()
+                    showingInvoiceForm = true
+                    print("Invoice form should appear")
                 } label: {
                     Text("Valider la commande")
                         .frame(maxWidth: .infinity)
@@ -294,15 +286,6 @@ struct OrderCreationScreen: View {
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                }
-                .alert("Confirmer la commande", isPresented: $showingConfirmation) {
-                    Button("Annuler", role: .cancel) {}
-                    Button("Confirmer") {
-                        createOrder()
-                        showingInvoiceForm = true // Afficher la vue après validation
-                    }
-                } message: {
-                    Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
                 }
                 .sheet(isPresented: $showingInvoiceForm) {
                     InvoiceFormView()
@@ -383,6 +366,7 @@ struct OrderCreationScreen: View {
     }
 }
 
+
 struct GameCardView: View {
     let game: FullGame
     let onAdd: () -> Void
@@ -433,6 +417,87 @@ struct GameCardView: View {
         .background(Color.white)
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
+    }
+}
+
+struct InvoiceFormView: View {
+    @Environment(\.dismiss) var dismiss
+    @State private var buyerLastName: String = ""
+    @State private var buyerFirstName: String = ""
+    @State private var buyerEmail: String = ""
+    @State private var buyerAddress: String = ""
+    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                VStack(spacing: 8) {
+                    TextField("Nom du client", text: $buyerLastName)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                    
+                    TextField("Prénom du client", text: $buyerFirstName)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                    
+                    TextField("Email du client", text: $buyerEmail)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                    
+                    TextField("Adresse du client", text: $buyerAddress)
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                }
+                Spacer()
+                Button {
+                    alertMessage = "Commande terminée avec facture !"
+                    showAlert = true
+                } label: {
+                    Text("Envoyer une facture")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+                Button {
+                    alertMessage = "Commande terminée sans facture !"
+                    showAlert = true
+                } label: {
+                    Text("Passer")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+            }
+            .navigationTitle("Facturation")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Passer") { dismiss() }
+                }
+            }
+            .alert(alertMessage, isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
+            }
+        }
     }
 }
 

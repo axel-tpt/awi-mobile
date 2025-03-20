@@ -24,37 +24,7 @@ struct WeeklyProfit: Identifiable {
 
 struct StatisticsScreen: View {
     @State private var isLoading = false
-    
-    // Données fictives pour les ventes par catégorie
-    let categorySales: [CategorySale] = [
-        CategorySale(category: "Stratégie", sales: 45),
-        CategorySale(category: "Famille", sales: 65),
-        CategorySale(category: "Enfants", sales: 25),
-        CategorySale(category: "Ambiance", sales: 32),
-        CategorySale(category: "Expert", sales: 18)
-    ]
-    
-    // Données fictives pour le meilleur vendeur
-    let topSeller = StatsSeller(
-        id: 1,
-        firstName: "Sophie",
-        lastName: "Moreau",
-        email: "sophie.moreau@example.com",
-        phone: "06 12 34 56 78",
-        sales: 23
-    )
-    
-    // Données fictives pour l'évolution du profit
-    let weeklyProfits: [WeeklyProfit] = [
-        WeeklyProfit(week: "Sem 1", profit: 1240.50),
-        WeeklyProfit(week: "Sem 2", profit: 1650.75),
-        WeeklyProfit(week: "Sem 3", profit: 1420.25),
-        WeeklyProfit(week: "Sem 4", profit: 2100.00),
-        WeeklyProfit(week: "Sem 5", profit: 1890.50)
-    ]
-    
-    // Chiffre d'affaires total
-    let totalProfit: Double = 8302.00
+    @StateObject private var statisticViewModel: StatisticViewModel = StatisticViewModel()
     
     var body: some View {
         NavigationStack {
@@ -67,10 +37,10 @@ struct StatisticsScreen: View {
                             .padding(.leading)
                         
                         Chart {
-                            ForEach(categorySales) { sale in
+                            ForEach(statisticViewModel.sellsByCategory) { sale in
                                 BarMark(
                                     x: .value("Catégorie", sale.category),
-                                    y: .value("Ventes", sale.sales)
+                                    y: .value("Ventes", sale.sells)
                                 )
                                 .foregroundStyle(Color.blue.gradient)
                             }
@@ -89,13 +59,16 @@ struct StatisticsScreen: View {
                             .padding(.horizontal)
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("\(topSeller.firstName) \(topSeller.lastName)")
+                            Text("\(statisticViewModel.topSeller?.seller.firstName ?? "Inconnu") \(statisticViewModel.topSeller?.seller.lastName ?? "Inconnu")")
                                 .font(.title3)
-                            Text("Email: \(topSeller.email)")
+                            
+                            Text("Email: \(statisticViewModel.topSeller?.seller.email ?? "Non disponible")")
                                 .font(.subheadline)
-                            Text("Téléphone: \(topSeller.phone)")
+                            
+                            Text("Téléphone: \(statisticViewModel.topSeller?.seller.phone ?? "Non disponible")")
                                 .font(.subheadline)
-                            Text("Nombre de ventes: \(topSeller.sales)")
+                            
+                            Text("Nombre de ventes: \(statisticViewModel.topSeller?.sales ?? 0)")
                                 .font(.subheadline)
                                 .bold()
                         }
@@ -113,7 +86,7 @@ struct StatisticsScreen: View {
                             .padding(.horizontal)
                         
                         VStack(alignment: .leading, spacing: 15) {
-                            Text("Profit total: \(totalProfit, specifier: "%.2f") €")
+                            Text("Profit total: \(statisticViewModel.turnoverStatistics?.profit ?? -1, specifier: "%.2f") €")
                                 .font(.title3)
                                 .bold()
                             
@@ -121,12 +94,12 @@ struct StatisticsScreen: View {
                                 .font(.subheadline)
                             
                             Chart {
-                                ForEach(weeklyProfits) { weeklyProfit in
+                                ForEach(statisticViewModel.turnoverStatistics?.profitEvolution ?? [], id: \.week) { weeklyProfit in
                                     BarMark(
                                         x: .value("Semaine", weeklyProfit.week),
                                         y: .value("Profit", weeklyProfit.profit)
                                     )
-                                    .foregroundStyle(Color.green.gradient)
+                                    .foregroundStyle(Color.green.gradient)  
                                 }
                             }
                             .frame(height: 250)
@@ -144,6 +117,12 @@ struct StatisticsScreen: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
+        }
+        .onAppear {
+            statisticViewModel.loadTopSeller()
+            statisticViewModel.loadFinancialStatement()
+            statisticViewModel.loadTurnoverStatistics()
+            statisticViewModel.loadSellsByCategory()
         }
     }
 }
