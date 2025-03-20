@@ -24,6 +24,9 @@ struct CatalogScreen: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(10)
                 .padding(.horizontal)
+                .onChange(of: searchText) { newValue in
+                    applyFilters()
+                }
                 
                 // Filtres
                 VStack(spacing: 10) {
@@ -32,6 +35,7 @@ struct CatalogScreen: View {
                         HStack(spacing: 10) {
                             Button {
                                 selectedCategoryFilter = nil
+                                applyFilters()
                             } label: {
                                 Text("Toutes")
                                     .padding(.horizontal, 12)
@@ -44,6 +48,7 @@ struct CatalogScreen: View {
                             ForEach(categoryViewModel.categories, id: \.self) { category in
                                 Button {
                                     selectedCategoryFilter = category
+                                    applyFilters()
                                 } label: {
                                     Text(category.name)
                                         .padding(.horizontal, 12)
@@ -56,11 +61,6 @@ struct CatalogScreen: View {
                         }
                         .padding(.horizontal)
                     }
-                    
-                    // Toggle pour afficher les jeux non disponibles
-                    Toggle("Afficher les jeux non disponibles", isOn: $showUnavailable)
-                        .padding(.horizontal)
-                        .toggleStyle(.switch)
                 }
                 
                 // Liste des jeux
@@ -86,18 +86,18 @@ struct CatalogScreen: View {
                                             .font(.headline)
                                     }
                                     
-                                    Text(game.publisher.name)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+//                                    Text(game.publisher.name)
+//                                        .font(.subheadline)
+//                                        .foregroundColor(.secondary)
                                     
                                     HStack {
-                                        Text(game.category.name)
-                                            .font(.caption)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 3)
-                                            .background(Color.blue.opacity(0.1))
-                                            .foregroundColor(.blue)
-                                            .cornerRadius(5)
+//                                        Text(game.category.name)
+//                                            .font(.caption)
+//                                            .padding(.horizontal, 8)
+//                                            .padding(.vertical, 3)
+//                                            .background(Color.blue.opacity(0.1))
+//                                            .foregroundColor(.blue)
+//                                            .cornerRadius(5)
                                         
                                         Text("\(game.minimumPlayersNumber)-\(game.maximumPlayersNumber) joueurs")
                                             .font(.caption)
@@ -122,6 +122,21 @@ struct CatalogScreen: View {
                 gameDetailView(game: game)
             }
         }
+        .onAppear {
+            self.gameViewModel.loadForSaleGames()
+            self.categoryViewModel.loadCategories()
+        }
+    }
+    
+    private func applyFilters() {
+        gameViewModel.applyFilter(filter: Filter(
+            gameName: searchText.isEmpty ? nil : searchText,
+            publisherName: nil,
+            categoryName: selectedCategoryFilter?.name,
+            playerNumber: nil,
+            minimumPrice: nil,
+            maximumPrice: nil
+        ))
     }
     
     private func gameDetailView(game: FullGame) -> some View {
@@ -145,9 +160,9 @@ struct CatalogScreen: View {
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                         
-                        Text(game.publisher.name)
-                            .font(.headline)
-                            .foregroundColor(.secondary)
+//                        Text(game.publisher.name)
+//                            .font(.headline)
+//                            .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.bottom)
@@ -202,4 +217,4 @@ struct CatalogScreen_Previews: PreviewProvider {
     static var previews: some View {
         CatalogScreen()
     }
-} 
+}

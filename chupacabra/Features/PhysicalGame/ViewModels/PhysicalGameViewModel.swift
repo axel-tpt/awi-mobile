@@ -16,7 +16,7 @@ class PhysicalGameViewModel: ObservableObject {
         self.physicalGameService = physicalGameService
     }
     
-    func getPhysicalGamesNotLabeled() {
+    func loadPhysicalGamesNotLabeled() {
         self.physicalGameService.getPhysicalGamesNotLabeled()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -30,7 +30,7 @@ class PhysicalGameViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func getPhysicalGameByBarcode(barcode : String) {
+    func loadPhysicalGameByBarcode(barcode : String) {
         self.physicalGameService.getPhysicalGameByBarcode(barcode)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -57,7 +57,7 @@ class PhysicalGameViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func getForSalePhysicalGamesBarcodes() {
+    func loadForSalePhysicalGamesBarcodes() {
         
     }
 }

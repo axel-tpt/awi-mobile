@@ -16,7 +16,7 @@ public protocol PhysicalGameServiceProtocol {
 }
 
 public final class PhysicalGameService: PhysicalGameServiceProtocol {
-
+    
     public func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], AuthError> {
         return APIService.fetch(
             endpoint: "physical-games",

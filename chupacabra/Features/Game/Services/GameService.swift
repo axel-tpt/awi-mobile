@@ -16,10 +16,11 @@ public final class GameService: GameServiceProtocol {
     private var state: AuthState = .idle
     
     public func getForSaleGames(filter: Filter) -> AnyPublisher<[FullGame], AuthError> {
+            
         return APIService.fetch(
             endpoint: "games/for-sale",
             method: .get,
-            body: filter
+            params: filter.toQueryParameters()
         )
         .mapError { error -> AuthError in
             print("Erreur capturée : \(error)")

@@ -119,6 +119,8 @@ struct SessionListScreen: View {
     }
 }
 
-#Preview {
-    SessionListScreen()
-} 
+struct SessionListScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        SessionListScreen()
+    }
+}
