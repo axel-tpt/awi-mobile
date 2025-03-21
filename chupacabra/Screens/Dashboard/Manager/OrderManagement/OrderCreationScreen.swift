@@ -290,13 +290,6 @@ struct OrderCreationScreen: View {
         selectedPhysicalsGames.reduce(0) { $0 + $1.price }
     }
     
-    private var filteredBarcodes: [String] {
-        let barcodes = physicalGameViewModel.forSalePhysicalGamesBarcodes
-        let selectedBarcodes = selectedPhysicalsGames.map { $0.barcode }
-        return barcodes.filter { !selectedBarcodes.contains($0) }
-            .filter { searchQuery.isEmpty || $0.lowercased().contains(searchQuery.lowercased()) }
-    }
-    
     private var selectedPaymentLabel: String {
         if let id = selectedPaymentId,
            let payment = meanPaymentViewModel.meansPayment.first(where: { $0.id == id }) {
