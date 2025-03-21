@@ -9,6 +9,8 @@ public protocol SellerServiceProtocol {
     func createSeller(data: SellerForm) -> AnyPublisher<EmptyResponse, RequestError>
     func getSellerBalanceSheet(id: Int) -> AnyPublisher<SellerBalanceSheet, RequestError>
     func getSellerDeposits(id: Int) -> AnyPublisher<[Deposit], RequestError>
+    func getSellerPhysicalGames(id: Int) -> AnyPublisher<[FullPhysicalGame], RequestError>
+    func withdrawGames(gameIds: [Int], sellerId: Int) -> AnyPublisher<EmptyResponse, RequestError>
 }
 
 public final class SellerService: SellerServiceProtocol {
@@ -114,6 +116,36 @@ public final class SellerService: SellerServiceProtocol {
                     return .networkError(error)
                 } else if error is DecodingError {
                     return .decodingError
+                } else {
+                    return .unknownError(error)
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func getSellerPhysicalGames(id: Int) -> AnyPublisher<[FullPhysicalGame], RequestError> {
+        return APIService.fetch(endpoint: "/sellers/\(id)/physical-games", method: .get)
+            .mapError { error -> RequestError in
+                if let apiError = error as? APIError {
+                    return .serverError(statusCode: apiError.statusCode, underlyingError: apiError.underlyingError)
+                } else if error is URLError {
+                    return .networkError(error)
+                } else if error is DecodingError {
+                    return .decodingError
+                } else {
+                    return .unknownError(error)
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func withdrawGames(gameIds: [Int], sellerId: Int) -> AnyPublisher<EmptyResponse, RequestError> {
+        return APIService.fetch(endpoint: "/sellers/\(sellerId)/stock-withdrawal", method: .post, body: gameIds)
+            .mapError { error -> RequestError in
+                if let apiError = error as? APIError {
+                    return .serverError(statusCode: apiError.statusCode, underlyingError: apiError.underlyingError)
+                } else if error is URLError {
+                    return .networkError(error)
                 } else {
                     return .unknownError(error)
                 }

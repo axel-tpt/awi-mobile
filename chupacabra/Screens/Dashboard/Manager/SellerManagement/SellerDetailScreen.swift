@@ -4,6 +4,7 @@ import Combine
 struct SellerDetailScreen: View {
     @ObservedObject var viewModel: SellerViewModel
     @State private var showCreateDeposit = false
+    @State private var showGamesList = false
     let sellerId: Int
     
     // Calcule le vendeur actuel à partir du viewModel à chaque fois qu'il change
@@ -68,6 +69,9 @@ struct SellerDetailScreen: View {
                     sellerId: sellerId
                 )
             }
+        }
+        .sheet(isPresented: $showGamesList) {
+            SellerGamesListScreen(sellerId: sellerId)
         }
     }
     
@@ -185,7 +189,7 @@ struct SellerDetailScreen: View {
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .blue))
             
             Button("Liste des jeux") {
-                // Action pour retirer des jeux
+                showGamesList = true
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .orange))
         }

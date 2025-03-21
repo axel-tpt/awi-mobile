@@ -75,6 +75,8 @@
 		56C387B92D8DA21100E4084E /* PhysicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387382D8DA21100E4084E /* PhysicalGame.swift */; };
 		56C387BA2D8DA21100E4084E /* LoggedUserEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387072D8DA21100E4084E /* LoggedUserEnvironment.swift */; };
 		56C387BB2D8DA21100E4084E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3875E2D8DA21100E4084E /* Preview Assets.xcassets */; };
+		56C387BD2D8DA58700E4084E /* SellerGamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */; };
+		56C387C12D8DA65800E4084E /* SellerGamesListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */; };
 		B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */; };
 		B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B22D81A318001D0F9E /* Assets.xcassets */; };
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
@@ -167,6 +169,8 @@
 		56C387742D8DA21100E4084E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		56C387762D8DA21100E4084E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		56C387782D8DA21100E4084E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerGamesViewModel.swift; sourceTree = "<group>"; };
+		56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerGamesListScreen.swift; sourceTree = "<group>"; };
 		B743C4AB2D81A30C001D0F9E /* chupacabra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chupacabra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraApp.swift; sourceTree = "<group>"; };
 		B743C4B22D81A318001D0F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -545,6 +549,7 @@
 		56C387452D8DA21100E4084E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */,
 				56C387442D8DA21100E4084E /* SellerViewModel.swift */,
 			);
 			path = ViewModels;
@@ -736,6 +741,7 @@
 		56C387702D8DA21100E4084E /* SellerManagement */ = {
 			isa = PBXGroup;
 			children = (
+				56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */,
 				56C3876D2D8DA21100E4084E /* CreateDepositScreen.swift */,
 				56C3876E2D8DA21100E4084E /* SellerDetailScreen.swift */,
 				56C3876F2D8DA21100E4084E /* SellerListScreen.swift */,
@@ -979,6 +985,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
+				56C387BD2D8DA58700E4084E /* SellerGamesViewModel.swift in Sources */,
 				56C3877A2D8DA21100E4084E /* CategoryService.swift in Sources */,
 				56C3877B2D8DA21100E4084E /* ManagerDashboardList.swift in Sources */,
 				56C3877C2D8DA21100E4084E /* OrderCreationScreen.swift in Sources */,
@@ -1019,6 +1026,7 @@
 				56C3879F2D8DA21100E4084E /* User.swift in Sources */,
 				56C387A02D8DA21100E4084E /* OrderViewModel.swift in Sources */,
 				56C387A12D8DA21100E4084E /* OrderService.swift in Sources */,
+				56C387C12D8DA65800E4084E /* SellerGamesListScreen.swift in Sources */,
 				56C387A22D8DA21100E4084E /* CreateSellerView.swift in Sources */,
 				56C387A32D8DA21100E4084E /* SessionForm.swift in Sources */,
 				56C387A42D8DA21100E4084E /* GameViewModel.swift in Sources */,
