@@ -7,174 +7,85 @@ struct FinancialData: Identifiable {
     let amount: Double
 }
 
+import SwiftUI
+
 struct BalanceSheetScreen: View {
-    // Données fictives
-    let totalRevenue: Double = 12500.75
-    let totalExpenses: Double = 5230.45
-    let totalProfit: Double = 7270.30
-    
-    let revenues: [FinancialData] = [
-        FinancialData(category: "Ventes de jeux", amount: 8750.50),
-        FinancialData(category: "Frais de dépôt", amount: 1250.25),
-        FinancialData(category: "Commissions", amount: 2500.00)
-    ]
-    
-    let expenses: [FinancialData] = [
-        FinancialData(category: "Location", amount: 2000.00),
-        FinancialData(category: "Personnel", amount: 2500.00),
-        FinancialData(category: "Matériel", amount: 450.45),
-        FinancialData(category: "Marketing", amount: 280.00)
-    ]
+    @StateObject private var statisticViewModel = StatisticViewModel()
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    // Résumé financier
-                    VStack {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Revenus")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                Text("\(totalRevenue, specifier: "%.2f") €")
-                                    .font(.title2)
-                                    .foregroundColor(.green)
-                            }
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .trailing) {
-                                Text("Dépenses")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                Text("\(totalExpenses, specifier: "%.2f") €")
-                                    .font(.title2)
-                                    .foregroundColor(.red)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.top)
-                        
-                        Divider()
-                            .padding(.vertical)
-                        
-                        HStack {
-                            Text("Bilan net")
-                                .font(.headline)
-                            
-                            Spacer()
-                            
-                            Text("\(totalProfit, specifier: "%.2f") €")
-                                .font(.title)
-                                .foregroundColor(totalProfit >= 0 ? .green : .red)
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom)
-                    }
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                    .padding(.horizontal)
+                VStack(spacing: 16) {
+                    FinancialCard(icon: "person.badge.dollar",
+                                  title: "Dû aux vendeurs",
+                                  value: statisticViewModel.financialStatement?.moneyOwed ?? 0,
+                                  color: .red)
                     
-                    // Graphique des revenus
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Ventilation des revenus")
-                            .font(.headline)
-                            .padding(.horizontal)
-                        
-                        Chart {
-                            ForEach(revenues) { revenue in
-                                BarMark(
-                                    x: .value("Montant", revenue.amount),
-                                    y: .value("Catégorie", revenue.category)
-                                )
-                                .foregroundStyle(getColor(index: revenues.firstIndex(where: { $0.id == revenue.id }) ?? 0))
-                            }
-                        }
-                        .frame(height: 250)
-                        .padding()
-                        
-                        // Légende
-                        VStack(alignment: .leading, spacing: 8) {
-                            ForEach(revenues) { revenue in
-                                HStack {
-                                    Circle()
-                                        .fill(getColor(index: revenues.firstIndex(where: { $0.id == revenue.id }) ?? 0))
-                                        .frame(width: 10, height: 10)
-                                    Text(revenue.category)
-                                        .font(.subheadline)
-                                    Spacer()
-                                    Text("\(revenue.amount, specifier: "%.2f") €")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom)
-                    }
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                    .padding(.horizontal)
+                    FinancialCard(icon: "cube.box",
+                                  title: "Jeux en vente",
+                                  value: Double(statisticViewModel.financialStatement?.numberOfPhysicalGamesForSale ?? 0),
+                                  color: .blue)
                     
-                    // Graphique des dépenses
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Ventilation des dépenses")
-                            .font(.headline)
-                            .padding(.horizontal)
-                        
-                        Chart {
-                            ForEach(expenses) { expense in
-                                BarMark(
-                                    x: .value("Montant", expense.amount),
-                                    y: .value("Catégorie", expense.category)
-                                )
-                                .foregroundStyle(getColor(index: expenses.firstIndex(where: { $0.id == expense.id }) ?? 0, isExpense: true))
-                            }
-                        }
-                        .frame(height: 250)
-                        .padding()
-                        
-                        // Légende
-                        VStack(alignment: .leading, spacing: 8) {
-                            ForEach(expenses) { expense in
-                                HStack {
-                                    Circle()
-                                        .fill(getColor(index: expenses.firstIndex(where: { $0.id == expense.id }) ?? 0, isExpense: true))
-                                        .frame(width: 10, height: 10)
-                                    Text(expense.category)
-                                        .font(.subheadline)
-                                    Spacer()
-                                    Text("\(expense.amount, specifier: "%.2f") €")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom)
-                    }
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                    .padding(.horizontal)
+                    FinancialCard(icon: "dollarsign.circle",
+                                  title: "Valeur des jeux en vente",
+                                  value: statisticViewModel.financialStatement?.valueOfPhysicalGamesForSale ?? 0,
+                                  color: .orange)
+                    
+                    FinancialCard(icon: "chart.bar.fill",
+                                  title: "CA Possible",
+                                  value: statisticViewModel.financialStatement?.turnoverPossible ?? 0,
+                                  color: .green)
+                    
+                    FinancialCard(icon: "chart.line.uptrend.xyaxis",
+                                  title: "CA Annuel",
+                                  value: statisticViewModel.financialStatement?.turnoverOfThisYear ?? 0,
+                                  color: .purple)
                 }
-                .padding(.vertical)
+                .padding()
             }
-            .navigationTitle("Bilan financier")
+            .navigationTitle("Bilan Financier")
+            .onAppear {
+                statisticViewModel.loadFinancialStatement()
+            }
         }
     }
-    
-    // Fonction pour obtenir des couleurs différentes selon l'index
-    private func getColor(index: Int, isExpense: Bool = false) -> Color {
-        let colors: [Color] = isExpense ? 
-            [.red, .orange, .pink, .purple] :
-            [.blue, .green, .teal, .indigo]
-        return colors[index % colors.count]
+}
+
+struct FinancialCard: View {
+    let icon: String
+    let title: String
+    let value: Double
+    let color: Color
+
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .font(.title)
+                .foregroundColor(color)
+                .frame(width: 40, height: 40)
+                .background(color.opacity(0.2))
+                .clipShape(Circle())
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Text("\(String(format: "%.2f", value)) €")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(color)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .background(Color(UIColor.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: color.opacity(0.2), radius: 5, x: 0, y: 3)
     }
 }
+
 
 struct BalanceSheetScreen_Previews: PreviewProvider {
     static var previews: some View {

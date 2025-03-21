@@ -326,6 +326,16 @@ struct OrderCreationScreen: View {
         }
     }
     
+    private var filteredBarcodes: [String] {
+        if searchQuery.isEmpty {
+            return []
+        }
+        let barcodes = physicalGameViewModel.forSalePhysicalGamesBarcodes
+        let selectedBarcodes = selectedPhysicalsGames.map { $0.barcode }
+        return barcodes.filter { !selectedBarcodes.contains($0) }
+            .filter { searchQuery.isEmpty || $0.lowercased().contains(searchQuery.lowercased()) }
+    }
+    
     private func addPhysicalGame(by barcode: String) {
         physicalGameViewModel.loadPhysicalGameByBarcode(barcode: barcode, onSuccess: {
             if let physicalGame = physicalGameViewModel.physicalGameByBarcode {
