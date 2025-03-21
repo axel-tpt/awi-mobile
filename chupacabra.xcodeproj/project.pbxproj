@@ -57,7 +57,15 @@
 		B743C4CC2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */; };
 		B77B7C662D885A2000647EB8 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B7C652D885A2000647EB8 /* GameViewModel.swift */; };
 		B77B7C692D88631B00647EB8 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B7C682D88631B00647EB8 /* CategoryViewModel.swift */; };
-		B79D0B7F2D8C14AE00235C04 /* InvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */; };
+		B780A37F2D8D7A800097D723 /* MeanPaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B780A37E2D8D7A800097D723 /* MeanPaymentModel.swift */; };
+		B780A3812D8D7AAC0097D723 /* MeanPaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B780A3802D8D7AAC0097D723 /* MeanPaymentService.swift */; };
+		B780A3832D8D7ABD0097D723 /* MeanPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B780A3822D8D7ABD0097D723 /* MeanPaymentViewModel.swift */; };
+		B78FCEBD2D8C4A7D00779F8A /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCEBC2D8C4A7D00779F8A /* OrderService.swift */; };
+		B78FCEC02D8C4E1200779F8A /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCEBF2D8C4E1200779F8A /* OrderModel.swift */; };
+		B78FCEC32D8C515A00779F8A /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCEC22D8C515A00779F8A /* OrderViewModel.swift */; };
+		B78FCEC92D8C54B300779F8A /* StatisticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCEC82D8C54B300779F8A /* StatisticModel.swift */; };
+		B78FCECB2D8C54BD00779F8A /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCECA2D8C54BD00779F8A /* StatisticService.swift */; };
+		B78FCECD2D8C54C900779F8A /* StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCECC2D8C54C900779F8A /* StatisticViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,7 +138,15 @@
 		B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B77B7C652D885A2000647EB8 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		B77B7C682D88631B00647EB8 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
-		B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceFormView.swift; sourceTree = "<group>"; };
+		B780A37E2D8D7A800097D723 /* MeanPaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentModel.swift; sourceTree = "<group>"; };
+		B780A3802D8D7AAC0097D723 /* MeanPaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentService.swift; sourceTree = "<group>"; };
+		B780A3822D8D7ABD0097D723 /* MeanPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentViewModel.swift; sourceTree = "<group>"; };
+		B78FCEBC2D8C4A7D00779F8A /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
+		B78FCEBF2D8C4E1200779F8A /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		B78FCEC22D8C515A00779F8A /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		B78FCEC82D8C54B300779F8A /* StatisticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticModel.swift; sourceTree = "<group>"; };
+		B78FCECA2D8C54BD00779F8A /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
+		B78FCECC2D8C54C900779F8A /* StatisticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +233,9 @@
 		5647F4272D81AB5400362FAC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				B780A37A2D8D7A2C0097D723 /* MeanPayment */,
+				B78FCEC42D8C548900779F8A /* Statistics */,
+				B78FCEB92D8C48C500779F8A /* Order */,
 				56EA3E402D89F1E300D16599 /* Member */,
 				56EA3E292D8840DB00D16599 /* Session */,
 				B7228D512D88311D00475A95 /* Game */,
@@ -315,7 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				56EA3E012D88368700D16599 /* OrderCreationScreen.swift */,
-				B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */,
 			);
 			path = OrderManagement;
 			sourceTree = "<group>";
@@ -602,6 +620,108 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		B780A37A2D8D7A2C0097D723 /* MeanPayment */ = {
+			isa = PBXGroup;
+			children = (
+				B780A37D2D8D7A5B0097D723 /* ViewModels */,
+				B780A37C2D8D7A430097D723 /* Services */,
+				B780A37B2D8D7A3C0097D723 /* Models */,
+			);
+			path = MeanPayment;
+			sourceTree = "<group>";
+		};
+		B780A37B2D8D7A3C0097D723 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B780A37E2D8D7A800097D723 /* MeanPaymentModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B780A37C2D8D7A430097D723 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B780A3802D8D7AAC0097D723 /* MeanPaymentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B780A37D2D8D7A5B0097D723 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B780A3822D8D7ABD0097D723 /* MeanPaymentViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B78FCEB92D8C48C500779F8A /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEC12D8C514B00779F8A /* ViewModels */,
+				B78FCEBE2D8C4E0100779F8A /* Models */,
+				B78FCEBA2D8C493F00779F8A /* Services */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		B78FCEBA2D8C493F00779F8A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEBC2D8C4A7D00779F8A /* OrderService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B78FCEBE2D8C4E0100779F8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEBF2D8C4E1200779F8A /* OrderModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B78FCEC12D8C514B00779F8A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEC22D8C515A00779F8A /* OrderViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B78FCEC42D8C548900779F8A /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEC72D8C54A200779F8A /* ViewModels */,
+				B78FCEC62D8C549C00779F8A /* Services */,
+				B78FCEC52D8C549500779F8A /* Models */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		B78FCEC52D8C549500779F8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCEC82D8C54B300779F8A /* StatisticModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B78FCEC62D8C549C00779F8A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCECA2D8C54BD00779F8A /* StatisticService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B78FCEC72D8C54A200779F8A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B78FCECC2D8C54C900779F8A /* StatisticViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -744,9 +864,11 @@
 				B707A8A72D82E1B20030D387 /* GameService.swift in Sources */,
 				B707A8A52D82271C0030D387 /* PhysicalGameService.swift in Sources */,
 				56EA3E412D89F1E300D16599 /* MemberViewModel.swift in Sources */,
+				B780A3832D8D7ABD0097D723 /* MeanPaymentViewModel.swift in Sources */,
 				56EA3E422D89F1E300D16599 /* MemberService.swift in Sources */,
 				56EA3E432D89F1E300D16599 /* Member.swift in Sources */,
 				56EA3E442D89F1E300D16599 /* EditMemberView.swift in Sources */,
+				B78FCECB2D8C54BD00779F8A /* StatisticService.swift in Sources */,
 				56EA3E452D89F1E300D16599 /* CreateMemberView.swift in Sources */,
 				56EA3E462D89F1E300D16599 /* MemberFormView.swift in Sources */,
 				5647F43D2D81AC9E00362FAC /* User.swift in Sources */,
@@ -754,14 +876,16 @@
 				B707A8A12D8225E20030D387 /* Publisher.swift in Sources */,
 				5647F4382D81AB5400362FAC /* CustomTextField.swift in Sources */,
 				B707A8A32D82261D0030D387 /* Category.swift in Sources */,
+				B780A37F2D8D7A800097D723 /* MeanPaymentModel.swift in Sources */,
 				5647F4392D81AB5400362FAC /* APIService.swift in Sources */,
 				5647F4472D81C12000362FAC /* LoggedUserEnvironment.swift in Sources */,
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
+				B78FCEC92D8C54B300779F8A /* StatisticModel.swift in Sources */,
+				B78FCEC02D8C4E1200779F8A /* OrderModel.swift in Sources */,
 				B707A89D2D8222EE0030D387 /* PhysicalGame.swift in Sources */,
 				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
 				56EA3E0B2D88368700D16599 /* BalanceSheetScreen.swift in Sources */,
 				B77B7C662D885A2000647EB8 /* GameViewModel.swift in Sources */,
-				B79D0B7F2D8C14AE00235C04 /* InvoiceFormView.swift in Sources */,
 				56EA3E0C2D88368700D16599 /* OrderCreationScreen.swift in Sources */,
 				56EA3E0D2D88368700D16599 /* StatisticsScreen.swift in Sources */,
 				56EA3E172D883A8500D16599 /* ManagerDashboardList.swift in Sources */,
@@ -773,13 +897,17 @@
 				56EA3E2A2D8840DB00D16599 /* SessionViewModel.swift in Sources */,
 				56EA3E2B2D8840DB00D16599 /* Session.swift in Sources */,
 				56EA3E2C2D8840DB00D16599 /* SessionService.swift in Sources */,
+				B78FCEC32D8C515A00779F8A /* OrderViewModel.swift in Sources */,
 				56EA3E122D88368700D16599 /* MemberListScreen.swift in Sources */,
 				56EA3E132D88368700D16599 /* DashboardView.swift in Sources */,
 				56EA3E142D88368700D16599 /* SellerListScreen.swift in Sources */,
 				56EA3E312D886A6400D16599 /* CreateSessionView.swift in Sources */,
+				B78FCEBD2D8C4A7D00779F8A /* OrderService.swift in Sources */,
 				56EA3E322D886A6400D16599 /* EditSessionView.swift in Sources */,
+				B78FCECD2D8C54C900779F8A /* StatisticViewModel.swift in Sources */,
 				56EA3E332D886A6400D16599 /* SessionForm.swift in Sources */,
 				B7228D4A2D882E6E00475A95 /* CategoryService.swift in Sources */,
+				B780A3812D8D7AAC0097D723 /* MeanPaymentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

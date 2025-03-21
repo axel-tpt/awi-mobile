@@ -1,438 +1,594 @@
 import SwiftUI
 
-enum OrderStatus: String, CaseIterable {
-    case pending = "En attente"
-    case preparing = "En préparation"
-    case ready = "Prêt"
-    case completed = "Terminé"
-    case cancelled = "Annulé"
-    
-    var color: Color {
-        switch self {
-        case .pending:
-            return .orange
-        case .preparing:
-            return .blue
-        case .ready:
-            return .green
-        case .completed:
-            return .gray
-        case .cancelled:
-            return .red
-        }
-    }
-}
-
-struct OrderItem: Identifiable {
-    let id: Int
-    let gameName: String
-    let price: Double
-    var quantity: Int
-}
-
-struct Order: Identifiable {
-    let id: Int
-    let orderNumber: String
-    let date: String
-    var status: OrderStatus
-    var items: [OrderItem]
-    var totalAmount: Double
-    
-    // Calculer le montant total à partir des éléments
-    var calculatedTotal: Double {
-        items.reduce(0) { $0 + ($1.price * Double($1.quantity)) }
-    }
-}
-
-struct Game: Identifiable {
-    let id: Int
-    let name: String
-    let price: Double
-    let imageURL: String
-    let inStock: Int
-}
-
 struct OrderCreationScreen: View {
-    @StateObject private var gameViewModel: GameViewModel = GameViewModel()
+    @StateObject private var physicalGameViewModel: PhysicalGameViewModel = PhysicalGameViewModel()
+    @StateObject private var meanPaymentViewModel: MeanPaymentViewModel = MeanPaymentViewModel()
+    @StateObject private var orderViewModel: OrderViewModel = OrderViewModel()
     
     // État de la commande en cours
-    @State private var selectedItems: [OrderItem] = []
-    @State private var searchText: String = ""
+    @State private var selectedPhysicalsGames: [FullPhysicalGame] = []
     @State private var showingInvoiceForm = false
+    @State private var orderId = -1
+    @State private var searchQuery: String = ""
+    @State private var selectedPaymentId: Int?
     
-    // État de l'interface
-    @State private var showingConfirmation = false
-    @State private var selectedTab = 0
-    
-    var totalAmount: Double {
-        selectedItems.reduce(0) { $0 + ($1.price * Double($1.quantity)) }
-    }
+    // UI States
+    @State private var isSearchFocused: Bool = false
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                // TabView pour basculer entre catalogue et panier
-                TabView(selection: $selectedTab) {
-                    catalogView
-                        .tag(0)
-                    
-                    cartView
-                        .tag(1)
-                }
-                #if os(iOS)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                #else
-                .tabViewStyle(.automatic)
-                #endif
+            ZStack {
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
                 
-                // Barre d'onglets personnalisée
-                HStack(spacing: 0) {
-                    tabButton(title: "Catalogue", systemImage: "square.grid.2x2", tag: 0)
+                VStack(spacing: 16) {
+                    // Search Section
+                    VStack(spacing: 0) {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(isFocused ? .blue : .gray)
+                            
+                            TextField("Rechercher un jeu par code-barre", text: $searchQuery)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .focused($isFocused)
+                                .submitLabel(.search)
+                            
+                            if !searchQuery.isEmpty {
+                                Button(action: {
+                                    searchQuery = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        .padding(12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(UIColor.secondarySystemBackground))
+                                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                        )
+                        .padding(.horizontal)
+                        .animation(.easeInOut(duration: 0.2), value: searchQuery)
+                        
+                        // Search results
+                        if !filteredBarcodes.isEmpty {
+                            ScrollView {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    ForEach(filteredBarcodes, id: \.self) { barcode in
+                                        Button(action: {
+                                            addPhysicalGame(by: barcode)
+                                            withAnimation {
+                                                isFocused = false
+                                            }
+                                        }) {
+                                            HStack {
+                                                Text(barcode)
+                                                    .foregroundColor(.primary)
+                                                
+                                                Spacer()
+                                                
+                                                Image(systemName: "plus.circle.fill")
+                                                    .foregroundColor(.blue)
+                                            }
+                                            .padding(12)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(Color(UIColor.tertiarySystemBackground))
+                                            )
+                                            .contentShape(Rectangle())
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                            .frame(maxHeight: 200)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(UIColor.secondarySystemBackground))
+                            )
+                            .padding(.horizontal)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                        }
+                    }
                     
-                    tabButton(
-                        title: "Panier (\(selectedItems.count))",
-                        systemImage: "cart",
-                        tag: 1,
-                        showBadge: !selectedItems.isEmpty
+                    // Selected Items Section
+                    if selectedPhysicalsGames.isEmpty {
+                        VStack(spacing: 16) {
+                            Image(systemName: "cart")
+                                .font(.system(size: 50))
+                                .foregroundColor(.gray.opacity(0.5))
+                            
+                            Text("Votre panier est vide")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                            
+                            Text("Recherchez et ajoutez des jeux à votre commande")
+                                .font(.subheadline)
+                                .foregroundColor(.gray.opacity(0.8))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 40)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(UIColor.tertiarySystemBackground))
+                        )
+                        .padding(.horizontal)
+                    } else {
+                        VStack(alignment: .leading) {
+                            Text("Votre panier")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                                .padding(.horizontal)
+                            
+                            ScrollView {
+                                LazyVStack(spacing: 12) {
+                                    ForEach(selectedPhysicalsGames, id: \.barcode) { physicalGame in
+                                        HStack(spacing: 12) {
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(physicalGame.game.name)
+                                                    .font(.headline)
+                                                    .foregroundColor(.primary)
+                                                
+                                                HStack(spacing: 8) {
+                                                    Label(physicalGame.barcode, systemImage: "barcode")
+                                                        .font(.footnote)
+                                                        .foregroundColor(.secondary)
+                                                }
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            Text("\(String(format: "%.2f", physicalGame.price)) €")
+                                                .font(.headline)
+                                                .foregroundColor(.blue)
+                                            
+                                            Button(action: {
+                                                withAnimation {
+                                                    removePhysicalGame(physicalGame)
+                                                }
+                                            }) {
+                                                Image(systemName: "trash")
+                                                    .foregroundColor(.red)
+                                                    .frame(width: 32, height: 32)
+                                                    .background(
+                                                        Circle()
+                                                            .fill(Color.red.opacity(0.1))
+                                                    )
+                                            }
+                                            .buttonStyle(PlainButtonStyle())
+                                        }
+                                        .padding(12)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color(UIColor.tertiarySystemBackground))
+                                        )
+                                        .padding(.horizontal)
+                                        .transition(.opacity.combined(with: .move(edge: .trailing)))
+                                    }
+                                }
+                                .padding(.vertical, 8)
+                            }
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    // Payment & Checkout Section
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text("Total")
+                                .font(.headline)
+                            
+                            Spacer()
+                            
+                            Text("\(String(format: "%.2f", totalPrice)) €")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        Divider()
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Moyen de paiement")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            
+                            Menu {
+                                ForEach(meanPaymentViewModel.meansPayment, id: \.id) { payment in
+                                    Button {
+                                        selectedPaymentId = payment.id
+                                    } label: {
+                                        HStack {
+                                            Text(payment.label)
+                                            if selectedPaymentId == payment.id {
+                                                Spacer()
+                                                Image(systemName: "checkmark")
+                                            }
+                                        }
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "creditcard")
+                                        .foregroundColor(.blue)
+                                    
+                                    Text(selectedPaymentLabel)
+                                        .foregroundColor(.primary)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.down")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(UIColor.tertiarySystemBackground))
+                                )
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        
+                        Button(action: validateOrder) {
+                            HStack {
+                                Spacer()
+                                
+                                Image(systemName: "cart.fill.badge.plus")
+                                    .font(.headline)
+                                
+                                Text("Valider la commande")
+                                    .font(.headline)
+                                
+                                Spacer()
+                            }
+                            .padding(.vertical, 16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(checkoutButtonEnabled ? Color.blue : Color.gray.opacity(0.3))
+                            )
+                            .foregroundColor(.white)
+                        }
+                        .disabled(!checkoutButtonEnabled)
+                    }
+                    .padding(16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(UIColor.tertiarySystemBackground))
+                            .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: -2)
                     )
                 }
-                .padding(.top, 8)
-                .background(Color.white)
-                .overlay(
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(Color.gray.opacity(0.2)),
-                    alignment: .top
-                )
+                .padding(.bottom, 8)
             }
-            .navigationTitle("Créer une commande")
+            .navigationTitle("Nouvelle commande")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .alert("Confirmer la commande", isPresented: $showingConfirmation) {
-                Button("Annuler", role: .cancel) {}
-                Button("Confirmer") {
-                    createOrder()
-                    showingInvoiceForm = true
-                }
-            } message: {
-                Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
+            .sheet(isPresented: $showingInvoiceForm) {
+                InvoiceFormView(orderId: self.orderId)
+            }
+            .onTapGesture {
+                isFocused = false
             }
         }
         .onAppear {
-            gameViewModel.loadForSaleGames()
+            physicalGameViewModel.loadForSalePhysicalGamesBarcodes()
+            meanPaymentViewModel.loadMeansPayment()
         }
     }
     
-    private func applyFilters() {
-        gameViewModel.applyFilter(filter: Filter(
-            gameName: searchText.isEmpty ? nil : searchText,
-            publisherName: nil,
-            categoryName: nil,
-            playerNumber: nil,
-            minimumPrice: nil,
-            maximumPrice: nil
-        ))
+    // MARK: - Computed Properties
+    
+    private var totalPrice: Double {
+        selectedPhysicalsGames.reduce(0) { $0 + $1.price }
     }
     
-    private var catalogView: some View {
-        VStack(spacing: 0) {
-            // Barre de recherche
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                TextField("Rechercher un jeu", text: $searchText)
-                    .autocorrectionDisabled()
-                
-                if !searchText.isEmpty {
-                    Button(action: {
-                        searchText = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
-                    }
-                    .onChange(of: searchText) { newValue in
-                        applyFilters()
-                    }
-                }
-            }
-            .padding(10)
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(10)
-            .padding([.horizontal, .top])
-            
-            // Catalogue de jeux
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 16) {
-                    ForEach(gameViewModel.forSaleGames) { game in
-                        GameCardView(game: game, onAdd: {
-                            addGameToOrder(game)
-                            // Feedback tactile et visuel
-                            #if os(iOS)
-                            let generator = UIImpactFeedbackGenerator(style: .medium)
-                            generator.impactOccurred()
-                            #endif
-                        })
-                    }
-                }
-                .padding()
-            }
+    private var selectedPaymentLabel: String {
+        if let id = selectedPaymentId,
+           let payment = meanPaymentViewModel.meansPayment.first(where: { $0.id == id }) {
+            return payment.label
         }
+        return "Sélectionner un moyen de paiement"
     }
     
-    private var cartView: some View {
-        VStack {
-            if selectedItems.isEmpty {
-                emptyCartView
-            } else {
-                cartContentView
-            }
-        }
+    private var checkoutButtonEnabled: Bool {
+        return !selectedPhysicalsGames.isEmpty && selectedPaymentId != nil
     }
     
-    private var emptyCartView: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            
-            Image(systemName: "cart")
-                .font(.system(size: 60))
-                .foregroundColor(.gray)
-            
-            Text("Votre panier est vide")
-                .font(.title2)
-                .foregroundColor(.gray)
-            
-            Button {
-                selectedTab = 0
-            } label: {
-                Text("Parcourir le catalogue")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            
-            Spacer()
-        }
-    }
+    // MARK: - Functions
     
-    private var cartContentView: some View {
-        VStack(spacing: 0) {
-            // Liste des articles
-            List {
-                ForEach(selectedItems) { item in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(item.gameName)
-                                .font(.headline)
-                            
-                            Text("\(item.price, specifier: "%.2f") € l'unité")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 12) {
-                            Button(action: {
-                                if item.quantity > 1 {
-                                    updateQuantity(for: item.id, to: item.quantity - 1)
-                                } else {
-                                    if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
-                                        selectedItems.remove(at: index)
-                                    }
-                                }
-                            }) {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(.blue)
-                                    .font(.title3)
-                            }
-                            
-                            Text("\(item.quantity)")
-                                .font(.headline)
-                                .frame(minWidth: 30, alignment: .center)
-                            
-                            Button(action: {
-                                updateQuantity(for: item.id, to: item.quantity + 1)
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.blue)
-                                    .font(.title3)
-                            }
-                            
-                            Text("\(item.price * Double(item.quantity), specifier: "%.2f") €")
-                                .frame(width: 80, alignment: .trailing)
-                                .font(.headline)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                }
-                .onDelete(perform: removeItems)
-            }
-            .listStyle(.plain)
-            
-            // Bouton de validation
-            VStack(spacing: 16) {
-                Divider()
-                
-                HStack {
-                    Text("Total à payer")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(totalAmount, specifier: "%.2f") €")
-                        .font(.title3)
-                        .bold()
-                }
-                .padding(.horizontal)
-                
-                Button {
-                    showingConfirmation = true
-                } label: {
-                    Text("Valider la commande")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .alert("Confirmer la commande", isPresented: $showingConfirmation) {
-                    Button("Annuler", role: .cancel) {}
-                    Button("Confirmer") {
-                        createOrder()
-                        showingInvoiceForm = true // Afficher la vue après validation
-                    }
-                } message: {
-                    Text("Créer une commande avec \(selectedItems.count) article(s) pour un total de \(totalAmount, specifier: "%.2f") € ?")
-                }
-                .sheet(isPresented: $showingInvoiceForm) {
-                    InvoiceFormView()
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 8)
-            }
-            .background(Color.white)
-        }
-    }
-    
-    private func tabButton(title: String, systemImage: String, tag: Int, showBadge: Bool = false) -> some View {
-        Button {
-            selectedTab = tag
-        } label: {
-            VStack(spacing: 6) {
-                ZStack {
-                    Image(systemName: systemImage)
-                        .font(.system(size: 24))
-                    
-                    if showBadge && tag == 1 {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 8, height: 8)
-                            .offset(x: 10, y: -10)
-                    }
-                }
-                
-                Text(title)
-                    .font(.caption)
-            }
-            .foregroundColor(selectedTab == tag ? .blue : .gray)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 10)
-        }
-    }
-    
-    private func addGameToOrder(_ game: FullGame) {
-        if let index = selectedItems.firstIndex(where: { $0.id == game.id }) {
-            // Le jeu est déjà dans le panier, augmenter la quantité
-            updateQuantity(for: game.id, to: selectedItems[index].quantity + 1)
+    private func validateOrder() {
+        if let pid = self.selectedPaymentId {
+            print("Commande validée avec \(selectedPhysicalsGames.count) jeux, total: \(totalPrice)€")
+            let body = OrderRequest(
+                physicalGameIds: self.selectedPhysicalsGames.map { $0.id },
+                meanPaymentId: pid
+            )
+            orderViewModel.sendOrder(body: body)
+            self.showingInvoiceForm = true
+            self.selectedPhysicalsGames = []
         } else {
-            // Ajouter le jeu au panier
-            let newItem = OrderItem(id: game.id, gameName: game.name, price: game.minimumPrice, quantity: 1)
-            selectedItems.append(newItem)
+            print("Mean Payment isn't selected")
         }
     }
     
-    private func updateQuantity(for itemId: Int, to newQuantity: Int) {
-        if let index = selectedItems.firstIndex(where: { $0.id == itemId }) {
-            selectedItems[index].quantity = newQuantity
+    private var filteredBarcodes: [String] {
+        if searchQuery.isEmpty {
+            return []
         }
+        let barcodes = physicalGameViewModel.forSalePhysicalGamesBarcodes
+        let selectedBarcodes = selectedPhysicalsGames.map { $0.barcode }
+        return barcodes.filter { !selectedBarcodes.contains($0) }
+            .filter { searchQuery.isEmpty || $0.lowercased().contains(searchQuery.lowercased()) }
     }
     
-    private func removeItems(at offsets: IndexSet) {
-        selectedItems.remove(atOffsets: offsets)
+    private func addPhysicalGame(by barcode: String) {
+        physicalGameViewModel.loadPhysicalGameByBarcode(barcode: barcode, onSuccess: {
+            if let physicalGame = physicalGameViewModel.physicalGameByBarcode {
+                withAnimation {
+                    selectedPhysicalsGames.append(physicalGame)
+                }
+            }
+            searchQuery = ""
+        })
     }
     
-    private func createOrder() {
-        // Générer un numéro de commande unique
-        let orderNumber = "CMD-\(Date().formatted(.dateTime.year()))-\(Int.random(in: 100...999))"
-        
-        // Créer une nouvelle commande
-        let newOrder = Order(
-            id: Int.random(in: 1000...9999),
-            orderNumber: orderNumber,
-            date: Date().formatted(.dateTime.day().month().year()),
-            status: .pending,
-            items: selectedItems,
-            totalAmount: totalAmount
-        )
-        
-        // Ici, vous pourriez envoyer la commande à un serveur ou la sauvegarder localement
-        print("Commande créée: \(newOrder)")
-        
-        // Réinitialiser le formulaire
-        selectedItems = []
+    private func removePhysicalGame(_ game: FullPhysicalGame) {
+        selectedPhysicalsGames.removeAll { $0.barcode == game.barcode }
     }
 }
 
-struct GameCardView: View {
-    let game: FullGame
-    let onAdd: () -> Void
+struct InvoiceFormView: View {
+    @StateObject private var orderViewModel: OrderViewModel = OrderViewModel()
+    
+    @Environment(\.dismiss) var dismiss
+    @State private var buyerLastName: String = ""
+    @State private var buyerFirstName: String = ""
+    @State private var buyerEmail: String = ""
+    @State private var buyerAddress: String = ""
+    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @FocusState private var focusedField: Field?
+    
+    enum Field: Hashable {
+        case lastName, firstName, email, address
+    }
+    
+    var orderId: Int
     
     var body: some View {
-        VStack(alignment: .leading) {
-            // Placeholder pour l'image
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .aspectRatio(1, contentMode: .fit)
-                .overlay(
-                    Text(game.name.prefix(1))
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
-                )
-            
-            VStack(alignment: .leading, spacing: 6) {
-                Text(game.name)
-                    .font(.headline)
-                    .lineLimit(1)
+        NavigationStack {
+            ZStack {
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
                 
-                HStack {
-                    Text("\(game.minimumPrice, specifier: "%.2f") €")
-                        .font(.subheadline)
-                        .bold()
+                VStack(spacing: 24) {
+                    // Header
+                    VStack(spacing: 8) {
+                        Image(systemName: "doc.text.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.blue)
+                            .padding()
+                            .background(
+                                Circle()
+                                    .fill(Color.blue.opacity(0.1))
+                            )
+                        
+                        Text("Informations de facturation")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        
+                        Text("Ces informations seront utilisées pour générer la facture client")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
+                    .padding(.top)
+                    
+                    // Form Fields
+                    VStack(spacing: 16) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                    .foregroundColor(.blue)
+                                Text("Nom")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            TextField("Dupont", text: $buyerLastName)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(UIColor.tertiarySystemBackground))
+                                )
+                                .focused($focusedField, equals: .lastName)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .firstName
+                                }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                    .foregroundColor(.blue)
+                                Text("Prénom")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            TextField("Jean", text: $buyerFirstName)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(UIColor.tertiarySystemBackground))
+                                )
+                                .focused($focusedField, equals: .firstName)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .email
+                                }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Image(systemName: "envelope.fill")
+                                    .foregroundColor(.blue)
+                                Text("Email")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            TextField("jean.dupont@example.com", text: $buyerEmail)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(UIColor.tertiarySystemBackground))
+                                )
+                                .keyboardType(.emailAddress)
+                                .textContentType(.emailAddress)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .focused($focusedField, equals: .email)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .address
+                                }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Image(systemName: "location.fill")
+                                    .foregroundColor(.blue)
+                                Text("Adresse")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            TextField("123 rue de Paris, 75001 Paris", text: $buyerAddress)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(UIColor.tertiarySystemBackground))
+                                )
+                                .focused($focusedField, equals: .address)
+                                .submitLabel(.done)
+                                .onSubmit {
+                                    focusedField = nil
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
                     
                     Spacer()
+                    
+                    // Bottom Buttons
+                    VStack(spacing: 12) {
+                        Button {
+                            if allFieldsFilled() {
+                                alertMessage = "Commande terminée avec facture !"
+                                showAlert = true
+                                sendInvoice()
+                            } else {
+                                alertMessage = "Veuillez remplir tous les champs."
+                                showAlert = true
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "doc.fill.badge.plus")
+                                Text("Envoyer une facture")
+                                    .fontWeight(.semibold)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(allFieldsFilled() ? Color.blue : Color.gray.opacity(0.3))
+                            )
+                            .foregroundColor(.white)
+                        }
+                        .disabled(!allFieldsFilled())
+                        
+                        Button {
+                            alertMessage = "Commande terminée sans facture !"
+                            showAlert = true
+                        } label: {
+                            Text("Passer")
+                                .fontWeight(.medium)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                                .foregroundColor(.primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(UIColor.tertiarySystemBackground))
+                            .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: -2)
+                    )
+                }
+                .padding(.bottom, 8)
+            }
+            .navigationTitle("Facturation")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray)
+                    }
                 }
                 
-                Button {
-                    onAdd()
-                } label: {
+                ToolbarItem(placement: .keyboard) {
                     HStack {
-                        Image(systemName: "plus")
-                        Text("Ajouter")
+                        Spacer()
+                        
+                        Button("Terminé") {
+                            focusedField = nil
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
                 }
-                .padding(.top, 4)
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
+            .onTapGesture {
+                focusedField = nil
+            }
+            .alert(alertMessage, isPresented: $showAlert) {
+                Button("OK", role: .cancel) { dismiss() }
+            }
         }
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
+    }
+    
+    // Function to check if all fields are filled
+    func allFieldsFilled() -> Bool {
+        return !buyerLastName.isEmpty && !buyerFirstName.isEmpty && !buyerEmail.isEmpty && !buyerAddress.isEmpty
+    }
+    
+    // Function to send the invoice
+    func sendInvoice() {
+        let body = InvoiceRequest(
+            buyerEmail: buyerEmail,
+            buyerAddress: buyerAddress,
+            buyerFirstName: buyerFirstName,
+            buyerLastName: buyerLastName,
+            transactionId: orderId
+        )
+        orderViewModel.sendInvoice(body: body)
     }
 }
 
@@ -440,4 +596,4 @@ struct OrderCreationScreen_Previews: PreviewProvider {
     static var previews: some View {
         OrderCreationScreen()
     }
-} 
+}

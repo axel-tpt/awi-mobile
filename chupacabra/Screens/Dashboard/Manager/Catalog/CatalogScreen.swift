@@ -162,7 +162,7 @@ struct CatalogScreen: View {
                         
 //                        Text(game.publisher.name)
 //                            .font(.headline)
-//                            .foregroundColor(.secondary)
+//                            .foregroundColodétails r(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.bottom)
