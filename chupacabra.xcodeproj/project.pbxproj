@@ -63,7 +63,6 @@
 		B78FCEC92D8C54B300779F8A /* StatisticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCEC82D8C54B300779F8A /* StatisticModel.swift */; };
 		B78FCECB2D8C54BD00779F8A /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCECA2D8C54BD00779F8A /* StatisticService.swift */; };
 		B78FCECD2D8C54C900779F8A /* StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78FCECC2D8C54C900779F8A /* StatisticViewModel.swift */; };
-		B79D0B7F2D8C14AE00235C04 /* InvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +141,6 @@
 		B78FCEC82D8C54B300779F8A /* StatisticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticModel.swift; sourceTree = "<group>"; };
 		B78FCECA2D8C54BD00779F8A /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
 		B78FCECC2D8C54C900779F8A /* StatisticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewModel.swift; sourceTree = "<group>"; };
-		B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,7 +327,6 @@
 			isa = PBXGroup;
 			children = (
 				56EA3E012D88368700D16599 /* OrderCreationScreen.swift */,
-				B79D0B7E2D8C14AE00235C04 /* InvoiceFormView.swift */,
 			);
 			path = OrderManagement;
 			sourceTree = "<group>";
@@ -846,7 +843,6 @@
 				5647F4422D81B4F600362FAC /* TokenService.swift in Sources */,
 				56EA3E0B2D88368700D16599 /* BalanceSheetScreen.swift in Sources */,
 				B77B7C662D885A2000647EB8 /* GameViewModel.swift in Sources */,
-				B79D0B7F2D8C14AE00235C04 /* InvoiceFormView.swift in Sources */,
 				56EA3E0C2D88368700D16599 /* OrderCreationScreen.swift in Sources */,
 				56EA3E0D2D88368700D16599 /* StatisticsScreen.swift in Sources */,
 				56EA3E172D883A8500D16599 /* ManagerDashboardList.swift in Sources */,

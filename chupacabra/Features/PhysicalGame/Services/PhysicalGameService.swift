@@ -12,7 +12,7 @@ public protocol PhysicalGameServiceProtocol {
     func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], AuthError>
     func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, AuthError>
     func bulkUpdatePhysicalGamesStatus(ids: [Int], status: PhysicalGameStatus) -> AnyPublisher<EmptyResponse, AuthError>
-    func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[FullPhysicalGame], AuthError>
+    func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], AuthError>
 }
 
 public final class PhysicalGameService: PhysicalGameServiceProtocol {
@@ -86,7 +86,7 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    public func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[FullPhysicalGame], AuthError> {
+    public func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], AuthError> {
         return APIService.fetch(
             endpoint: "physical-games/for-sale-barcodes",
             method: .get

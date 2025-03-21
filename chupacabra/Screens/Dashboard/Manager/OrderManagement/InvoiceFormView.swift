@@ -83,9 +83,3 @@ struct InvoiceFormView2: View {
         }
     }
 }
-
-struct InvoiceFormView_Previews: PreviewProvider {
-    static var previews: some View {
-        InvoiceFormView()
-    }
-}

@@ -13,10 +13,10 @@ public struct OrderResponse: Codable {
     }
 }
 
-public struct OrderRequest: Codable {
-    let physicalGameIds: [Int]
-    let meanPaymentId: Int
-}
+    public struct OrderRequest: Codable {
+        let physicalGameIds: [Int]
+        let meanPaymentId: Int
+    }
 
 public struct InvoiceRequest: Codable {
     let buyerEmail: String

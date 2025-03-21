@@ -6,7 +6,7 @@ import JWTDecode
 class PhysicalGameViewModel: ObservableObject {
     @Published var physicalGamesNotLabeled: [FullPhysicalGame] = []
     @Published var physicalGameByBarcode: FullPhysicalGame? = nil
-    @Published var forSalePhysicalGamesBarcodes: [FullPhysicalGame] = []
+    @Published var forSalePhysicalGamesBarcodes: [String] = []
     
     private var cancellables = Set<AnyCancellable>()
     private var state: AuthState = .idle
@@ -58,6 +58,16 @@ class PhysicalGameViewModel: ObservableObject {
     }
     
     func loadForSalePhysicalGamesBarcodes() {
-        
+        self.physicalGameService.getForSalePhysicalGamesBarcodes()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.state = .error(error.localizedDescription)
+                }
+            }, receiveValue: { [weak self] (response: [String]) in
+                guard let self = self else { return }
+                self.forSalePhysicalGamesBarcodes = response
+            })
+            .store(in: &cancellables)
     }
 }
