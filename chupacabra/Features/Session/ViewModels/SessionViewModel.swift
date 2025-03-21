@@ -32,6 +32,22 @@ class SessionViewModel: ObservableObject, RequestHandler {
         )
     }
     
+    func loadCurrentSession(onSuccess: ((Session) -> Void)? = nil,
+                           onError: ((RequestError) -> Void)? = nil) {
+        handlePublisher(
+            sessionService.getCurrentSession(),
+            setLoading: { self.isLoading = $0 },
+            setError: { self.error = $0 },
+            onSuccess: { session in
+                self.session = session
+                onSuccess?(session)
+            },
+            onError: { error in
+                onError?(error)
+            }
+        )
+    }
+    
     func updateSession(id: Int,
                        data: SessionForm,
                        onSuccess: (() -> Void)? = nil,

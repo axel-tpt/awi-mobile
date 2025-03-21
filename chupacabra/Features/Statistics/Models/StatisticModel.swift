@@ -28,11 +28,3 @@ public struct topSellerResponse: Decodable {
     let seller: Seller
     let sales: Int
 }
-
-public struct Seller: Decodable, Identifiable {
-    public let id: Int
-    let firstName: String
-    let lastName: String
-    let email: String
-    let phone: String
-}

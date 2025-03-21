@@ -3,6 +3,7 @@ import Combine
 
 struct SellerDetailScreen: View {
     @ObservedObject var viewModel: SellerViewModel
+    @State private var showCreateDeposit = false
     let sellerId: Int
     
     // Calcule le vendeur actuel à partir du viewModel à chaque fois qu'il change
@@ -18,6 +19,8 @@ struct SellerDetailScreen: View {
                 } else if let error = viewModel.error {
                     errorView(error: error)
                 } else if let seller = seller {
+                    actionButtonsSection
+                    
                     sellerInfoSection(seller: seller)
                     
                     if let balanceSheet = viewModel.balanceSheet {
@@ -33,8 +36,6 @@ struct SellerDetailScreen: View {
                         Text("Aucun dépôt trouvé")
                             .padding()
                     }
-                    
-                    actionButtonsSection
                 } else {
                     Text("Impossible de trouver le vendeur")
                         .foregroundColor(.red)
@@ -58,6 +59,15 @@ struct SellerDetailScreen: View {
         .onAppear {
             loadBalanceSheet()
             loadDeposits()
+        }
+        .sheet(isPresented: $showCreateDeposit) {
+            if let seller = seller {
+                CreateDepositScreen(
+                    viewModel: DepositViewModel(),
+                    sellerViewModel: viewModel,
+                    sellerId: sellerId
+                )
+            }
         }
     }
     
@@ -154,7 +164,7 @@ struct SellerDetailScreen: View {
                     
                     let formattedDate = dateFormatter.string(from: deposit.date)
                     infoRow(label: "Date", value: formattedDate)
-                    infoRow(label: "Frais appliqués", value: "\(String(format: "%.2f", deposit.feesApplied)) €")
+                    infoRow(label: "Taux frais de dépôt", value: "\(String(format: "%.2f", deposit.feesApplied))")
                     
                     Divider()
                 }
@@ -170,11 +180,11 @@ struct SellerDetailScreen: View {
     private var actionButtonsSection: some View {
         VStack(spacing: 16) {
             Button("Créer un dépôt") {
-                // Action pour créer un dépôt
+                showCreateDeposit = true
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .blue))
             
-            Button("Retrait des jeux") {
+            Button("Liste des jeux") {
                 // Action pour retirer des jeux
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .orange))

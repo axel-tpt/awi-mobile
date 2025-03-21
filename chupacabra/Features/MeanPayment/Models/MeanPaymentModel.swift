@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MeanPayment: Decodable {
-    let id: Int
-    let label: String
+public struct MeanPayment: Identifiable, Decodable, Equatable {
+    public let id: Int
+    public let label: String
 }
