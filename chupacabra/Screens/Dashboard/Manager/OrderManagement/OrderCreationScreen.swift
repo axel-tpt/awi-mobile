@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OrderCreationScreen: View {
     @StateObject private var physicalGameViewModel: PhysicalGameViewModel = PhysicalGameViewModel()
+    @StateObject private var meanPaymentViewModel: MeanPaymentViewModel = MeanPaymentViewModel()
     @StateObject private var orderViewModel: OrderViewModel = OrderViewModel()
     
     // État de la commande en cours
@@ -9,6 +10,7 @@ struct OrderCreationScreen: View {
     @State private var showingInvoiceForm = false
     @State private var orderId = -1
     @State private var searchQuery: String = ""
+    @State private var selectedPaymentId: Int?
     
     var body: some View {
         NavigationStack {
@@ -84,6 +86,16 @@ struct OrderCreationScreen: View {
                     }
                     .padding()
                     
+                    // Menu déroulant pour le moyen de paiement
+                    Picker("Moyen de paiement", selection: $selectedPaymentId) {
+                        Text("Sélectionner").tag(nil as Int?)
+                        ForEach(meanPaymentViewModel.meansPayment, id: \.id) { payment in
+                            Text(payment.label).tag(payment.id as Int?)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .padding()
+                    
                     Button(action: validateOrder) {
                         Text("Valider la commande")
                             .font(.title3)
@@ -91,11 +103,11 @@ struct OrderCreationScreen: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(selectedPhysicalsGames.isEmpty ? Color.gray : Color.blue)
+                            .background((selectedPhysicalsGames.isEmpty || selectedPaymentId == nil) ? Color.gray : Color.blue)
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
-                    .disabled(selectedPhysicalsGames.isEmpty)
+                    .disabled(selectedPhysicalsGames.isEmpty || selectedPaymentId == nil)
                 }
                 .background(Color(UIColor.systemBackground))
                 .shadow(radius: 5)
@@ -110,6 +122,7 @@ struct OrderCreationScreen: View {
         }
         .onAppear {
             physicalGameViewModel.loadForSalePhysicalGamesBarcodes()
+            meanPaymentViewModel.loadMeansPayment()
         }
     }
     
@@ -118,8 +131,18 @@ struct OrderCreationScreen: View {
     }
     
     private func validateOrder() {
-        // Action pour valider la commande
-        print("Commande validée avec \(selectedPhysicalsGames.count) jeux, total: \(totalPrice)€")
+        if let pid = self.selectedPaymentId {
+            print("Commande validée avec \(selectedPhysicalsGames.count) jeux, total: \(totalPrice)€")
+            let body = OrderRequest(
+                physicalGameIds: self.selectedPhysicalsGames.map { $0.id },
+                meanPaymentId: pid
+            )
+            orderViewModel.sendOrder(body: body)
+            self.showingInvoiceForm = true
+            self.selectedPhysicalsGames = []
+        } else {
+            print("Mean Payment isn't selected")
+        }
     }
     
     private var filteredBarcodes: [String] {
@@ -130,11 +153,12 @@ struct OrderCreationScreen: View {
     }
     
     private func addPhysicalGame(by barcode: String) {
-        physicalGameViewModel.loadPhysicalGameByBarcode(barcode: barcode)
-        if let physicalGame = physicalGameViewModel.physicalGameByBarcode {
-            selectedPhysicalsGames.append(physicalGame)
-        }
-        searchQuery = "" // Réinitialise la recherche après sélection
+        physicalGameViewModel.loadPhysicalGameByBarcode(barcode: barcode, onSuccess: {
+            if let physicalGame = physicalGameViewModel.physicalGameByBarcode {
+                selectedPhysicalsGames.append(physicalGame)
+            }
+            searchQuery = ""
+        })
     }
     
     private func removePhysicalGame(_ game: FullPhysicalGame) {

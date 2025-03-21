@@ -9,20 +9,20 @@ struct BulkUpdateRequest: Encodable {
 }
 
 public protocol PhysicalGameServiceProtocol {
-    func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], AuthError>
-    func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, AuthError>
-    func bulkUpdatePhysicalGamesStatus(ids: [Int], status: PhysicalGameStatus) -> AnyPublisher<EmptyResponse, AuthError>
-    func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], AuthError>
+    func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], RequestError>
+    func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, RequestError>
+    func bulkUpdatePhysicalGamesStatus(ids: [Int], status: PhysicalGameStatus) -> AnyPublisher<EmptyResponse, RequestError>
+    func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], RequestError>
 }
 
 public final class PhysicalGameService: PhysicalGameServiceProtocol {
     
-    public func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], AuthError> {
+    public func getPhysicalGamesNotLabeled() -> AnyPublisher<[FullPhysicalGame], RequestError> {
         return APIService.fetch(
             endpoint: "physical-games",
             method: .get
         )
-        .mapError { error -> AuthError in
+        .mapError { error -> RequestError in
             print("Erreur capturée : \(error)")
 
             if let apiError = error as? APIError {
@@ -38,12 +38,12 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    public func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, AuthError> {
+    public func getPhysicalGameByBarcode(_ barcode : String) -> AnyPublisher<FullPhysicalGame, RequestError> {
         return APIService.fetch(
             endpoint: "physical-games/by-barcode/" + barcode,
             method: .get
         )
-        .mapError { error -> AuthError in
+        .mapError { error -> RequestError in
             print("Erreur capturée : \(error)")
 
             if let apiError = error as? APIError {
@@ -62,7 +62,7 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
     public func bulkUpdatePhysicalGamesStatus(
         ids: [Int],
         status: PhysicalGameStatus
-    ) -> AnyPublisher<EmptyResponse, AuthError> {
+    ) -> AnyPublisher<EmptyResponse, RequestError> {
         let body = BulkUpdateRequest(ids: ids, status: status.rawValue)
         
         return APIService.fetch(
@@ -70,7 +70,7 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
             method: .put,
             body: body
         )
-        .mapError { error -> AuthError in
+        .mapError { error -> RequestError in
             print("Erreur capturée : \(error)")
 
             if let apiError = error as? APIError {
@@ -86,12 +86,12 @@ public final class PhysicalGameService: PhysicalGameServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    public func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], AuthError> {
+    public func getForSalePhysicalGamesBarcodes() -> AnyPublisher<[String], RequestError> {
         return APIService.fetch(
             endpoint: "physical-games/for-sale-barcodes",
             method: .get
         )
-        .mapError { error -> AuthError in
+        .mapError { error -> RequestError in
             print("Erreur capturée : \(error)")
 
             if let apiError = error as? APIError {
