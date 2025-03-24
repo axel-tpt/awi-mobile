@@ -443,59 +443,58 @@ struct CreateDepositScreen: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
             } else {
-                ForEach(0..<viewModel.selectedGames.count, id: \.self) { index in
-                    let game = viewModel.selectedGames[index]
-                    let gameInfo = viewModel.getGameById(game.gameId)
-                    
-                    VStack {
-                        HStack(alignment: .top) {
-                            Image(systemName: "gamecontroller.fill")
-                                .foregroundColor(.blue)
-                                .padding(8)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(8)
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(gameInfo?.name ?? "Jeu #\(game.gameId)")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
+                ForEach(viewModel.selectedGames, id: \.gameId) { game in
+                    if let gameInfo = viewModel.getGameById(game.gameId) {
+                        VStack {
+                            HStack(alignment: .top) {
+                                Image(systemName: "gamecontroller.fill")
+                                    .foregroundColor(.blue)
+                                    .padding(8)
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(8)
                                 
-                                HStack {
-                                    Text("Prix: \(game.price, specifier: "%.2f")€")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(gameInfo.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
                                     
-                                    Text("•")
-                                        .foregroundColor(.secondary)
+                                    HStack {
+                                        Text("Prix: \(game.price, specifier: "%.2f")€")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        
+                                        Text("•")
+                                            .foregroundColor(.secondary)
+                                        
+                                        Text("Quantité: \(game.quantity)")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .padding(.leading, 4)
+                                
+                                Spacer()
+                                
+                                VStack(alignment: .trailing, spacing: 4) {
+                                    Text("\(game.price * Double(game.quantity), specifier: "%.2f")€")
+                                        .fontWeight(.semibold)
                                     
-                                    Text("Quantité: \(game.quantity)")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                    Button(action: {
+                                        withAnimation {
+                                            viewModel.removeGame(at: game.gameId)
+                                        }
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.red)
+                                            .padding(6)
+                                            .background(Color.red.opacity(0.1))
+                                            .cornerRadius(8)
+                                    }
+                                    .buttonStyle(BorderlessButtonStyle())
                                 }
                             }
-                            .padding(.leading, 4)
+                            .padding(.vertical, 8)
                             
-                            Spacer()
-                            
-                            VStack(alignment: .trailing, spacing: 4) {
-                                Text("\(game.price * Double(game.quantity), specifier: "%.2f")€")
-                                    .fontWeight(.semibold)
-                                
-                                Button(action: {
-                                    viewModel.removeGame(at: index)
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.red)
-                                        .padding(6)
-                                        .background(Color.red.opacity(0.1))
-                                        .cornerRadius(8)
-                                }
-                                .buttonStyle(BorderlessButtonStyle())
-                            }
-                        }
-                        .padding(.vertical, 8)
-                        
-                        if index < viewModel.selectedGames.count - 1 {
                             Divider()
                         }
                     }
@@ -970,11 +969,3 @@ struct CreateDepositScreen: View {
         }
     }
 }
-
-#Preview {
-    CreateDepositScreen(
-        viewModel: DepositViewModel(),
-        sellerViewModel: SellerViewModel(),
-        sellerId: 1
-    )
-} 

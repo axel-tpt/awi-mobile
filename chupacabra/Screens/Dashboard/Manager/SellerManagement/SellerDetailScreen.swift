@@ -4,6 +4,9 @@ import Combine
 struct SellerDetailScreen: View {
     @ObservedObject var viewModel: SellerViewModel
     @State private var showCreateDeposit = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @Environment(\.dismiss) var dismiss
     let sellerId: Int
     
     // Calcule le vendeur actuel à partir du viewModel à chaque fois qu'il change
@@ -19,7 +22,11 @@ struct SellerDetailScreen: View {
                 } else if let error = viewModel.error {
                     errorView(error: error)
                 } else if let seller = seller {
-                    actionButtonsSection
+                    
+                    
+                    if let balanceSheet = viewModel.balanceSheet {
+                        actionButtonsSection(balanceSheet: balanceSheet)
+                    }
                     
                     sellerInfoSection(seller: seller)
                     
@@ -61,7 +68,7 @@ struct SellerDetailScreen: View {
             loadDeposits()
         }
         .sheet(isPresented: $showCreateDeposit) {
-            if let seller = seller {
+            if seller != nil {
                 CreateDepositScreen(
                     viewModel: DepositViewModel(),
                     sellerViewModel: viewModel,
@@ -131,7 +138,7 @@ struct SellerDetailScreen: View {
             infoRow(label: "Jeux en vente", value: "\(balanceSheet.gamesForSale)")
             infoRow(label: "Gains possibles", value: "\(String(format: "%.2f", balanceSheet.possibleGain)) €")
             infoRow(label: "Jeux à retirer", value: "\(balanceSheet.gamesToWithdraw)")
-            infoRow(label: "Valeur à retirer", value: "\(String(format: "%.2f", balanceSheet.valueToWithdraw)) €")
+            infoRow(label: "Valeur des jeux à retirer", value: "\(String(format: "%.2f", balanceSheet.valueToWithdraw)) €")
             infoRow(label: "Frais de dépôt", value: "\(String(format: "%.2f", balanceSheet.totalFeesForDeposits)) €")
         }
         .padding()
@@ -177,19 +184,34 @@ struct SellerDetailScreen: View {
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
     
-    private var actionButtonsSection: some View {
+    private func actionButtonsSection(balanceSheet: SellerBalanceSheet) -> some View {
+        
         VStack(spacing: 16) {
             Button("Créer un dépôt") {
                 showCreateDeposit = true
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .blue))
-            
             Button("Liste des jeux") {
                 // Action pour retirer des jeux
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .orange))
+            Button("Retirer les fonds") {
+                viewModel.financialWithdraw(id: sellerId, onSuccess: {
+                    alertMessage = "Fonds retirés avec succès !"
+                    showAlert = true
+                }, onError: { _ in
+                    alertMessage = "Erreur lors du retrés des fonds !"
+                    showAlert = true
+                })
+            }
+            .buttonStyle(PrimaryButtonStyle(backgroundColor: .green, isDisabled: balanceSheet.credit <= 0))
+            .disabled(balanceSheet.credit <= 0)
         }
         .padding(.top, 20)
+        .alert(alertMessage, isPresented: $showAlert) {
+            Button("OK", role: .cancel) { dismiss() }
+        }
+        
     }
     
     // MARK: - Helper Views
@@ -208,16 +230,20 @@ struct SellerDetailScreen: View {
 
 struct PrimaryButtonStyle: ButtonStyle {
     let backgroundColor: Color
+    var isDisabled: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
             .foregroundColor(.white)
             .padding()
-            .background(backgroundColor.opacity(configuration.isPressed ? 0.7 : 1))
+            .background(
+                isDisabled ? Color.gray : backgroundColor.opacity(configuration.isPressed ? 0.7 : 1)
+            )
             .cornerRadius(8)
     }
 }
+
 
 struct SellerDetailScreen_Previews: PreviewProvider {
     static var previews: some View {

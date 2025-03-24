@@ -123,4 +123,22 @@ class SellerViewModel: ObservableObject, RequestHandler {
             }
         )
     }
+    
+    func financialWithdraw(id: Int,
+                           onSuccess: (() -> Void)? = nil,
+                           onError: ((RequestError) -> Void)? = nil) {
+        handlePublisher(
+            sellerService.financialWithdraw(id: id),
+            setLoading: { self.isLoading = $0 },
+            setError: { self.error = $0 },
+            onSuccess: { _ in
+                self.loadSellers(onSuccess: {
+                    onSuccess?()
+                })
+            },
+            onError: { error in
+                onError?(error)
+            }
+        )
+    }
 } 

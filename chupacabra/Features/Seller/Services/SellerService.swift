@@ -9,6 +9,7 @@ public protocol SellerServiceProtocol {
     func createSeller(data: SellerForm) -> AnyPublisher<EmptyResponse, RequestError>
     func getSellerBalanceSheet(id: Int) -> AnyPublisher<SellerBalanceSheet, RequestError>
     func getSellerDeposits(id: Int) -> AnyPublisher<[Deposit], RequestError>
+    func financialWithdraw(id: Int) -> AnyPublisher<EmptyResponse, RequestError>
 }
 
 public final class SellerService: SellerServiceProtocol {
@@ -107,6 +108,22 @@ public final class SellerService: SellerServiceProtocol {
     
     public func getSellerDeposits(id: Int) -> AnyPublisher<[Deposit], RequestError> {
         return APIService.fetch(endpoint: "/sellers/\(id)/deposits", method: .get)
+            .mapError { error -> RequestError in
+                if let apiError = error as? APIError {
+                    return .serverError(statusCode: apiError.statusCode, underlyingError: apiError.underlyingError)
+                } else if error is URLError {
+                    return .networkError(error)
+                } else if error is DecodingError {
+                    return .decodingError
+                } else {
+                    return .unknownError(error)
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func financialWithdraw(id: Int) -> AnyPublisher<EmptyResponse, RequestError> {
+        return APIService.fetch(endpoint: "/sellers/\(id)/financial-withdrawal", method: .post)
             .mapError { error -> RequestError in
                 if let apiError = error as? APIError {
                     return .serverError(statusCode: apiError.statusCode, underlyingError: apiError.underlyingError)
