@@ -7,6 +7,7 @@ struct SellerDetailScreen: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @Environment(\.dismiss) var dismiss
+    @State private var showGamesList = false
     let sellerId: Int
     
     // Calcule le vendeur actuel à partir du viewModel à chaque fois qu'il change
@@ -75,6 +76,9 @@ struct SellerDetailScreen: View {
                     sellerId: sellerId
                 )
             }
+        }
+        .sheet(isPresented: $showGamesList) {
+            SellerGamesListScreen(sellerId: sellerId)
         }
     }
     
@@ -192,7 +196,7 @@ struct SellerDetailScreen: View {
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .blue))
             Button("Liste des jeux") {
-                // Action pour retirer des jeux
+                showGamesList = true
             }
             .buttonStyle(PrimaryButtonStyle(backgroundColor: .orange))
             Button("Retirer les fonds") {
