@@ -77,8 +77,8 @@ class DepositViewModel: ObservableObject, RequestHandler {
         }
         
         let depositForm = SellerCreateDeposit(
-            feesApplied: feesApplied,
-            commissionApplied: commissionApplied,
+            feesApplied: feesApplied / 100,
+            commissionApplied: commissionApplied / 100,
             meanPaymentId: meanPaymentId,
             physicalGames: selectedGames
         )

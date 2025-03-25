@@ -30,7 +30,6 @@ struct GameLabellingScreen: View {
     @StateObject private var physicalGameViewModel: PhysicalGameViewModel = PhysicalGameViewModel()
     
     @State private var selectedGames: Set<Int> = []
-    @State private var isLoading = false
     
     var body: some View {
         NavigationStack {
@@ -48,14 +47,14 @@ struct GameLabellingScreen: View {
                             .background(selectedGames.isEmpty ? Color.gray : Color.green)
                             .cornerRadius(8)
                     }
-                    .disabled(selectedGames.isEmpty || isLoading)
+                    .disabled(selectedGames.isEmpty ||  self.physicalGameViewModel.isLoading)
                     .padding(.trailing)
                 }
                 .padding(.vertical)
                 
                 Divider()
                 
-                if isLoading {
+                if self.physicalGameViewModel.isLoading {
                     ProgressView()
                         .scaleEffect(1.5)
                         .padding(.top, 100)
@@ -109,15 +108,9 @@ struct GameLabellingScreen: View {
     }
     
     private func labelSelectedGames() {
-        isLoading = true
-        
-        // Simuler un délai pour l'API
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            // Supprimer les jeux sélectionnés
-            physicalGameViewModel.physicalGamesNotLabeled.removeAll { selectedGames.contains($0.id)}
-            selectedGames.removeAll()
-            isLoading = false
-        }
+        self.physicalGameViewModel.bulkUpdatePhysicalGamesStatus(ids: Array(selectedGames), status: .FOR_SALE, onSuccess: {
+            self.physicalGameViewModel.loadPhysicalGamesNotLabeled()
+        })
     }
 }
 

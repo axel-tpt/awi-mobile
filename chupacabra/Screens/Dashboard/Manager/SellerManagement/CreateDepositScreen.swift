@@ -544,17 +544,30 @@ struct CreateDepositScreen: View {
             Form {
                 Section(header: Text("Sélection du jeu").textCase(.uppercase)) {
                     // Champ de recherche
-                    TextField("Rechercher un jeu", text: $searchQuery)
-                        .padding(.vertical, 8)
-                        .onChange(of: searchQuery) { newValue in
-                            viewModel.filterGames(query: newValue)
-                        }
-                        .overlay(
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.gray)
-                                .padding(.trailing),
-                            alignment: .trailing
-                        )
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .padding(.leading, 8)
+                        
+                        TextField("Rechercher un jeu", text: $searchQuery)
+                            .padding(.vertical, 8)
+                            .padding(.trailing, 28) // Espace pour l'icône
+                            .onChange(of: searchQuery) { newValue in
+                                viewModel.filterGames(query: newValue)
+                            }
+                            .overlay(
+                                HStack {
+                                    Spacer()
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.gray)
+                                        .frame(width: 20, height: 20)
+                                        .padding(.trailing, 8)
+                                }
+                            )
+                    }
+                    .padding(.horizontal, 4)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
                     
                     if viewModel.currentGameId != nil {
                         HStack {
