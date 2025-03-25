@@ -1,28 +1,21 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var authViewModel = AuthViewModel()
+    @EnvironmentObject var loggedUserVM: LoggedUserEnvironment
     
     var body: some View {
-        Group {
-            if case .authenticated(let user) = authViewModel.state {
-                switch user.role {
-                case .admin:
-                    AdminDashboardView(authViewModel: authViewModel)
-                case .teacher:
-                    TeacherDashboardView(authViewModel: authViewModel)
-                case .student:
-                    StudentDashboardView(authViewModel: authViewModel)
-                }
-            } else {
-                LoginView()
-            }
+        switch loggedUserVM.loggedUser?.permissionLevel {
+        case nil:
+            LoginView()
+        default:
+            DashboardView()
         }
     }
 }
 
-struct RootPreview: PreviewProvider {
+struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+        RootView().environmentObject(LoggedUserEnvironment())
     }
 }
+

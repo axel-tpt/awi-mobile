@@ -7,10 +7,78 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5647F43A2D81AB5400362FAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5647F4282D81AB5400362FAC /* Preview Assets.xcassets */; };
+		5647F4452D81BA6100362FAC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 5647F4442D81BA6100362FAC /* JWTDecode */; };
+		56C3877A2D8DA21100E4084E /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3870B2D8DA21100E4084E /* CategoryService.swift */; };
+		56C3877B2D8DA21100E4084E /* ManagerDashboardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386F92D8DA21100E4084E /* ManagerDashboardList.swift */; };
+		56C3877C2D8DA21100E4084E /* OrderCreationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3876B2D8DA21100E4084E /* OrderCreationScreen.swift */; };
+		56C3877D2D8DA21100E4084E /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387052D8DA21100E4084E /* AuthViewModel.swift */; };
+		56C3877E2D8DA21100E4084E /* SellerBalanceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387402D8DA21100E4084E /* SellerBalanceSheet.swift */; };
+		56C3877F2D8DA21100E4084E /* StatisticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387562D8DA21100E4084E /* StatisticModel.swift */; };
+		56C387802D8DA21100E4084E /* MemberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3872E2D8DA21100E4084E /* MemberFormView.swift */; };
+		56C387812D8DA21100E4084E /* SellerListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3876F2D8DA21100E4084E /* SellerListScreen.swift */; };
+		56C387822D8DA21100E4084E /* PhysicalGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3873A2D8DA21100E4084E /* PhysicalGameService.swift */; };
+		56C387832D8DA21100E4084E /* CreateMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3872C2D8DA21100E4084E /* CreateMemberView.swift */; };
+		56C387842D8DA21100E4084E /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3872D2D8DA21100E4084E /* EditMemberView.swift */; };
+		56C387852D8DA21100E4084E /* CatalogScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387672D8DA21100E4084E /* CatalogScreen.swift */; };
+		56C387862D8DA21100E4084E /* StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3875A2D8DA21100E4084E /* StatisticViewModel.swift */; };
+		56C387872D8DA21100E4084E /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387032D8DA21100E4084E /* TokenService.swift */; };
+		56C387882D8DA21100E4084E /* DepositService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387132D8DA21100E4084E /* DepositService.swift */; };
+		56C387892D8DA21100E4084E /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387512D8DA21100E4084E /* CreateSessionView.swift */; };
+		56C3878A2D8DA21100E4084E /* StatisticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387712D8DA21100E4084E /* StatisticsScreen.swift */; };
+		56C3878B2D8DA21100E4084E /* SessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3874F2D8DA21100E4084E /* SessionViewModel.swift */; };
+		56C3878C2D8DA21100E4084E /* DepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387152D8DA21100E4084E /* DepositViewModel.swift */; };
+		56C3878D2D8DA21100E4084E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386FC2D8DA21100E4084E /* APIService.swift */; };
+		56C3878E2D8DA21100E4084E /* SellerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387482D8DA21100E4084E /* SellerFormView.swift */; };
+		56C3878F2D8DA21100E4084E /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387022D8DA21100E4084E /* AuthService.swift */; };
+		56C387902D8DA21100E4084E /* MeanPaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387212D8DA21100E4084E /* MeanPaymentService.swift */; };
+		56C387912D8DA21100E4084E /* BalanceSheetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387652D8DA21100E4084E /* BalanceSheetScreen.swift */; };
+		56C387922D8DA21100E4084E /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3871A2D8DA21100E4084E /* GameService.swift */; };
+		56C387932D8DA21100E4084E /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3874D2D8DA21100E4084E /* SessionService.swift */; };
+		56C387942D8DA21100E4084E /* SellerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387442D8DA21100E4084E /* SellerViewModel.swift */; };
+		56C387952D8DA21100E4084E /* EditSellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387472D8DA21100E4084E /* EditSellerView.swift */; };
+		56C387962D8DA21100E4084E /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3874B2D8DA21100E4084E /* Session.swift */; };
+		56C387972D8DA21100E4084E /* DepositForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387112D8DA21100E4084E /* DepositForm.swift */; };
+		56C387982D8DA21100E4084E /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3873F2D8DA21100E4084E /* Seller.swift */; };
+		56C387992D8DA21100E4084E /* PhysicalGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3873C2D8DA21100E4084E /* PhysicalGameViewModel.swift */; };
+		56C3879A2D8DA21100E4084E /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387262D8DA21100E4084E /* Member.swift */; };
+		56C3879B2D8DA21100E4084E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387182D8DA21100E4084E /* Game.swift */; };
+		56C3879C2D8DA21100E4084E /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387282D8DA21100E4084E /* MemberService.swift */; };
+		56C3879D2D8DA21100E4084E /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386FD2D8DA21100E4084E /* RequestHandler.swift */; };
+		56C3879E2D8DA21100E4084E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387742D8DA21100E4084E /* DashboardView.swift */; };
+		56C3879F2D8DA21100E4084E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387002D8DA21100E4084E /* User.swift */; };
+		56C387A02D8DA21100E4084E /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387352D8DA21100E4084E /* OrderViewModel.swift */; };
+		56C387A12D8DA21100E4084E /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387332D8DA21100E4084E /* OrderService.swift */; };
+		56C387A22D8DA21100E4084E /* CreateSellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387462D8DA21100E4084E /* CreateSellerView.swift */; };
+		56C387A32D8DA21100E4084E /* SessionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387532D8DA21100E4084E /* SessionForm.swift */; };
+		56C387A42D8DA21100E4084E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3871C2D8DA21100E4084E /* GameViewModel.swift */; };
+		56C387A52D8DA21100E4084E /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3870D2D8DA21100E4084E /* CategoryViewModel.swift */; };
+		56C387A62D8DA21100E4084E /* SellerDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3876E2D8DA21100E4084E /* SellerDetailScreen.swift */; };
+		56C387A72D8DA21100E4084E /* CreateDepositScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3876D2D8DA21100E4084E /* CreateDepositScreen.swift */; };
+		56C387A82D8DA21100E4084E /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3872A2D8DA21100E4084E /* MemberViewModel.swift */; };
+		56C387A92D8DA21100E4084E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386F82D8DA21100E4084E /* CustomTextField.swift */; };
+		56C387AA2D8DA21100E4084E /* GameLabellingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387692D8DA21100E4084E /* GameLabellingScreen.swift */; };
+		56C387AB2D8DA21100E4084E /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387582D8DA21100E4084E /* StatisticService.swift */; };
+		56C387AC2D8DA21100E4084E /* Deposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387102D8DA21100E4084E /* Deposit.swift */; };
+		56C387AD2D8DA21100E4084E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387092D8DA21100E4084E /* Category.swift */; };
+		56C387AE2D8DA21100E4084E /* SessionListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387622D8DA21100E4084E /* SessionListScreen.swift */; };
+		56C387AF2D8DA21100E4084E /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386FF2D8DA21100E4084E /* Publisher.swift */; };
+		56C387B02D8DA21100E4084E /* AdminDashboardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C386F72D8DA21100E4084E /* AdminDashboardList.swift */; };
+		56C387B12D8DA21100E4084E /* SellerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387422D8DA21100E4084E /* SellerService.swift */; };
+		56C387B22D8DA21100E4084E /* MeanPaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C3871F2D8DA21100E4084E /* MeanPaymentModel.swift */; };
+		56C387B32D8DA21100E4084E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387782D8DA21100E4084E /* RootView.swift */; };
+		56C387B42D8DA21100E4084E /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387312D8DA21100E4084E /* OrderModel.swift */; };
+		56C387B52D8DA21100E4084E /* MemberListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387602D8DA21100E4084E /* MemberListScreen.swift */; };
+		56C387B62D8DA21100E4084E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387762D8DA21100E4084E /* LoginView.swift */; };
+		56C387B72D8DA21100E4084E /* EditSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387522D8DA21100E4084E /* EditSessionView.swift */; };
+		56C387B82D8DA21100E4084E /* MeanPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387232D8DA21100E4084E /* MeanPaymentViewModel.swift */; };
+		56C387B92D8DA21100E4084E /* PhysicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387382D8DA21100E4084E /* PhysicalGame.swift */; };
+		56C387BA2D8DA21100E4084E /* LoggedUserEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387072D8DA21100E4084E /* LoggedUserEnvironment.swift */; };
+		56C387BB2D8DA21100E4084E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3875E2D8DA21100E4084E /* Preview Assets.xcassets */; };
+		56C387BD2D8DA58700E4084E /* SellerGamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */; };
+		56C387C12D8DA65800E4084E /* SellerGamesListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */; };
 		B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */; };
-		B743C4B12D81A30C001D0F9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4B02D81A30C001D0F9E /* ContentView.swift */; };
 		B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B22D81A318001D0F9E /* Assets.xcassets */; };
-		B743C4B62D81A318001D0F9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B743C4B52D81A318001D0F9E /* Preview Assets.xcassets */; };
 		B743C4C02D81A319001D0F9E /* chupacabraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */; };
 		B743C4CA2D81A319001D0F9E /* chupacabraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4C92D81A319001D0F9E /* chupacabraUITests.swift */; };
 		B743C4CC2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B743C4CB2D81A319001D0F9E /* chupacabraUITestsLaunchTests.swift */; };
@@ -34,11 +102,78 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5647F4282D81AB5400362FAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		56C386F72D8DA21100E4084E /* AdminDashboardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardList.swift; sourceTree = "<group>"; };
+		56C386F82D8DA21100E4084E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		56C386F92D8DA21100E4084E /* ManagerDashboardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerDashboardList.swift; sourceTree = "<group>"; };
+		56C386FC2D8DA21100E4084E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		56C386FD2D8DA21100E4084E /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
+		56C386FF2D8DA21100E4084E /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
+		56C387002D8DA21100E4084E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		56C387022D8DA21100E4084E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		56C387032D8DA21100E4084E /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		56C387052D8DA21100E4084E /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		56C387072D8DA21100E4084E /* LoggedUserEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedUserEnvironment.swift; sourceTree = "<group>"; };
+		56C387092D8DA21100E4084E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		56C3870B2D8DA21100E4084E /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
+		56C3870D2D8DA21100E4084E /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		56C387102D8DA21100E4084E /* Deposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deposit.swift; sourceTree = "<group>"; };
+		56C387112D8DA21100E4084E /* DepositForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositForm.swift; sourceTree = "<group>"; };
+		56C387132D8DA21100E4084E /* DepositService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositService.swift; sourceTree = "<group>"; };
+		56C387152D8DA21100E4084E /* DepositViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositViewModel.swift; sourceTree = "<group>"; };
+		56C387182D8DA21100E4084E /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		56C3871A2D8DA21100E4084E /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
+		56C3871C2D8DA21100E4084E /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		56C3871F2D8DA21100E4084E /* MeanPaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentModel.swift; sourceTree = "<group>"; };
+		56C387212D8DA21100E4084E /* MeanPaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentService.swift; sourceTree = "<group>"; };
+		56C387232D8DA21100E4084E /* MeanPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanPaymentViewModel.swift; sourceTree = "<group>"; };
+		56C387262D8DA21100E4084E /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		56C387282D8DA21100E4084E /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
+		56C3872A2D8DA21100E4084E /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
+		56C3872C2D8DA21100E4084E /* CreateMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMemberView.swift; sourceTree = "<group>"; };
+		56C3872D2D8DA21100E4084E /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
+		56C3872E2D8DA21100E4084E /* MemberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFormView.swift; sourceTree = "<group>"; };
+		56C387312D8DA21100E4084E /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		56C387332D8DA21100E4084E /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
+		56C387352D8DA21100E4084E /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		56C387382D8DA21100E4084E /* PhysicalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGame.swift; sourceTree = "<group>"; };
+		56C3873A2D8DA21100E4084E /* PhysicalGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameService.swift; sourceTree = "<group>"; };
+		56C3873C2D8DA21100E4084E /* PhysicalGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalGameViewModel.swift; sourceTree = "<group>"; };
+		56C3873F2D8DA21100E4084E /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
+		56C387402D8DA21100E4084E /* SellerBalanceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerBalanceSheet.swift; sourceTree = "<group>"; };
+		56C387422D8DA21100E4084E /* SellerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerService.swift; sourceTree = "<group>"; };
+		56C387442D8DA21100E4084E /* SellerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerViewModel.swift; sourceTree = "<group>"; };
+		56C387462D8DA21100E4084E /* CreateSellerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSellerView.swift; sourceTree = "<group>"; };
+		56C387472D8DA21100E4084E /* EditSellerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSellerView.swift; sourceTree = "<group>"; };
+		56C387482D8DA21100E4084E /* SellerFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerFormView.swift; sourceTree = "<group>"; };
+		56C3874B2D8DA21100E4084E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		56C3874D2D8DA21100E4084E /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
+		56C3874F2D8DA21100E4084E /* SessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewModel.swift; sourceTree = "<group>"; };
+		56C387512D8DA21100E4084E /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
+		56C387522D8DA21100E4084E /* EditSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSessionView.swift; sourceTree = "<group>"; };
+		56C387532D8DA21100E4084E /* SessionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionForm.swift; sourceTree = "<group>"; };
+		56C387562D8DA21100E4084E /* StatisticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticModel.swift; sourceTree = "<group>"; };
+		56C387582D8DA21100E4084E /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
+		56C3875A2D8DA21100E4084E /* StatisticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewModel.swift; sourceTree = "<group>"; };
+		56C3875E2D8DA21100E4084E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		56C387602D8DA21100E4084E /* MemberListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListScreen.swift; sourceTree = "<group>"; };
+		56C387622D8DA21100E4084E /* SessionListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListScreen.swift; sourceTree = "<group>"; };
+		56C387652D8DA21100E4084E /* BalanceSheetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceSheetScreen.swift; sourceTree = "<group>"; };
+		56C387672D8DA21100E4084E /* CatalogScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogScreen.swift; sourceTree = "<group>"; };
+		56C387692D8DA21100E4084E /* GameLabellingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLabellingScreen.swift; sourceTree = "<group>"; };
+		56C3876B2D8DA21100E4084E /* OrderCreationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCreationScreen.swift; sourceTree = "<group>"; };
+		56C3876D2D8DA21100E4084E /* CreateDepositScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDepositScreen.swift; sourceTree = "<group>"; };
+		56C3876E2D8DA21100E4084E /* SellerDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerDetailScreen.swift; sourceTree = "<group>"; };
+		56C3876F2D8DA21100E4084E /* SellerListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerListScreen.swift; sourceTree = "<group>"; };
+		56C387712D8DA21100E4084E /* StatisticsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScreen.swift; sourceTree = "<group>"; };
+		56C387742D8DA21100E4084E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		56C387762D8DA21100E4084E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		56C387782D8DA21100E4084E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerGamesViewModel.swift; sourceTree = "<group>"; };
+		56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerGamesListScreen.swift; sourceTree = "<group>"; };
 		B743C4AB2D81A30C001D0F9E /* chupacabra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chupacabra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraApp.swift; sourceTree = "<group>"; };
-		B743C4B02D81A30C001D0F9E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B743C4B22D81A318001D0F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B743C4B52D81A318001D0F9E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B743C4BB2D81A319001D0F9E /* chupacabraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chupacabraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B743C4BF2D81A319001D0F9E /* chupacabraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chupacabraTests.swift; sourceTree = "<group>"; };
 		B743C4C52D81A319001D0F9E /* chupacabraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chupacabraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5647F4452D81BA6100362FAC /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +207,597 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5647F4292D81AB5400362FAC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				5647F4282D81AB5400362FAC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		56C386FA2D8DA21100E4084E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				56C386F72D8DA21100E4084E /* AdminDashboardList.swift */,
+				56C386F82D8DA21100E4084E /* CustomTextField.swift */,
+				56C386F92D8DA21100E4084E /* ManagerDashboardList.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		56C386FB2D8DA21100E4084E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				56C386FA2D8DA21100E4084E /* Components */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		56C386FE2D8DA21100E4084E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				56C386FC2D8DA21100E4084E /* APIService.swift */,
+				56C386FD2D8DA21100E4084E /* RequestHandler.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		56C387012D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C386FF2D8DA21100E4084E /* Publisher.swift */,
+				56C387002D8DA21100E4084E /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387042D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387022D8DA21100E4084E /* AuthService.swift */,
+				56C387032D8DA21100E4084E /* TokenService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387062D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C387052D8DA21100E4084E /* AuthViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387082D8DA21100E4084E /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				56C387012D8DA21100E4084E /* Models */,
+				56C387042D8DA21100E4084E /* Services */,
+				56C387062D8DA21100E4084E /* ViewModels */,
+				56C387072D8DA21100E4084E /* LoggedUserEnvironment.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		56C3870A2D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387092D8DA21100E4084E /* Category.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C3870C2D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C3870B2D8DA21100E4084E /* CategoryService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C3870E2D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3870D2D8DA21100E4084E /* CategoryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C3870F2D8DA21100E4084E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				56C3870A2D8DA21100E4084E /* Models */,
+				56C3870C2D8DA21100E4084E /* Services */,
+				56C3870E2D8DA21100E4084E /* ViewModels */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		56C387122D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387102D8DA21100E4084E /* Deposit.swift */,
+				56C387112D8DA21100E4084E /* DepositForm.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387142D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387132D8DA21100E4084E /* DepositService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387162D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C387152D8DA21100E4084E /* DepositViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387172D8DA21100E4084E /* Deposit */ = {
+			isa = PBXGroup;
+			children = (
+				56C387122D8DA21100E4084E /* Models */,
+				56C387142D8DA21100E4084E /* Services */,
+				56C387162D8DA21100E4084E /* ViewModels */,
+			);
+			path = Deposit;
+			sourceTree = "<group>";
+		};
+		56C387192D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387182D8DA21100E4084E /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C3871B2D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C3871A2D8DA21100E4084E /* GameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C3871D2D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3871C2D8DA21100E4084E /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C3871E2D8DA21100E4084E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				56C387192D8DA21100E4084E /* Models */,
+				56C3871B2D8DA21100E4084E /* Services */,
+				56C3871D2D8DA21100E4084E /* ViewModels */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		56C387202D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C3871F2D8DA21100E4084E /* MeanPaymentModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387222D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387212D8DA21100E4084E /* MeanPaymentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387242D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C387232D8DA21100E4084E /* MeanPaymentViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387252D8DA21100E4084E /* MeanPayment */ = {
+			isa = PBXGroup;
+			children = (
+				56C387202D8DA21100E4084E /* Models */,
+				56C387222D8DA21100E4084E /* Services */,
+				56C387242D8DA21100E4084E /* ViewModels */,
+			);
+			path = MeanPayment;
+			sourceTree = "<group>";
+		};
+		56C387272D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387262D8DA21100E4084E /* Member.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387292D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387282D8DA21100E4084E /* MemberService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C3872B2D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3872A2D8DA21100E4084E /* MemberViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C3872F2D8DA21100E4084E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56C3872C2D8DA21100E4084E /* CreateMemberView.swift */,
+				56C3872D2D8DA21100E4084E /* EditMemberView.swift */,
+				56C3872E2D8DA21100E4084E /* MemberFormView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56C387302D8DA21100E4084E /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				56C387272D8DA21100E4084E /* Models */,
+				56C387292D8DA21100E4084E /* Services */,
+				56C3872B2D8DA21100E4084E /* ViewModels */,
+				56C3872F2D8DA21100E4084E /* Views */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		56C387322D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387312D8DA21100E4084E /* OrderModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387342D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387332D8DA21100E4084E /* OrderService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387362D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C387352D8DA21100E4084E /* OrderViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387372D8DA21100E4084E /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				56C387322D8DA21100E4084E /* Models */,
+				56C387342D8DA21100E4084E /* Services */,
+				56C387362D8DA21100E4084E /* ViewModels */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		56C387392D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387382D8DA21100E4084E /* PhysicalGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C3873B2D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C3873A2D8DA21100E4084E /* PhysicalGameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C3873D2D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3873C2D8DA21100E4084E /* PhysicalGameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C3873E2D8DA21100E4084E /* PhysicalGame */ = {
+			isa = PBXGroup;
+			children = (
+				56C387392D8DA21100E4084E /* Models */,
+				56C3873B2D8DA21100E4084E /* Services */,
+				56C3873D2D8DA21100E4084E /* ViewModels */,
+			);
+			path = PhysicalGame;
+			sourceTree = "<group>";
+		};
+		56C387412D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C3873F2D8DA21100E4084E /* Seller.swift */,
+				56C387402D8DA21100E4084E /* SellerBalanceSheet.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387432D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387422D8DA21100E4084E /* SellerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387452D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C387BC2D8DA58700E4084E /* SellerGamesViewModel.swift */,
+				56C387442D8DA21100E4084E /* SellerViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387492D8DA21100E4084E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56C387462D8DA21100E4084E /* CreateSellerView.swift */,
+				56C387472D8DA21100E4084E /* EditSellerView.swift */,
+				56C387482D8DA21100E4084E /* SellerFormView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56C3874A2D8DA21100E4084E /* Seller */ = {
+			isa = PBXGroup;
+			children = (
+				56C387412D8DA21100E4084E /* Models */,
+				56C387432D8DA21100E4084E /* Services */,
+				56C387452D8DA21100E4084E /* ViewModels */,
+				56C387492D8DA21100E4084E /* Views */,
+			);
+			path = Seller;
+			sourceTree = "<group>";
+		};
+		56C3874C2D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C3874B2D8DA21100E4084E /* Session.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C3874E2D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C3874D2D8DA21100E4084E /* SessionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C387502D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3874F2D8DA21100E4084E /* SessionViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C387542D8DA21100E4084E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56C387512D8DA21100E4084E /* CreateSessionView.swift */,
+				56C387522D8DA21100E4084E /* EditSessionView.swift */,
+				56C387532D8DA21100E4084E /* SessionForm.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56C387552D8DA21100E4084E /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				56C3874C2D8DA21100E4084E /* Models */,
+				56C3874E2D8DA21100E4084E /* Services */,
+				56C387502D8DA21100E4084E /* ViewModels */,
+				56C387542D8DA21100E4084E /* Views */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		56C387572D8DA21100E4084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56C387562D8DA21100E4084E /* StatisticModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		56C387592D8DA21100E4084E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56C387582D8DA21100E4084E /* StatisticService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		56C3875B2D8DA21100E4084E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56C3875A2D8DA21100E4084E /* StatisticViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56C3875C2D8DA21100E4084E /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				56C387572D8DA21100E4084E /* Models */,
+				56C387592D8DA21100E4084E /* Services */,
+				56C3875B2D8DA21100E4084E /* ViewModels */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		56C3875D2D8DA21100E4084E /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				56C387082D8DA21100E4084E /* Authentication */,
+				56C3870F2D8DA21100E4084E /* Category */,
+				56C387172D8DA21100E4084E /* Deposit */,
+				56C3871E2D8DA21100E4084E /* Game */,
+				56C387252D8DA21100E4084E /* MeanPayment */,
+				56C387302D8DA21100E4084E /* Member */,
+				56C387372D8DA21100E4084E /* Order */,
+				56C3873E2D8DA21100E4084E /* PhysicalGame */,
+				56C3874A2D8DA21100E4084E /* Seller */,
+				56C387552D8DA21100E4084E /* Session */,
+				56C3875C2D8DA21100E4084E /* Statistics */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		56C3875F2D8DA21100E4084E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				56C3875E2D8DA21100E4084E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		56C387612D8DA21100E4084E /* MemberManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C387602D8DA21100E4084E /* MemberListScreen.swift */,
+			);
+			path = MemberManagement;
+			sourceTree = "<group>";
+		};
+		56C387632D8DA21100E4084E /* SessionManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C387622D8DA21100E4084E /* SessionListScreen.swift */,
+			);
+			path = SessionManagement;
+			sourceTree = "<group>";
+		};
+		56C387642D8DA21100E4084E /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				56C387612D8DA21100E4084E /* MemberManagement */,
+				56C387632D8DA21100E4084E /* SessionManagement */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		56C387662D8DA21100E4084E /* BalanceSheetManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C387652D8DA21100E4084E /* BalanceSheetScreen.swift */,
+			);
+			path = BalanceSheetManagement;
+			sourceTree = "<group>";
+		};
+		56C387682D8DA21100E4084E /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				56C387672D8DA21100E4084E /* CatalogScreen.swift */,
+			);
+			path = Catalog;
+			sourceTree = "<group>";
+		};
+		56C3876A2D8DA21100E4084E /* GameLabellingManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C387692D8DA21100E4084E /* GameLabellingScreen.swift */,
+			);
+			path = GameLabellingManagement;
+			sourceTree = "<group>";
+		};
+		56C3876C2D8DA21100E4084E /* OrderManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C3876B2D8DA21100E4084E /* OrderCreationScreen.swift */,
+			);
+			path = OrderManagement;
+			sourceTree = "<group>";
+		};
+		56C387702D8DA21100E4084E /* SellerManagement */ = {
+			isa = PBXGroup;
+			children = (
+				56C387C02D8DA65800E4084E /* SellerGamesListScreen.swift */,
+				56C3876D2D8DA21100E4084E /* CreateDepositScreen.swift */,
+				56C3876E2D8DA21100E4084E /* SellerDetailScreen.swift */,
+				56C3876F2D8DA21100E4084E /* SellerListScreen.swift */,
+			);
+			path = SellerManagement;
+			sourceTree = "<group>";
+		};
+		56C387722D8DA21100E4084E /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				56C387712D8DA21100E4084E /* StatisticsScreen.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		56C387732D8DA21100E4084E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				56C387662D8DA21100E4084E /* BalanceSheetManagement */,
+				56C387682D8DA21100E4084E /* Catalog */,
+				56C3876A2D8DA21100E4084E /* GameLabellingManagement */,
+				56C3876C2D8DA21100E4084E /* OrderManagement */,
+				56C387702D8DA21100E4084E /* SellerManagement */,
+				56C387722D8DA21100E4084E /* Statistics */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		56C387752D8DA21100E4084E /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				56C387642D8DA21100E4084E /* Admin */,
+				56C387732D8DA21100E4084E /* Manager */,
+				56C387742D8DA21100E4084E /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		56C387772D8DA21100E4084E /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				56C387762D8DA21100E4084E /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		56C387792D8DA21100E4084E /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				56C387752D8DA21100E4084E /* Dashboard */,
+				56C387772D8DA21100E4084E /* Login */,
+				56C387782D8DA21100E4084E /* RootView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		B743C4A22D81A30C001D0F9E = {
 			isa = PBXGroup;
 			children = (
@@ -94,20 +821,16 @@
 		B743C4AD2D81A30C001D0F9E /* chupacabra */ = {
 			isa = PBXGroup;
 			children = (
+				56C386FB2D8DA21100E4084E /* Common */,
+				56C386FE2D8DA21100E4084E /* Core */,
+				56C3875D2D8DA21100E4084E /* Features */,
+				56C3875F2D8DA21100E4084E /* Preview Content */,
+				56C387792D8DA21100E4084E /* Screens */,
+				5647F4292D81AB5400362FAC /* Preview Content */,
 				B743C4AE2D81A30C001D0F9E /* chupacabraApp.swift */,
-				B743C4B02D81A30C001D0F9E /* ContentView.swift */,
 				B743C4B22D81A318001D0F9E /* Assets.xcassets */,
-				B743C4B42D81A318001D0F9E /* Preview Content */,
 			);
 			path = chupacabra;
-			sourceTree = "<group>";
-		};
-		B743C4B42D81A318001D0F9E /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				B743C4B52D81A318001D0F9E /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		B743C4BE2D81A319001D0F9E /* chupacabraTests */ = {
@@ -215,6 +938,9 @@
 				Base,
 			);
 			mainGroup = B743C4A22D81A30C001D0F9E;
+			packageReferences = (
+				5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = B743C4AC2D81A30C001D0F9E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,7 +957,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B743C4B62D81A318001D0F9E /* Preview Assets.xcassets in Resources */,
+				5647F43A2D81AB5400362FAC /* Preview Assets.xcassets in Resources */,
+				56C387BB2D8DA21100E4084E /* Preview Assets.xcassets in Resources */,
 				B743C4B32D81A318001D0F9E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,8 +984,74 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B743C4B12D81A30C001D0F9E /* ContentView.swift in Sources */,
 				B743C4AF2D81A30C001D0F9E /* chupacabraApp.swift in Sources */,
+				56C387BD2D8DA58700E4084E /* SellerGamesViewModel.swift in Sources */,
+				56C3877A2D8DA21100E4084E /* CategoryService.swift in Sources */,
+				56C3877B2D8DA21100E4084E /* ManagerDashboardList.swift in Sources */,
+				56C3877C2D8DA21100E4084E /* OrderCreationScreen.swift in Sources */,
+				56C3877D2D8DA21100E4084E /* AuthViewModel.swift in Sources */,
+				56C3877E2D8DA21100E4084E /* SellerBalanceSheet.swift in Sources */,
+				56C3877F2D8DA21100E4084E /* StatisticModel.swift in Sources */,
+				56C387802D8DA21100E4084E /* MemberFormView.swift in Sources */,
+				56C387812D8DA21100E4084E /* SellerListScreen.swift in Sources */,
+				56C387822D8DA21100E4084E /* PhysicalGameService.swift in Sources */,
+				56C387832D8DA21100E4084E /* CreateMemberView.swift in Sources */,
+				56C387842D8DA21100E4084E /* EditMemberView.swift in Sources */,
+				56C387852D8DA21100E4084E /* CatalogScreen.swift in Sources */,
+				56C387862D8DA21100E4084E /* StatisticViewModel.swift in Sources */,
+				56C387872D8DA21100E4084E /* TokenService.swift in Sources */,
+				56C387882D8DA21100E4084E /* DepositService.swift in Sources */,
+				56C387892D8DA21100E4084E /* CreateSessionView.swift in Sources */,
+				56C3878A2D8DA21100E4084E /* StatisticsScreen.swift in Sources */,
+				56C3878B2D8DA21100E4084E /* SessionViewModel.swift in Sources */,
+				56C3878C2D8DA21100E4084E /* DepositViewModel.swift in Sources */,
+				56C3878D2D8DA21100E4084E /* APIService.swift in Sources */,
+				56C3878E2D8DA21100E4084E /* SellerFormView.swift in Sources */,
+				56C3878F2D8DA21100E4084E /* AuthService.swift in Sources */,
+				56C387902D8DA21100E4084E /* MeanPaymentService.swift in Sources */,
+				56C387912D8DA21100E4084E /* BalanceSheetScreen.swift in Sources */,
+				56C387922D8DA21100E4084E /* GameService.swift in Sources */,
+				56C387932D8DA21100E4084E /* SessionService.swift in Sources */,
+				56C387942D8DA21100E4084E /* SellerViewModel.swift in Sources */,
+				56C387952D8DA21100E4084E /* EditSellerView.swift in Sources */,
+				56C387962D8DA21100E4084E /* Session.swift in Sources */,
+				56C387972D8DA21100E4084E /* DepositForm.swift in Sources */,
+				56C387982D8DA21100E4084E /* Seller.swift in Sources */,
+				56C387992D8DA21100E4084E /* PhysicalGameViewModel.swift in Sources */,
+				56C3879A2D8DA21100E4084E /* Member.swift in Sources */,
+				56C3879B2D8DA21100E4084E /* Game.swift in Sources */,
+				56C3879C2D8DA21100E4084E /* MemberService.swift in Sources */,
+				56C3879D2D8DA21100E4084E /* RequestHandler.swift in Sources */,
+				56C3879E2D8DA21100E4084E /* DashboardView.swift in Sources */,
+				56C3879F2D8DA21100E4084E /* User.swift in Sources */,
+				56C387A02D8DA21100E4084E /* OrderViewModel.swift in Sources */,
+				56C387A12D8DA21100E4084E /* OrderService.swift in Sources */,
+				56C387C12D8DA65800E4084E /* SellerGamesListScreen.swift in Sources */,
+				56C387A22D8DA21100E4084E /* CreateSellerView.swift in Sources */,
+				56C387A32D8DA21100E4084E /* SessionForm.swift in Sources */,
+				56C387A42D8DA21100E4084E /* GameViewModel.swift in Sources */,
+				56C387A52D8DA21100E4084E /* CategoryViewModel.swift in Sources */,
+				56C387A62D8DA21100E4084E /* SellerDetailScreen.swift in Sources */,
+				56C387A72D8DA21100E4084E /* CreateDepositScreen.swift in Sources */,
+				56C387A82D8DA21100E4084E /* MemberViewModel.swift in Sources */,
+				56C387A92D8DA21100E4084E /* CustomTextField.swift in Sources */,
+				56C387AA2D8DA21100E4084E /* GameLabellingScreen.swift in Sources */,
+				56C387AB2D8DA21100E4084E /* StatisticService.swift in Sources */,
+				56C387AC2D8DA21100E4084E /* Deposit.swift in Sources */,
+				56C387AD2D8DA21100E4084E /* Category.swift in Sources */,
+				56C387AE2D8DA21100E4084E /* SessionListScreen.swift in Sources */,
+				56C387AF2D8DA21100E4084E /* Publisher.swift in Sources */,
+				56C387B02D8DA21100E4084E /* AdminDashboardList.swift in Sources */,
+				56C387B12D8DA21100E4084E /* SellerService.swift in Sources */,
+				56C387B22D8DA21100E4084E /* MeanPaymentModel.swift in Sources */,
+				56C387B32D8DA21100E4084E /* RootView.swift in Sources */,
+				56C387B42D8DA21100E4084E /* OrderModel.swift in Sources */,
+				56C387B52D8DA21100E4084E /* MemberListScreen.swift in Sources */,
+				56C387B62D8DA21100E4084E /* LoginView.swift in Sources */,
+				56C387B72D8DA21100E4084E /* EditSessionView.swift in Sources */,
+				56C387B82D8DA21100E4084E /* MeanPaymentViewModel.swift in Sources */,
+				56C387B92D8DA21100E4084E /* PhysicalGame.swift in Sources */,
+				56C387BA2D8DA21100E4084E /* LoggedUserEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +1370,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5647F4442D81BA6100362FAC /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5647F4432D81B79600362FAC /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B743C4A32D81A30C001D0F9E /* Project object */;
 }
