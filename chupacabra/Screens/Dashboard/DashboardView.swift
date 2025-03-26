@@ -20,8 +20,10 @@ struct DashboardView: View {
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility, sidebar: {
             List(selection: $selectedItem) {
-                ManagerDashboardListWithSelection()
-                AdminDashboardListWithSelection()
+                if let loggedUser = loggedUserVM.loggedUser {
+                    loggedUser.permissionLevel >= .MANAGER ? AnyView(ManagerDashboardListWithSelection()) : nil
+                    loggedUser.permissionLevel >= .ADMIN ? AnyView(AdminDashboardListWithSelection()) : nil
+                }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Dashboard")

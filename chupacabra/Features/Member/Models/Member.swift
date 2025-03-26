@@ -1,6 +1,8 @@
 import Foundation
 
-public enum PermissionLevel: Int, Codable {
+public enum PermissionLevel: Int, Codable, Comparable {
+    
+    
     case USER = 0
     case MANAGER = 1
     case ADMIN = 2
@@ -11,6 +13,10 @@ public enum PermissionLevel: Int, Codable {
         case .MANAGER: return "Manager"
         case .ADMIN: return "Administrateur"
         }
+    }
+    
+    public static func < (lhs: PermissionLevel, rhs: PermissionLevel) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
 

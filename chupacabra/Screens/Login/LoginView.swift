@@ -6,7 +6,7 @@ struct LoginView: View {
 
     init() {
         let authVM = AuthViewModel()
-        authVM.email = "cyril.dsch@gmail.com"
+        authVM.email = ""
         authVM.password = "Test0202!"
         _viewModel = StateObject(wrappedValue: authVM)
     }

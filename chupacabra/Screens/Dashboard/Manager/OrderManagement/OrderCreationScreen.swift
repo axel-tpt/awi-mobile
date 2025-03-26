@@ -8,7 +8,6 @@ struct OrderCreationScreen: View {
     // État de la commande en cours
     @State private var selectedPhysicalsGames: [FullPhysicalGame] = []
     @State private var showingInvoiceForm = false
-    @State private var orderId = -1
     @State private var searchQuery: String = ""
     @State private var selectedPaymentId: Int?
     
@@ -272,7 +271,7 @@ struct OrderCreationScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .sheet(isPresented: $showingInvoiceForm) {
-                InvoiceFormView(orderId: self.orderId)
+                InvoiceFormView(orderId: self.orderViewModel.order!.id)
             }
             .onTapGesture {
                 isFocused = false
@@ -311,9 +310,11 @@ struct OrderCreationScreen: View {
                 physicalGameIds: self.selectedPhysicalsGames.map { $0.id },
                 meanPaymentId: pid
             )
-            orderViewModel.sendOrder(body: body)
-            self.showingInvoiceForm = true
-            self.selectedPhysicalsGames = []
+            orderViewModel.sendOrder(body: body, onSuccess: {
+                self.showingInvoiceForm = true
+                self.selectedPhysicalsGames = []
+                self.physicalGameViewModel.loadForSalePhysicalGamesBarcodes()
+            })
         } else {
             print("Mean Payment isn't selected")
         }
@@ -581,6 +582,7 @@ struct InvoiceFormView: View {
     
     // Function to send the invoice
     func sendInvoice() {
+        
         let body = InvoiceRequest(
             buyerEmail: buyerEmail,
             buyerAddress: buyerAddress,
